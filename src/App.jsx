@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Navbar from './component/Navbar'
+import Navbar from './component/Sidebar'
 import './App.css'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -9,13 +9,18 @@ import Checkout from './pages/Checkout'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+// import { GiCompass, GiDiamondHard, GiStabbedNote } from 'react-icons/gi'
+
 
 function App() {
 
+
+
+
   return (
-    <div className="App">
-      <h1>sofjesofilogin</h1>
+    <div className="App ">
       <Navbar />
+
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
