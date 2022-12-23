@@ -10,16 +10,13 @@ export const ContextProvider = ({ children }) => {
         setShowNavbar(prev => !prev)
     }
 
-    console.log(showNavbar)
-
     return (
         <StateContext.Provider
-        value={{
-            showNavbar,
-            setShowNavbar,
-            handleNavbarClick,
-            
-        }}
+            value={{
+                showNavbar,
+                setShowNavbar,
+                handleNavbarClick
+            }}
         >
             {children}
         </StateContext.Provider>
