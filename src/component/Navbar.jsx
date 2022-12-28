@@ -10,11 +10,8 @@ const Navbar = () => {
 
   const { handleNavbarClick, showNavbar, } = useStateContext()
 
-
-
-  console.log(showNavbar)
   return (
-    <div className='flex items-center justify-between  mx-auto'>
+    <div className='flex items-center justify-between max-w-[75em] mx-auto px-5 py-4'>
       <img src={Logo} alt="logo" className='w-[10em] ' />
 
       <div className='hidden lg:flex items-center gap-10 tracking-widest text-[#324D67] '>

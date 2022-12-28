@@ -10,7 +10,6 @@ import Checkout from './pages/Checkout'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-// import { GiCompass, GiDiamondHard, GiStabbedNote } from 'react-icons/gi'
 import { useStateContext } from './context/ContextProvider'
 
 
@@ -20,7 +19,7 @@ function App() {
 
 
   return (
-    <div className='px-5 py-4 max-w-[75em] mx-auto'>
+    <div className=''>
       <BrowserRouter>
         <Navbar />
         <SideBar />
