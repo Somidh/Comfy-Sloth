@@ -5,7 +5,7 @@ import hero2 from '../assests/hero-2.jpeg'
 
 const Hero = () => {
     return (
-        <div className='mt-64 max-w-[75em] mx-auto px-5 py-4 flex items-start justify-between relative w-full'>
+        <div className='mt-32 lg:mt-56 max-w-[75em] mx-auto px-5 md:px-20 lg:px-5 py-4 flex items-start justify-between relative w-full'>
             <div className='flex flex-col items-start gap-3 lg:gap-5 lg:w-[35em] w-[60em]  lg:px-0  '>
                 <h1 className='capitalize text-5xl leading-[1.1em] font-extrabold text-[#102A42] tracking-widest'>design your <br /> comfort zone</h1>
                 <p className='text-[#617D98] leading-8 font-normal mb-6 lg:text-xl lg:leading-10'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto, at sed omnis corporis doloremque possimus velit! Repudiandae nisi odit, aperiam odio ducimus, obcaecati libero et quia tempora excepturi quis alias?</p>

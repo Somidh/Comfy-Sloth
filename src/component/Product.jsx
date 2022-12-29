@@ -24,7 +24,7 @@ const Product = ({ image, name, price }) => {
 
     return (
 
-            <div className='w-full mx-auto px-5 md:w-[45%] xl:w-[40em]'>
+            <div className='w-full rounded-md mx-auto px-5 '>
                 <img src={image} alt="product_image" className='w-full h-[18em] xl:h-[14em] bg-center bg-cover rounded-sm object-cover' />
                 <div className='flex items-center justify-between py-2'>
                     <p className='capitalize text-[#102A42] tracking-widest text-sm md:text-lg'>{name}</p>

@@ -17,12 +17,12 @@ const FeaturedProducts = () => {
     }, [])
 
     return (
-        <div className=' bg-[#F1F5F8] w-full h-full flex flex-col items-center justify-center gap-8 py-20 mt-72'>
+        <div className=' bg-[#F1F5F8] w-full h-full flex flex-col items-center justify-center gap-8 py-20 mt-52'>
             <div className='flex flex-col items-center justify-center gap-3'>
                 <h1 className='text-4xl text-[#102A42] font-extrabold tracking-widest'>Featured Products</h1>
                 <div className='bg-[#AB7A5F] w-24 h-1' />
             </div>
-            <div className='flex flex-wrap xl:flex-nowrap items-start justify-center gap-5 w-full xl:max-w-[75em] '>
+            <div className='grid grid-cols-0 md:grid-cols-2 xl:grid-cols-3 gap-5 w-full xl:max-w-[75em] '>
                 {featuredData.map(product => (
                     <Product
                         key={product.id}

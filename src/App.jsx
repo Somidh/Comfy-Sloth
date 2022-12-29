@@ -11,6 +11,7 @@ import Cart from './pages/Cart'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import { useStateContext } from './context/ContextProvider'
+import Footer from './component/Footer'
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path='/signup' element={<Signup />} />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </div>
   )
 }
