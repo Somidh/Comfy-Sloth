@@ -18,7 +18,7 @@ const Navbar = () => {
   return (
 
     
-    <div className={`fixed top-0 left-0 bg-white w-screen h-screen flex flex-col gap-8 px-5 py-4 ${showNavbar ? '-translate-x-0' : '-translate-x-full'} transition-all duration-300 ease-linear`}>
+    <div className={`fixed top-0 left-0 bg-white z-50 w-screen h-screen flex flex-col gap-8 px-5 py-4 ${showNavbar ? '-translate-x-0' : '-translate-x-full'} transition-all duration-300 ease-linear`}>
       <div className='flex flex-col items-start  gap-5  '>
         <div className='flex items-center justify-between w-full'>
           <img src={Logo} alt="logo" className='w-[10em]' />
