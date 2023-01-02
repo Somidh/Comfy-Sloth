@@ -9,6 +9,9 @@ export const ContextProvider = ({ children }) => {
     const handleNavbarClick = () => {
         setShowNavbar(prev => !prev)
     }
+    const handleImageHover = () => {
+        
+    }
 
     return (
         <StateContext.Provider

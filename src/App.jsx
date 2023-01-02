@@ -5,7 +5,7 @@ import SideBar from './component/Sidebar'
 import './App.css'
 import Home from './pages/Home'
 import About from './pages/About'
-import Product from './pages/Product'
+import Products from './pages/Products'
 import Checkout from './pages/Checkout'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
@@ -27,7 +27,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
-          <Route path='/products' element={<Product />} />
+          <Route path='/products' element={<Products />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/login' element={<Login />} />
