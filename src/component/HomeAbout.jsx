@@ -5,7 +5,7 @@ import { GiCompass, GiDiamondHard, GiStabbedNote } from 'react-icons/gi'
 const HomeAbout = () => {
     return (
         <div className='bg-[#EADED7] w-full px-5 py-20 flex items-center justify-center mb-20 xl:mb-60 relative xl:h-[28em] xl:items-start    '>
-            <div className='max-w-[75em]'>
+            <div className='max-w-[85em]'>
                 <div className='flex flex-col w-full lg:flex-row lg:justify-between lg:items-center  gap-5 mb-20'>
                     <h1 className='text-[#453227] text-2xl md:text-4xl font-bold tracking-wider capitalize'>custom furniture <br /> built only for you</h1>
                     <p className='text-[#795744] lg:w-[38em]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe dolorum debitis consectetur reprehenderit non aliquam voluptates dolore aut vero consequuntur.</p>

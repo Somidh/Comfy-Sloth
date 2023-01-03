@@ -8,7 +8,7 @@ const About = () => {
   return (
     <div className='w-full h-full'>
       <Header title="About" />
-      <div className='grid grid-cols-0 lg:grid-cols-2 items-center justify-center mx-auto px-10 lg:px-5 max-w-[75em] gap-20 mb-20'>
+      <div className='grid grid-cols-0 lg:grid-cols-2 items-center justify-center mx-auto px-10 lg:px-5 max-w-[85em] gap-20 mb-20'>
         <img src={hero2} alt="About image" className='h-[500px] w-full  object-cover' />
         <div className='flex flex-col items-start justify-center gap-8'>
           <div>

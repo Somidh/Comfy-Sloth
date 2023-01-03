@@ -15,8 +15,8 @@ const Product = ({ image, name, price }) => {
     return (
 
         <div className='w-full rounded-md mx-auto px-5'>
-            <div className=' product_image bg-black relative '>
-                <img src={image} alt="product_image" className=' w-full h-[18em] xl:h-[14em]   bg-center bg-cover rounded-sm object-cover cursor-pointer z-30 hover:opacity-50 transition-opacity duration-500 ' />
+            <div className=' product_image bg-black  relative '>
+                <img src={image} alt="product_image" className=' w-full h-[12em]   bg-center bg-cover rounded-sm object-cover cursor-pointer z-30 hover:opacity-50 transition-opacity duration-500 ' />
                 <div className='search-icon hidden  absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 bg-[#AB7A5F] w-10 h-10 rounded-full cursor-pointer'>
                     <FaSearch style={{ color: 'white', fontSize: '20px' }} />
                 </div>

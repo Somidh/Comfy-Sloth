@@ -22,3 +22,20 @@ body{
     align-items: center;
     justify-content: center;
 } 
+
+
+@media screen and (min-width: 575px){
+    .view_section {
+       flex-direction: row;
+        align-items: center;
+        
+        margin-top: 3em;
+        
+    }
+    .line{
+        width: 8em;
+    }
+    
+    
+    
+}
