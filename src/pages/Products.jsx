@@ -1,13 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../component/Header'
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import MenuIcon from '@mui/icons-material/Menu';
-import GridView from '../component/GridView';
+import Product from '../component/Product';
 
 
 const Products = () => {
 
   const [priceRange, setPriceRange] = useState('0')
+  const [items, setItems] = useState([])
+  // const [filteredItems, ] = useState(items)
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('https://course-api.com/react-store-products')
+      const data = await response.json()
+      setItems(data)
+    }
+
+    fetchData()
+  }, [])
+  
+  console.log(items)
+
+
+  const filterAll = () => {
+    setItems(items)
+  }
+
+  const officeFilter = () => {
+    setItems(items.filter(item => item.category === 'office'))
+
+  }
+  const livingRoomFilter = () => {
+    setItems(items.filter(item => item.category === 'living room'))
+  }
+  const kitchenFilter = () => {
+    setItems(items.filter(item => item.category === 'kitchen'))
+  }
+  const bedroomFilter = () => {
+    setItems(items.filter(item => item.category === 'bedroom'))
+  }
+  const diningFilter = () => {
+    setItems(items.filter(item => item.category === 'dining'))
+  }
+  const kidsFilter = () => {
+    setItems(items.filter(item => item.category === 'kids'))
+  }
+
 
   const formatPrice = (number) => {
     return new Intl.NumberFormat('en-US', {
@@ -19,25 +60,24 @@ const Products = () => {
   const price = formatPrice(priceRange)
 
 
-  console.log(priceRange)
 
   return (
     <>
       <Header title="Products" />
       <div className='flex flex-col items-start md:flex-row max-w-[85em] mx-auto '>
 
-        <div className='px-5 flex flex-col items-start justify-center gap-5    '>
+        <div className='px-5 flex flex-col items-start justify-center gap-5'>
           <input type="text" placeholder='Search' className='bg-[#F1F5F8] py-2 w-60 px-3 font-normal text-sm rounded-md tracking-widest ' />
           <div>
             <h1 className='text-[#102A42]  font-bold tracking-widest'>Category</h1>
             <ul className='text-[#617D98] text-sm tracking-widest flex flex-col items-start justify-center gap-2 mt-3 cursor-pointer'>
-              <li>All</li>
-              <li>office</li>
-              <li>Living Room</li>
-              <li>Kitchen</li>
-              <li>Bedroom</li>
-              <li>Dining</li>
-              <li>Kids</li>
+              <li onClick={filterAll}>All</li>
+              <li onClick={officeFilter} >office</li>
+              <li onClick={livingRoomFilter}>Living Room</li>
+              <li onClick={kitchenFilter}>Kitchen</li>
+              <li onClick={bedroomFilter}>Bedroom</li>
+              <li onClick={diningFilter}>Dining</li>
+              <li onClick={kidsFilter}>Kids</li>
             </ul>
           </div>
 
@@ -84,8 +124,16 @@ const Products = () => {
               </select>
             </div>
           </div>
-          <div >
-            <GridView />
+
+          <div className='mt-10 grid lg:grid-cols-2 xl:grid-cols-3 '>
+            {items.map(item => (
+              <Product
+                key={item.id}
+                name={item.name}
+                price={item.price}
+                image={item.image}
+              />
+            ))}
           </div>
         </div>
       </div>
