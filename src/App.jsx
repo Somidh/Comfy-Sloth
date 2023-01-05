@@ -12,6 +12,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import { useStateContext } from './context/ContextProvider'
 import Footer from './component/Footer'
+import AboutProduct from './pages/AboutProduct'
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path='/cart' element={<Cart />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/:id' element={<AboutProduct />} />
         </Routes>
       </BrowserRouter>
       <Footer />
