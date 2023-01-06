@@ -12,7 +12,7 @@ const Product = ({ image, name, price, isGridView, description, id }) => {
     }
 
     const number = formatPrice(price)
-    const shortDescription = description.slice(0, 150) + '...'
+    // const shortDescription = description.slice(0, 150) + '...'
 
     return (
 
@@ -32,7 +32,7 @@ const Product = ({ image, name, price, isGridView, description, id }) => {
                 <span className={`text-[#AB7A5F] tracking-widest ${isGridView ? 'text-[14px] md:text-[16px]' : 'font-bold text-[14px]'}`}>{number}</span>
                 {!isGridView &&
                     <>
-                        <p>{shortDescription}</p>
+                        {/* <p>{shortDescription}</p> */}
                         <Link className='bg-[#AB7A5F] text-[10px] uppercase text-white tracking-widest px-3 py-[2px] rounded-md'>Details</Link>
                     </>
                 }

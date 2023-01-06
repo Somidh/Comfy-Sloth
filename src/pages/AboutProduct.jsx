@@ -12,7 +12,7 @@ const AboutProduct = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`https://course-api.com/react-store-products/products/${id}`)
+            const response = await fetch(`https://course-api.com/react-store-single-product?id=${id}`)
             const data = await response.json()
             setProductDetail(data)
         }
