@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
+import Header from '../component/Header'
 
 
 const AboutProduct = () => {
@@ -21,13 +22,29 @@ const AboutProduct = () => {
     }, [])
 
 
+    const handleBackClick = () => {
+        navigate('/products')
+    }
+    console.log(productDetail)
+    console.log(productDetail?.images[0].url)
+
 
     return (
         <div>
-            <p>
-                {/* <img src={items.image} alt="" /> */}
-                {productDetail?.name}
-            </p>
+            <Header title="Product" productName={productDetail?.name} />
+
+            <div className='px-5'>
+                <div>
+                    <button onClick={handleBackClick} className='bg-[#AB7A5F] text-[#EADED7] text-[14px] tracking-widest px-3 py-1.5 uppercase rounded-md'>back to products</button>
+
+                    <div>
+                        {productDetail?.images.map((img, index) => (
+                            <img key={index} src={img.url} alt="image" />
+                        ))}
+                    </div>
+                </div>
+
+            </div>
         </div>
     )
 }

@@ -27,6 +27,8 @@ const Products = () => {
     fetchData()
   }, [])
 
+  console.log(items)
+
   // console.log(items)
 
   const handleSelectedCategory = (category) => {
