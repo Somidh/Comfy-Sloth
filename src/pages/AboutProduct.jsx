@@ -3,16 +3,19 @@ import { useNavigate, useParams } from 'react-router'
 import Header from '../component/Header'
 import Stars from '../component/Stars'
 import { ClipLoader } from 'react-spinners'
+import { useStateContext } from '../context/ContextProvider'
 
 
 const AboutProduct = () => {
 
-    const [productDetail, setProductDetail] = useState()
-    const [cartCount, setCartCount] = useState(1)
+    // const [productDetail, setProductDetail] = useState()
+    // const [cartCount, setCartCount] = useState(1)
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const { id } = useParams()
-    let stockMessage = ''
+    // let stockMessage = ''
+
+    const { productDetail, setProductDetail, addingCartCount, setAddingCartCount, setCartCount } = useStateContext()
 
 
     useEffect(() => {
@@ -42,24 +45,25 @@ const AboutProduct = () => {
     }
     const handleAddToCartButton = () => {
         navigate('/cart')
+        setCartCount(prev => prev + addingCartCount )
     }
 
     const handleAddingToCart = () => {
 
-        if (cartCount > productDetail?.stock) {
-            stockMessage = "sorry we don't have that much in stock"
+        if (addingCartCount > productDetail?.stock) {
+            console.log("exceeding then stocks")
         }
 
         else {
-            setCartCount(prev => prev + 1)
+            setAddingCartCount(prev => prev + 1)
         }
     }
     const handleRemovingFromCart = () => {
-        if (cartCount === 1) {
-            setCartCount(1)
+        if (addingCartCount === 1) {
+            setAddingCartCount(1)
         }
         else {
-            setCartCount(prev => prev - 1)
+            setAddingCartCount(prev => prev - 1)
         }
     }
 
@@ -71,8 +75,8 @@ const AboutProduct = () => {
             <Header title="Product" productName={productDetail?.name} />
 
             {loading ? <div className='flex items-center justify-center mb-20'>
-            <ClipLoader color="#AB7A5F" size={60} />
-                 </div> :
+                <ClipLoader color="#AB7A5F" size={60} />
+            </div> :
 
 
                 <div className='px-5 mb-20 grid lg:grid-cols-2 gap-10 max-w-[85em] mx-auto'>
@@ -112,15 +116,18 @@ const AboutProduct = () => {
                         </div>
                         <hr className='w-full my-5' />
 
-                        <div className='flex flex-col items-center gap-3'>
-                            <div className='flex items-center gap-5 '>
-                                <span onClick={handleRemovingFromCart} className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
-                                <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{cartCount}</span>
-                                <span onClick={handleAddingToCart} className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
-                            </div>
-                            <button onClick={handleAddToCartButton} className='bg-[#ab7a5f] text-[#EADED7] text-[14px] tracking-widest px-5 py-1.5 uppercase rounded-md'>add to cart</button>
+                        {productDetail?.stock > 0 &&
+                            <div className='flex flex-col items-center gap-3'>
+                                <div className='flex items-center gap-5 '>
+                                    <span onClick={handleRemovingFromCart} className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
+                                    <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{addingCartCount}</span>
+                                    <span onClick={handleAddingToCart} className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
+                                </div>
+                                <button onClick={handleAddToCartButton} className='bg-[#ab7a5f] text-[#EADED7] text-[14px] tracking-widest px-5 py-1.5 uppercase rounded-md'>add to cart</button>
 
-                        </div>
+                            </div>
+                        }
+
                     </div>
 
                 </div>

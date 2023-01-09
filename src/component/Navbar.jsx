@@ -8,7 +8,7 @@ import { useStateContext } from '../context/ContextProvider';
 
 const Navbar = () => {
 
-  const { handleNavbarClick, showNavbar, } = useStateContext()
+  const { handleNavbarClick, showNavbar, cartCount } = useStateContext()
 
   return (
     <div className='flex items-center justify-between max-w-[85em] mx-auto px-5 py-4 '>
@@ -28,7 +28,7 @@ const Navbar = () => {
         <div className='flex items-center justify-center gap-2 cursor-pointer relative'>
           <h2 className='text-[25px] '>Cart</h2>
           <ShoppingCartIcon fontSize='medium' />
-          <span className='w-5 h-5 bg-[#AB7A5F] rounded-full absolute -right-2 -top-1 flex items-center justify-center text-white text-sm'>0</span>
+          <span className='w-5 h-5 bg-[#AB7A5F] rounded-full absolute -right-2 -top-1 flex items-center justify-center text-white text-sm'>{cartCount}</span>
         </div>
         <div className='flex items-center justify-center gap-2 cursor-pointer'>
           <h2 className='text-[25px]'>Logout </h2>
