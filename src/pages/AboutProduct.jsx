@@ -67,7 +67,7 @@ const AboutProduct = () => {
         }
     }
 
-    console.log(productDetail)
+    // console.log(productDetail)
 
 
     return (
