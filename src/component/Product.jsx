@@ -12,7 +12,7 @@ const Product = ({ image, name, price, isGridView, description, id }) => {
     }
 
     const number = formatPrice(price)
-    const shortDescription = description.slice(0, 150) + '...'
+    const shortDescription = description?.slice(0, 150) + '...'
 
     return (
 
