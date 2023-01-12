@@ -1,12 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Header from '../component/Header'
-import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
-import MenuIcon from '@mui/icons-material/Menu';
 import Product from '../component/Product';
 import { ClipLoader } from 'react-spinners'
+import useProductStore from '../store/productStore';
+import Filters from '../component/Filters';
+import ProductList from '../component/ProductList';
+import ProductListHeader from '../component/ProductListHeader';
 
 
-const categories = ['All', 'office', 'living room', 'kitchen', 'bedroom', 'dining', 'kids']
+
 
 
 const Products = () => {
@@ -19,40 +21,37 @@ const Products = () => {
   const [isGridView, setIsGridView] = useState(true)
   const [loading, setLoading] = useState(true)
 
+  // const products = useProductStore(state => state.products)
+  // const fetchProducts = useProductStore(state => state.fetchProducts)
+  // const singleProduct = useProductStore(state => state.singleProduct)
+
+  const { products, fetchProducts } = useProductStore(state => ({
+    products: state.products,
+    fetchProducts: state.fetchProducts,
+    // fetchSingleProduct: state.fetchSingleProduct,
+    // singleProduct: state.singleProduct
+  }))
+
+
 
   useEffect(() => {
-
-    const fetchData = async () => {
-      const response = await fetch('https://course-api.com/react-store-products')
-      const data = await response.json()
-      setItems(data)
-      setLoading(false)
-    }
-
-    fetchData()
+    fetchProducts()
   }, [])
 
-  console.log(items)
 
-  // console.log(items.filter(item => item.price < priceRange))
+  console.log("here goes product", products)
 
-  // console.log(items)
+  // useEffect(() => {
 
-  const handleSelectedCategory = (category) => {
-    setSelectedCategory(category)
-  }
+  //   const fetchData = async () => {
+  //     const response = await fetch('https://course-api.com/react-store-products')
+  //     const data = await response.json()
+  //     setItems(data)
+  //     setLoading(false)
+  //   }
 
-  const handleSelectedCompany = (e) => {
-    setSelectedCompany(e.target.value)
-  }
-
-  const handleListView = () => {
-    setIsGridView(false)
-  }
-  const handleGridView = () => {
-    setIsGridView(true)
-  }
-  // console.log(selectedCompany)
+  //   fetchData()
+  // }, [])
 
   const formatPrice = (number) => {
     return new Intl.NumberFormat('en-US', {
@@ -61,94 +60,25 @@ const Products = () => {
     }).format(number / 100)
   }
 
-
-  // const filteredItems = 
-  //   items.filter((item, index) => (
-  //     !selectedCategory || item.category ==
-  //   ))
-
-
-  console.log(selectedCategory)
-
   const price = formatPrice(priceRange)
-
-  console.log(price)
 
   return (
     <>
       <Header title="Products" />
-      {loading ? <div className='flex items-center justify-center mb-20'>
+      {/* {loading ? <div className='flex items-center justify-center mb-20'>
         <ClipLoader color="#AB7A5F" size={60} />
-      </div> :
+      </div> : */}
 
-        <div className='flex flex-col items-start md:flex-row max-w-[85em] mx-auto '>
+      <div className='flex flex-col items-start md:flex-row max-w-[85em] mx-auto '>
+        <Filters />
 
-          <div className='px-5 flex flex-col items-start justify-center gap-5 md:sticky '>
-            <input onChange={e => setSearch(e.target.value)} type="text" placeholder='Search' className='bg-[#F1F5F8] py-2 w-60 px-3 font-normal text-sm rounded-md tracking-widest ' />
-            <div>
-              <h1 className='text-[#102A42]  font-bold tracking-widest'>Category</h1>
-              <ul className='text-[#617D98] text-sm tracking-widest flex flex-col items-start justify-center gap-2 mt-3 cursor-pointer'>
+        <div className='flex flex-col w-full  '>
+          <ProductListHeader />
 
-                {categories.map(category => (
-                  <>
-                    <li key={category} onClick={() => handleSelectedCategory(category)} className='cursor-pointer capitalize ' >{category}</li>
-                    {selectedCategory === category && <hr className='bg-black w-14 h-[2px] -mt-2' />}
-                  </>
-                ))}
+          <div>
+            <ProductList products={products} />
 
-              </ul>
-            </div>
-
-            <div>
-              <h1 className='text-[#102A42] font-bold tracking-widest'>Company</h1>
-              <select onChange={handleSelectedCompany} className='pl-2 py-1 text-sm mt-2 rounded-md w-20'>
-                <option value="all">All</option>
-                <option value="marcos">Marcos</option>
-                <option value="liddy">Liddy</option>
-                <option value="ikea">Ikea</option>
-                <option value="caressa">Caressa</option>
-              </select>
-            </div>
-
-            <div className='flex flex-col items-start gap-1'>
-              <h1 className='text-[#102A42] font-bold tracking-widest'>Price</h1>
-              <p className='text-[#324D67]'>{price}</p>
-              <input onChange={e => setPriceRange(e.target.value)} type="range" min="0" max="309999" step="any" className='w-40' value={priceRange} />
-            </div>
-
-            <div className='flex items-center justify-between w-[14em]'>
-              <label htmlFor="free-shipping">Free Shipping</label>
-              <input type="checkbox" id='free-shipping' name='free-shipping' />
-            </div>
-
-            <button className='bg-[#BB2525] text-white tracking-widest text-sm py-1 px-3 rounded-md'>Clear Filters</button>
-          </div>
-
-          <div className='flex flex-col w-full  '>
-            <div className='view_section mt-10 flex flex-col px-5 items-start gap-3'>
-              <div className='flex items-center gap-2 '>
-                <GridViewRoundedIcon onClick={handleGridView} style={{ color: 'white', backgroundColor: 'black', padding: '2px', borderRadius: '4px', cursor: 'pointer' }} />
-                <MenuIcon onClick={handleListView} style={{ border: '1px solid black', padding: '2px', borderRadius: '4px', cursor: 'pointer' }} />
-              </div>
-              <p className='text-[#324D67] text-sm tracking-wide'>20 Products Found</p>
-              <div className='line h-[1px] w-full bg-[#bcccdc]' />
-              <div className='tracking-wide flex items-center justify-center gap-2 '>
-                <h1>Sort By</h1>
-                <select className='pl-3 py-2 text-base  rounded-md w-36 '>
-                  <option value="lowest">Price (Lowest)</option>
-                  <option value="highest">Price (Highest)</option>
-                  <option value="a-z">Name (A-Z)</option>
-                  <option value="z-a">Name (Z-A)</option>
-                </select>
-              </div>
-            </div>
-
-            <div className={`mt-10 ${isGridView ? 'grid lg:grid-cols-2 xl:grid-cols-3' :
-              'flex flex-col'
-              }`}>
-
-              {/* || item.company === selectedCompany || selectedCompany === 'All' || item.price < priceRange || item.shipping */}
-              {
+            {/* {
                 items
                   .filter(item => !selectedCategory || item.category === selectedCategory || selectedCategory === 'All' || item.company === selectedCompany || selectedCompany === 'all')
                   .map(item => (
@@ -162,11 +92,10 @@ const Products = () => {
                       id={item.id}
                     />
                   ))
-              }
-            </div>
+              } */}
           </div>
         </div>
-      }
+      </div>
     </>
   )
 }
