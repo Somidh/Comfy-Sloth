@@ -8,7 +8,7 @@ const GridView = ( { products } ) => {
   // const products = useProductStore(state => state.Products)
 
   return (
-    <div>
+    <div className='grid lg:grid-cols-2 xl:grid-cols-3 w-full mt-10'>
       {products.map(product => (
         <Product key={product.id} {...product} />
       ))}

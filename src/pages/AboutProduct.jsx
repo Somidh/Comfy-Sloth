@@ -4,6 +4,7 @@ import Header from '../component/Header'
 import Stars from '../component/Stars'
 import { ClipLoader } from 'react-spinners'
 import { useStateContext } from '../context/ContextProvider'
+import useProductStore from '../store/productStore'
 
 
 const AboutProduct = () => {
@@ -13,22 +14,43 @@ const AboutProduct = () => {
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const { id } = useParams()
-    // let stockMessage = ''
 
-    const { productDetail, setProductDetail, addingCartCount, setAddingCartCount, setCartCount } = useStateContext()
+    // const addToCart = useProductStore(state => state.addToCart(id))
+
+    const { fetchSingleProduct, singleProduct } = useProductStore(state => ({
+        products: state.products,
+        addToCart: state.addToCart,
+        fetchSingleProduct: state.fetchSingleProduct,
+        singleProduct: state.singleProduct
+    }))
 
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true)
-            const response = await fetch(`https://course-api.com/react-store-single-product?id=${id}`)
-            const data = await response.json()
-            setProductDetail(data)
+      let  timer = setTimeout(() => {
             setLoading(false)
-        }
+        }, 500);
 
-        fetchData()
+        fetchSingleProduct(id)
+
+        return () => clearTimeout(timer)
     }, [])
+
+
+    const { images, name, price, reviews, stars, description, stock, company } = singleProduct
+
+
+
+
+    console.log("I am single", singleProduct)
+    // const { productDetail, setProductDetail, addingCartCount, setAddingCartCount, setCartCount } = useStateContext()
+
+    const handleAddToCartButton = () => {
+        navigate('/cart')
+    }
+    const handleBackClick = () => {
+        navigate('/products')
+    }
+
 
     const formatPrice = (number) => {
         return new Intl.NumberFormat('en-US', {
@@ -37,56 +59,25 @@ const AboutProduct = () => {
         }).format(number / 100)
     }
 
-    const price = formatPrice(productDetail?.price)
-
-
-    const handleBackClick = () => {
-        navigate('/products')
-    }
-    const handleAddToCartButton = () => {
-        navigate('/cart')
-        setCartCount(prev => prev + addingCartCount )
-    }
-
-    const handleAddingToCart = () => {
-
-        if (addingCartCount > productDetail?.stock) {
-            console.log("exceeding then stocks")
-        }
-
-        else {
-            setAddingCartCount(prev => prev + 1)
-        }
-    }
-    const handleRemovingFromCart = () => {
-        if (addingCartCount === 1) {
-            setAddingCartCount(1)
-        }
-        else {
-            setAddingCartCount(prev => prev - 1)
-        }
-    }
-
-    // console.log(productDetail)
+    const formatedPrice = formatPrice(price)
 
 
     return (
         <div>
-            <Header title="Product" productName={productDetail?.name} />
+            <Header title="Product" productName={name} />
 
             {loading ? <div className='flex items-center justify-center mb-20'>
                 <ClipLoader color="#AB7A5F" size={60} />
             </div> :
-
 
                 <div className='px-5 mb-20 grid lg:grid-cols-2 gap-10 max-w-[85em] mx-auto'>
                     <div className='flex flex-col items-start gap-5' >
                         <button onClick={handleBackClick} className='bg-[#AB7A5F] text-[#EADED7] text-[14px] tracking-widest px-3 py-1.5 uppercase rounded-md'>back to products</button>
 
                         <div className='grid grid-rows-1 w-full ' >
-                            <img className='bg-cover object-cover w-full  sm:h-[500px] lg:- mb-3 rounded-sm' src={productDetail?.images[0].url} alt="" />
+                            <img className='bg-cover object-cover w-full  sm:h-[500px] lg:- mb-3 rounded-sm' src={images[0]?.url} alt="" />
                             <div className='grid grid-cols-5 gap-[1rem]'>
-                                {productDetail?.images.map((img, index) => (
+                                {images?.map((img, index) => (
                                     <img className='object-cover cursor-pointer h-[50px] sm:h-[100px] lg:h-[80px] w-full rounded-sm' key={index} src={img.url} alt="image" />
                                 ))}
                             </div>
@@ -94,34 +85,34 @@ const AboutProduct = () => {
                     </div>
 
                     <div className='mt-20 flex flex-col items-start gap-2'>
-                        <h1 className='text-[#102A42] font-bold text-3xl md:text-4xl capitalize' >{productDetail?.name}</h1>
-                        <Stars stars={productDetail?.stars} reviews={productDetail?.reviews} />
-                        <span className='text-[#AB7A5F] font-bold tracking-widest md:text-lg'>{price}</span>
-                        <p className='text-[#324D67] text-sm md:text-base leading-7 md:leading-8'>{productDetail?.description}</p>
+                        <h1 className='text-[#102A42] font-bold text-3xl md:text-4xl capitalize' >{name}</h1>
+                        <Stars stars={stars} reviews={reviews} />
+                        <span className='text-[#AB7A5F] font-bold tracking-widest md:text-lg'>{formatedPrice}</span>
+                        <p className='text-[#324D67] text-sm md:text-base leading-7 md:leading-8'>{description}</p>
 
                         <div className='flex flex-col gap-4 text-[#324D67] mt-5 md:text-lg'>
                             <p className='grid grid-cols-2'>
                                 <span className='font-bold '>Available:</span>
-                                <p className={`${productDetail?.stock > 0 ? 'text-[green]' : 'text-[red]'}`}>{productDetail?.stock > 0 ? 'In Stock' : 'Out Of Stock'}</p>
+                                <p className={`${stock > 0 ? 'text-[green]' : 'text-[red]'}`}>{stock > 0 ? 'In Stock' : 'Out Of Stock'}</p>
 
                             </p>
                             <p className='grid grid-cols-2 capitalize'>
                                 <span className='font-bold'>SKU:</span>
-                                {productDetail?.id}
+                                {singleProduct?.id}
                             </p>
                             <p className='grid grid-cols-2 capitalize'>
                                 <span className='font-bold'>Brand:</span>
-                                {productDetail?.company}
+                                {company}
                             </p>
                         </div>
                         <hr className='w-full my-5' />
 
-                        {productDetail?.stock > 0 &&
+                        {stock > 0 &&
                             <div className='flex flex-col items-center gap-3'>
                                 <div className='flex items-center gap-5 '>
-                                    <span onClick={handleRemovingFromCart} className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
-                                    <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{addingCartCount}</span>
-                                    <span onClick={handleAddingToCart} className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
+                                    <span className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
+                                    <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>0</span>
+                                    <span className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
                                 </div>
                                 <button onClick={handleAddToCartButton} className='bg-[#ab7a5f] text-[#EADED7] text-[14px] tracking-widest px-5 py-1.5 uppercase rounded-md'>add to cart</button>
 
