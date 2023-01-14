@@ -3,9 +3,6 @@ import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs'
 
 const Stars = ({ stars, reviews }) => {
 
-    console.log("stars:", stars)
-    console.log("reviews", reviews)
-
     const starArray = Array.from({ length: 5 }, (i, index) => {
         const number = index + 0.5
         return (

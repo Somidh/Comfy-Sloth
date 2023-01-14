@@ -1,14 +1,26 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import Logo from '../assests/logo.svg'
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
 import { useStateContext } from '../context/ContextProvider';
+import useProductStore from '../store/productStore';
 
 const Navbar = () => {
 
   const { handleNavbarClick, showNavbar, cartCount } = useStateContext()
+
+  const { cart } = useProductStore(state => ({
+    cart: state.cart,
+  }))
+
+const navigate = useNavigate()
+
+  const handleCartClick = () => {
+    navigate('/cart')
+  }
 
   return (
     <div className='flex items-center justify-between max-w-[85em] mx-auto px-5 py-4 '>
@@ -27,8 +39,8 @@ const Navbar = () => {
       <div className=' items-center justify-center gap-5 hidden lg:flex'>
         <div className='flex items-center justify-center gap-2 cursor-pointer relative'>
           <h2 className='text-[25px] '>Cart</h2>
-          <ShoppingCartIcon fontSize='medium' />
-          <span className='w-5 h-5 bg-[#AB7A5F] rounded-full absolute -right-2 -top-1 flex items-center justify-center text-white text-sm'>{cartCount}</span>
+          <ShoppingCartIcon fontSize='medium' onClick={handleCartClick} />
+          <span className='w-5 h-5 bg-[#AB7A5F] rounded-full absolute -right-2 -top-1 flex items-center justify-center text-white text-sm'>{cart.length}</span>
         </div>
         <div className='flex items-center justify-center gap-2 cursor-pointer'>
           <h2 className='text-[25px]'>Logout </h2>

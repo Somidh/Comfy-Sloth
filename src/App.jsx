@@ -21,8 +21,8 @@ function App() {
 
 
   return (
-    <div className=''>
-      <BrowserRouter>
+    <div>
+      <BrowserRouter >
         <Navbar />
         <SideBar />
         <Routes>
@@ -36,7 +36,7 @@ function App() {
           <Route path='/product/:id' element={<AboutProduct />} />
         </Routes>
       </BrowserRouter>
-      <Footer />
+      <Footer  />
     </div>
   )
 }

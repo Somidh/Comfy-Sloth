@@ -5,6 +5,7 @@ import Stars from '../component/Stars'
 import { ClipLoader } from 'react-spinners'
 import { useStateContext } from '../context/ContextProvider'
 import useProductStore from '../store/productStore'
+import { v4 as uuidv4 } from 'uuid';
 
 
 const AboutProduct = () => {
@@ -17,17 +18,18 @@ const AboutProduct = () => {
 
     // const addToCart = useProductStore(state => state.addToCart(id))
 
-    const { fetchSingleProduct, singleProduct } = useProductStore(state => ({
-        products: state.products,
-        addToCart: state.addToCart,
+    const { fetchSingleProduct, singleProduct, cart, addToCart } = useProductStore(state => ({
+      
         fetchSingleProduct: state.fetchSingleProduct,
-        singleProduct: state.singleProduct
+        singleProduct: state.singleProduct,
+        cart: state.cart,
+        addToCart: state.addToCart
     }))
 
 
     useEffect(() => {
       let  timer = setTimeout(() => {
-            setLoading(false)
+        setLoading(false)
         }, 500);
 
         fetchSingleProduct(id)
@@ -39,13 +41,15 @@ const AboutProduct = () => {
     const { images, name, price, reviews, stars, description, stock, company } = singleProduct
 
 
+    console.log(cart)
 
 
-    console.log("I am single", singleProduct)
+    // console.log("I am single", singleProduct)
     // const { productDetail, setProductDetail, addingCartCount, setAddingCartCount, setCartCount } = useStateContext()
 
     const handleAddToCartButton = () => {
         navigate('/cart')
+        addToCart(id)
     }
     const handleBackClick = () => {
         navigate('/products')
@@ -86,14 +90,14 @@ const AboutProduct = () => {
 
                     <div className='mt-20 flex flex-col items-start gap-2'>
                         <h1 className='text-[#102A42] font-bold text-3xl md:text-4xl capitalize' >{name}</h1>
-                        <Stars stars={stars} reviews={reviews} />
+                        <Stars key={uuidv4()} stars={stars} reviews={reviews} />
                         <span className='text-[#AB7A5F] font-bold tracking-widest md:text-lg'>{formatedPrice}</span>
                         <p className='text-[#324D67] text-sm md:text-base leading-7 md:leading-8'>{description}</p>
 
                         <div className='flex flex-col gap-4 text-[#324D67] mt-5 md:text-lg'>
                             <p className='grid grid-cols-2'>
                                 <span className='font-bold '>Available:</span>
-                                <p className={`${stock > 0 ? 'text-[green]' : 'text-[red]'}`}>{stock > 0 ? 'In Stock' : 'Out Of Stock'}</p>
+                                <span className={`${stock > 0 ? 'text-[green]' : 'text-[red]'}`}>{stock > 0 ? 'In Stock' : 'Out Of Stock'}</span>
 
                             </p>
                             <p className='grid grid-cols-2 capitalize'>
