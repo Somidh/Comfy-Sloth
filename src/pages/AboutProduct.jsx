@@ -13,23 +13,39 @@ const AboutProduct = () => {
     // const [productDetail, setProductDetail] = useState()
     // const [cartCount, setCartCount] = useState(1)
     const [loading, setLoading] = useState(true)
+    const [reachedStock, setReachedStock] = useState(true)
     const navigate = useNavigate()
     const { id } = useParams()
 
     // const addToCart = useProductStore(state => state.addToCart(id))
 
-    const { fetchSingleProduct, singleProduct, cart, addToCart } = useProductStore(state => ({
-      
+    const { fetchSingleProduct, singleProduct, cart, addToCart, increaseAmount, cartAmount, decreaseAmount } = useProductStore(state => ({
+
         fetchSingleProduct: state.fetchSingleProduct,
         singleProduct: state.singleProduct,
         cart: state.cart,
-        addToCart: state.addToCart
+        addToCart: state.addToCart,
+        increaseAmount: state.increaseAmount,
+        cartAmount: state.cartAmount,
+        decreaseAmount: state.decreaseAmount
     }))
+
+    const { images, name, price, reviews, stars, description, stock, company } = singleProduct
+
+    const increase = () => {
+        cartAmount < stock && increaseAmount(1, id)
+    }
+    const decrease = () => {
+        cartAmount !== 0 && decreaseAmount(1, id)
+    }
+
+    
+
 
 
     useEffect(() => {
-      let  timer = setTimeout(() => {
-        setLoading(false)
+        let timer = setTimeout(() => {
+            setLoading(false)
         }, 500);
 
         fetchSingleProduct(id)
@@ -38,10 +54,8 @@ const AboutProduct = () => {
     }, [])
 
 
-    const { images, name, price, reviews, stars, description, stock, company } = singleProduct
-
-
     console.log(cart)
+
 
 
     // console.log("I am single", singleProduct)
@@ -114,10 +128,11 @@ const AboutProduct = () => {
                         {stock > 0 &&
                             <div className='flex flex-col items-center gap-3'>
                                 <div className='flex items-center gap-5 '>
-                                    <span className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
-                                    <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>0</span>
-                                    <span className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
+                                    <span onClick={decrease} className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
+                                    <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{cartAmount}</span>
+                                    <span onClick={increase} className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
                                 </div>
+                               
                                 <button onClick={handleAddToCartButton} className='bg-[#ab7a5f] text-[#EADED7] text-[14px] tracking-widest px-5 py-1.5 uppercase rounded-md'>add to cart</button>
 
                             </div>

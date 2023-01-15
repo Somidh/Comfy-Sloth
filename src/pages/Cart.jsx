@@ -44,7 +44,7 @@ const Cart = () => {
           <ul className='hidden md:grid grid-cols-4 items-center ml-20 px-5 text-[#617D98]'>
             <li>Item</li>
             <li>Price</li>
-            <li>Quality</li>
+            <li>Quantity</li>
             <li>Subtotal</li>
           </ul>
 
@@ -56,10 +56,7 @@ const Cart = () => {
               <CartItem key={idx} formatPrice={formatPrice} {...item} />
             ))
 
-
           }
-
-
 
           <hr className='w-full border-[#bcccdc] mt-10' />
         </div>

@@ -6,21 +6,19 @@ import useProductStore from '../store/productStore';
 const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
 
     // const [amount, setAmount] = useState(qty)
-    const { removeFromCart, increaseAmount, amount, decreaseAmount } = useProductStore(state => ({
+    const { removeFromCart, increaseAmount, cartAmount, decreaseAmount } = useProductStore(state => ({
         removeFromCart: state.removeFromCart,
         increaseAmount: state.increaseAmount,
-        amount: state.amount,
+        cartAmount: state.cartAmount,
         decreaseAmount: state.decreaseAmount
     }))
 
-    console.log(stock)
-    console.log(amount)
     const increase = () => {
-
-        increaseAmount(id)
+        cartAmount < stock && increaseAmount(1, id)
     }
     const decrease = () => {
-        decreaseAmount(id)
+        // cartAmount !== 0 && decreaseAmount(1, id)
+        cartAmount !== 0 && decreaseAmount(1)
     }
 
     const handleDelete = () => {
@@ -42,12 +40,12 @@ const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
 
             <div className='flex items-center gap-5 '>
                 <span onClick={decrease} className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
-                <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{amount}</span>
+                <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{cartAmount}</span>
                 <span onClick={increase} className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
             </div>
 
             <div className='hidden md:block'>
-                <span className='text-[#617D98]'>{formatPrice(price * amount)}</span>
+                <span className='text-[#617D98]'>{formatPrice(price * cartAmount)}</span>
             </div>
             <DeleteIcon onClick={handleDelete} style={{ color: 'white', backgroundColor: '#BB2525', padding: '3px 3px', fontSize: '25px', cursor: 'pointer', borderRadius: '5px' }} />
         </div>
