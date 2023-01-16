@@ -6,19 +6,20 @@ import useProductStore from '../store/productStore';
 const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
 
     // const [amount, setAmount] = useState(qty)
-    const { removeFromCart, increaseAmount, cartAmount, decreaseAmount } = useProductStore(state => ({
+    const { cart, removeFromCart, increaseQty, cartAmount, decreaseQty } = useProductStore(state => ({
+        cart: state.cart,
         removeFromCart: state.removeFromCart,
-        increaseAmount: state.increaseAmount,
+        increaseQty: state.increaseQty,
         cartAmount: state.cartAmount,
-        decreaseAmount: state.decreaseAmount
+        decreaseQty: state.decreaseQty
     }))
 
     const increase = () => {
-        cartAmount < stock && increaseAmount(1, id)
+        cartAmount < stock && increaseQty(id)
     }
     const decrease = () => {
         // cartAmount !== 0 && decreaseAmount(1, id)
-        cartAmount !== 0 && decreaseAmount(1)
+        cartAmount !== 0 && decreaseQty(id)
     }
 
     const handleDelete = () => {
@@ -40,7 +41,7 @@ const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
 
             <div className='flex items-center gap-5 '>
                 <span onClick={decrease} className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
-                <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{cartAmount}</span>
+                <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{qty}</span>
                 <span onClick={increase} className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
             </div>
 

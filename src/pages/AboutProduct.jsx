@@ -19,28 +19,25 @@ const AboutProduct = () => {
 
     // const addToCart = useProductStore(state => state.addToCart(id))
 
-    const { fetchSingleProduct, singleProduct, cart, addToCart, increaseAmount, cartAmount, decreaseAmount } = useProductStore(state => ({
+    const { fetchSingleProduct, singleProduct, cart, addToCart, increaseQty, cartAmount, decreaseQty } = useProductStore(state => ({
 
         fetchSingleProduct: state.fetchSingleProduct,
         singleProduct: state.singleProduct,
         cart: state.cart,
         addToCart: state.addToCart,
-        increaseAmount: state.increaseAmount,
+        increaseQty: state.increaseQty,
         cartAmount: state.cartAmount,
-        decreaseAmount: state.decreaseAmount
+        decreaseQty: state.decreaseQty
     }))
 
     const { images, name, price, reviews, stars, description, stock, company } = singleProduct
 
     const increase = () => {
-        cartAmount < stock && increaseAmount(1, id)
+        cartAmount < stock && increaseQty(id)
     }
     const decrease = () => {
-        cartAmount !== 0 && decreaseAmount(1, id)
+        cartAmount !== 0 && decreaseQty(id)
     }
-
-    
-
 
 
     useEffect(() => {
@@ -129,7 +126,7 @@ const AboutProduct = () => {
                             <div className='flex flex-col items-center gap-3'>
                                 <div className='flex items-center gap-5 '>
                                     <span onClick={decrease} className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
-                                    <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{cartAmount}</span>
+                                    <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{ cart.length > 0 && cart?.find(item => item.id === id) === -1 ? '1' : cart?.find(item => item.id === id).qty }</span>
                                     <span onClick={increase} className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
                                 </div>
                                

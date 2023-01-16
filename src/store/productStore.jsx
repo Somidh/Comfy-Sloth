@@ -19,7 +19,7 @@ const useProductStore = create(
       loading: true,
       cart: [],
       singleProduct: {},
-      cartAmount: 0,
+      cartAmount: 1,
       fetchProducts: async () => {
         const response = await axios.get('https://course-api.com/react-store-products')
         set(
@@ -51,20 +51,20 @@ const useProductStore = create(
           cart: state.cart.filter(item => item.id != id)
         })
       },
-      increaseAmount: (amount, id) => {
+      increaseQty: (id) => {
         const state = get()
-        const item = state.cart.find(item => item.id === id)
-        console.log(item.qty)
+        const item = state.cart?.find(item => item.id === id)
+        console.log(state)
           set({
-            cartAmount: item.qty + amount,
+            
           })
       },
-      decreaseAmount: (amount) => {
+      decreaseQty: (id) => {
         const state = get()
-        // const item = state.cart.find(item => item.id === id)
-        
+        const item = state.cart?.find(item => item.id === id)
+
           set({
-            cartAmount: state.cartAmount - amount
+            cartAmount: state.cart.length > 0 ?  item.qty -= 1 : state.cartAmount -= 1
           })
       },
 
