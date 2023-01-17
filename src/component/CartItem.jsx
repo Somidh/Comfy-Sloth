@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import useProductStore from '../store/productStore';
 
@@ -6,25 +6,33 @@ import useProductStore from '../store/productStore';
 const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
 
     // const [amount, setAmount] = useState(qty)
-    const { cart, removeFromCart, increaseQty, cartAmount, decreaseQty } = useProductStore(state => ({
+    const { cart, removeFromCart, increaseQty, decreaseQty, setCount } = useProductStore(state => ({
         cart: state.cart,
         removeFromCart: state.removeFromCart,
         increaseQty: state.increaseQty,
-        cartAmount: state.cartAmount,
-        decreaseQty: state.decreaseQty
+        decreaseQty: state.decreaseQty,
+        setCount: state.setCount
     }))
 
+
+    useEffect(() => {
+        setCount()
+    },[])
+
     const increase = () => {
-        cartAmount < stock && increaseQty(id)
+       stock > qty && increaseQty(id)
     }
     const decrease = () => {
         // cartAmount !== 0 && decreaseAmount(1, id)
-        cartAmount !== 0 && decreaseQty(id)
+        qty > 1 && decreaseQty(id)
     }
 
     const handleDelete = () => {
         removeFromCart(id)
     }
+
+    console.log(cart)
+    console.log(qty)
 
 
     return (
@@ -41,12 +49,12 @@ const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
 
             <div className='flex items-center gap-5 '>
                 <span onClick={decrease} className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
-                <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{qty}</span>
+                <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{qty ? qty : count}</span>
                 <span onClick={increase} className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
             </div>
 
             <div className='hidden md:block'>
-                <span className='text-[#617D98]'>{formatPrice(price * cartAmount)}</span>
+                <span className='text-[#617D98]'>{formatPrice(price * qty)}</span>
             </div>
             <DeleteIcon onClick={handleDelete} style={{ color: 'white', backgroundColor: '#BB2525', padding: '3px 3px', fontSize: '25px', cursor: 'pointer', borderRadius: '5px' }} />
         </div>

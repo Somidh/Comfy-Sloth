@@ -14,7 +14,7 @@ const Cart = () => {
 
   const navigate = useNavigate()
 
-  console.log(cart)
+  
 
 
 

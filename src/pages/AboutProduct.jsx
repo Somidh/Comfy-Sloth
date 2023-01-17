@@ -13,31 +13,63 @@ const AboutProduct = () => {
     // const [productDetail, setProductDetail] = useState()
     // const [cartCount, setCartCount] = useState(1)
     const [loading, setLoading] = useState(true)
+    // const [count, setCount] = useState(1)
     const [reachedStock, setReachedStock] = useState(true)
     const navigate = useNavigate()
     const { id } = useParams()
 
     // const addToCart = useProductStore(state => state.addToCart(id))
 
-    const { fetchSingleProduct, singleProduct, cart, addToCart, increaseQty, cartAmount, decreaseQty } = useProductStore(state => ({
+    const {
+        fetchSingleProduct,
+        singleProduct,
+        cart,
+        addToCart,
+        increaseQty,
+        decreaseQty,
+        count,
+        increaseCount,
+        decreaseCount,
+        setCount } = useProductStore(state => ({
 
-        fetchSingleProduct: state.fetchSingleProduct,
-        singleProduct: state.singleProduct,
-        cart: state.cart,
-        addToCart: state.addToCart,
-        increaseQty: state.increaseQty,
-        cartAmount: state.cartAmount,
-        decreaseQty: state.decreaseQty
-    }))
+            fetchSingleProduct: state.fetchSingleProduct,
+            singleProduct: state.singleProduct,
+            cart: state.cart,
+            addToCart: state.addToCart,
+            increaseQty: state.increaseQty,
+            decreaseQty: state.decreaseQty,
+            count: state.count,
+            increaseCount: state.increaseCount,
+            decreaseCount: state.decreaseCount,
+            setCount: state.setCount
+        }))
 
-    const { images, name, price, reviews, stars, description, stock, company } = singleProduct
+    const {
+        images,
+        name,
+        price,
+        reviews,
+        stars,
+        description,
+        stock,
+        company,
+    qty } = singleProduct
 
-    const increase = () => {
-        cartAmount < stock && increaseQty(id)
+    const handleIncrease = () => {
+        count < stock && increaseCount(id)
+        increaseQty(id)
     }
-    const decrease = () => {
-        cartAmount !== 0 && decreaseQty(id)
+
+    const handleDecrease = () => {
+        count > 1 && decreaseCount(id)
+        decreaseQty(id)
     }
+
+    console.log("count", count)
+
+    useEffect(() => {
+        setCount(1)
+    }, [])
 
 
     useEffect(() => {
@@ -125,11 +157,11 @@ const AboutProduct = () => {
                         {stock > 0 &&
                             <div className='flex flex-col items-center gap-3'>
                                 <div className='flex items-center gap-5 '>
-                                    <span onClick={decrease} className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
-                                    <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{ cart.length > 0 && cart?.find(item => item.id === id) === -1 ? '1' : cart?.find(item => item.id === id).qty }</span>
-                                    <span onClick={increase} className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
+                                    <span onClick={handleDecrease} className='text-3xl md:text-4xl cursor-pointer font-medium'>-</span>
+                                    <span className='text-[#102A42] font-bold text-3xl md:text-4xl'>{count}</span>
+                                    <span onClick={handleIncrease} className='text-xl md:text-2xl font-bold cursor-pointer'>+</span>
                                 </div>
-                               
+
                                 <button onClick={handleAddToCartButton} className='bg-[#ab7a5f] text-[#EADED7] text-[14px] tracking-widest px-5 py-1.5 uppercase rounded-md'>add to cart</button>
 
                             </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import Logo from '../assests/logo.svg'
 import MenuIcon from '@mui/icons-material/Menu';
@@ -12,11 +12,11 @@ const Navbar = () => {
 
   const { handleNavbarClick, showNavbar, cartCount } = useStateContext()
 
-  const { cart } = useProductStore(state => ({
-    cart: state.cart,
-  }))
+  const {cart} = useProductStore(state => ({ cart: state.cart}))
 
-const navigate = useNavigate()
+  console.log(cart)
+
+  const navigate = useNavigate()
 
   const handleCartClick = () => {
     navigate('/cart')

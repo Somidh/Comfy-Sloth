@@ -39,7 +39,7 @@ const Products = () => {
   }, [])
 
 
-  console.log("here goes product", products)
+  // console.log("here goes product", products)
 
   // useEffect(() => {
 

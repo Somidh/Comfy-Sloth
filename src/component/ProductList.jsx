@@ -5,7 +5,7 @@ import ListView from './ListView'
 
 const ProductList = () => {
 
-    const gridView = false
+    const gridView = true
 
     const { products, fetchProducts } = useProductStore(state => ({
         products: state.products,
@@ -16,7 +16,7 @@ const ProductList = () => {
         )
     }
 
-    console.log("Bing BIng", products)
+    // console.log("Bing BIng", products)
 
     return (
         <div>

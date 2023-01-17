@@ -19,7 +19,7 @@ const useProductStore = create(
       loading: true,
       cart: [],
       singleProduct: {},
-      cartAmount: 1,
+      count: 1,
       fetchProducts: async () => {
         const response = await axios.get('https://course-api.com/react-store-products')
         set(
@@ -51,21 +51,49 @@ const useProductStore = create(
           cart: state.cart.filter(item => item.id != id)
         })
       },
+
+      // increaseQty: (id) => set(state => {
+      //   state.cart.find(item => item.id === id).qty += 1
+      // }),
+      // decreaseQty: (id) => set(state => {
+      //   state.cart.find(item => item.id === id).qty -= 1
+      // }),
+
       increaseQty: (id) => {
         const state = get()
         const item = state.cart?.find(item => item.id === id)
-        console.log(state)
-          set({
-            
-          })
+        set({
+          // item: item.qty ? item.qty += 1 : item.qty
+          item: state.cart.length > 0 ? item.qty += state.count : state.count
+        })
       },
       decreaseQty: (id) => {
         const state = get()
         const item = state.cart?.find(item => item.id === id)
 
-          set({
-            cartAmount: state.cart.length > 0 ?  item.qty -= 1 : state.cartAmount -= 1
-          })
+        set({
+          item: state.cart.length > 0  ? item.qty -= 1 : state.count
+        })
+      },
+
+      increaseCount: (id) => {
+        const state = get()
+        const item = state.cart?.find(item => item.id === id)
+
+        set({
+          count: state.count += 1
+        })
+      },
+      decreaseCount: (id) => {
+        set({
+          count: state.count -= 1
+        })
+      },
+      setCount: () => {
+        const state = get()
+        set({
+          count: state.count = 1
+        })
       },
 
       fetchSingleProduct: async (id) => {
