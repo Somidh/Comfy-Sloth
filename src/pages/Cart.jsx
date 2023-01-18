@@ -2,20 +2,18 @@ import React, { useState } from 'react'
 import Header from '../component/Header'
 import { useStateContext } from '../context/ContextProvider'
 import useProductStore from '../store/productStore'
-import { borderRadius } from '@mui/system';
 import CartItem from '../component/CartItem';
 import { useNavigate } from 'react-router';
+import SubTotal from '../component/SubTotal';
 
 const Cart = () => {
 
-  const { cart } = useProductStore(state => ({
+  const { cart, clearCart } = useProductStore(state => ({
     cart: state.cart,
+    clearCart: state.clearCart
   }))
 
   const navigate = useNavigate()
-
-  
-
 
 
   const formatPrice = (number) => {
@@ -25,16 +23,21 @@ const Cart = () => {
     }).format(number / 100)
   }
 
-  const fillCartButton = () => {
+  const goToProducts = () => {
     navigate('/products')
   }
+  const goToCheckout = () => {
+    navigate('/checkout')
+  }
+
+ 
 
   return (
 
     cart.length < 1 ?
       <div className='flex flex-col items-center justify-center h-[82vh] gap-4'>
         <h1 className='font-bold text-5xl text-[#102A42] tracking-widest'>Your cart is empty</h1>
-        <button onClick={fillCartButton} className='bg-[#AB7A5F] text-[#EADED7]  uppercase  tracking-widest px-3 py-1 rounded-md'>fill it</button>
+        <button onClick={goToProducts} className='bg-[#AB7A5F] text-[#EADED7]  uppercase  tracking-widest px-3 py-1 rounded-md'>fill it</button>
       </div>
       :
       <>
@@ -52,14 +55,22 @@ const Cart = () => {
           <hr className='w-full  border-[#bcccdc] hidden my-10 md:block' />
 
           {
-
             cart.map((item, idx) => (
               <CartItem key={idx} formatPrice={formatPrice} {...item} />
             ))
-
           }
 
           <hr className='w-full border-[#bcccdc] mt-10' />
+
+
+          <div className='flex item-center justify-between my-10 gap-2'>
+            <button onClick={goToProducts} className='bg-[#AB7A5F] text-white px-3 py-1  tracking-widest rounded-[3px]'>Continue Shopping</button>
+            <button onClick={clearCart} className='bg-[#222222] text-white text-sm px-3 py-1 tracking-widest rounded-[3px]'>Clear Shopping Cart</button>
+          </div>
+          
+          <SubTotal goToCheckout={goToCheckout} />
+
+
         </div>
       </>
   )

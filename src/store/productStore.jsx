@@ -1,4 +1,3 @@
-import React from 'react'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import axios from 'axios'
@@ -20,8 +19,10 @@ const useProductStore = create(
       cart: [],
       singleProduct: {},
       count: 1,
+   
+
       fetchProducts: async () => {
-        const response = await axios.get('https://course-api.com/react-store-products')
+        const response = await axios.get(url)
         set(
           {
             loading: false,
@@ -52,18 +53,18 @@ const useProductStore = create(
         })
       },
 
-      // increaseQty: (id) => set(state => {
-      //   state.cart.find(item => item.id === id).qty += 1
-      // }),
-      // decreaseQty: (id) => set(state => {
-      //   state.cart.find(item => item.id === id).qty -= 1
-      // }),
+      clearCart: () => {
+        const state = get()
 
+        set({
+          cart: []
+        })
+      },
+      
       increaseQty: (id) => {
         const state = get()
         const item = state.cart?.find(item => item.id === id)
         set({
-          // item: item.qty ? item.qty += 1 : item.qty
           item: state.cart.length > 0 ? item.qty += state.count : state.count
         })
       },
