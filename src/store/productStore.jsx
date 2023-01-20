@@ -48,7 +48,6 @@ const useProductStore = create(
       },
 
       clearCart: () => {
-        const state = get()
 
         set({
           cart: []

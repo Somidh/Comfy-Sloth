@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { supabase } from '../supabaseClient'
 
 const Login = () => {
   return (
-    <div>
-      <h1>login</h1>
-    </div>
+    <div></div>
   )
+
 }
 
 export default Login
