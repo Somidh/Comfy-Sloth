@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import useProductStore from '../store/productStore';
 
 
 const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
 
-    // const [amount, setAmount] = useState(qty)
     const { cart, removeFromCart, increaseQty, decreaseQty, setCount } = useProductStore(state => ({
         cart: state.cart,
         removeFromCart: state.removeFromCart,
@@ -23,7 +22,6 @@ const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
        stock > qty && increaseQty(id)
     }
     const decrease = () => {
-        // cartAmount !== 0 && decreaseAmount(1, id)
         qty > 1 && decreaseQty(id)
     }
 

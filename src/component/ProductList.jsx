@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import useProductStore from '../store/productStore'
 import GridView from './GridView'
 import ListView from './ListView'
@@ -7,7 +7,7 @@ const ProductList = () => {
 
     const gridView = true
 
-    const { products, fetchProducts } = useProductStore(state => ({
+    const { products } = useProductStore(state => ({
         products: state.products,
     }))
     if (products.length < 1) {
@@ -16,7 +16,6 @@ const ProductList = () => {
         )
     }
 
-    // console.log("Bing BIng", products)
 
     return (
         <div>

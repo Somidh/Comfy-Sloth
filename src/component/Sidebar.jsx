@@ -1,19 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Logo from '../assests/logo.svg'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
 import CloseIcon from '@mui/icons-material/Close';
 import { useStateContext } from '../context/ContextProvider';
-// import { UserContext } from '../App';
 
 
 const Navbar = () => {
 
-  // const  handleNavbarClick  = UserContext()
 
   const { handleNavbarClick, showNavbar } = useStateContext()
-  // console.log(showNavbar)
 
   return (
 

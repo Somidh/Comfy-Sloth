@@ -3,22 +3,16 @@ import { useNavigate, useParams } from 'react-router'
 import Header from '../component/Header'
 import Stars from '../component/Stars'
 import { ClipLoader } from 'react-spinners'
-import { useStateContext } from '../context/ContextProvider'
 import useProductStore from '../store/productStore'
 import { v4 as uuidv4 } from 'uuid';
 
 
 const AboutProduct = () => {
 
-    // const [productDetail, setProductDetail] = useState()
-    // const [cartCount, setCartCount] = useState(1)
     const [loading, setLoading] = useState(true)
-    // const [count, setCount] = useState(1)
-    const [reachedStock, setReachedStock] = useState(true)
     const navigate = useNavigate()
     const { id } = useParams()
 
-    // const addToCart = useProductStore(state => state.addToCart(id))
 
     const {
         fetchSingleProduct,
@@ -87,8 +81,6 @@ const AboutProduct = () => {
 
 
 
-    // console.log("I am single", singleProduct)
-    // const { productDetail, setProductDetail, addingCartCount, setAddingCartCount, setCartCount } = useStateContext()
 
     const handleAddToCartButton = () => {
         navigate('/cart')

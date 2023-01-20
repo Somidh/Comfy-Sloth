@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Header from '../component/Header'
-import { useStateContext } from '../context/ContextProvider'
 import useProductStore from '../store/productStore'
 import CartItem from '../component/CartItem';
 import { useNavigate } from 'react-router';

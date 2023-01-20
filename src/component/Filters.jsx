@@ -15,7 +15,6 @@ const Filters = () => {
                     {categories.map(category => (
                         <>
                             <li key={category} className='cursor-pointer capitalize ' >{category}</li>
-                            {/* {selectedCategory === category && <hr className='bg-black w-14 h-[2px] -mt-2' />} */}
                         </>
                     ))}
 

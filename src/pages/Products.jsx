@@ -21,15 +21,11 @@ const Products = () => {
   const [isGridView, setIsGridView] = useState(true)
   const [loading, setLoading] = useState(true)
 
-  // const products = useProductStore(state => state.products)
-  // const fetchProducts = useProductStore(state => state.fetchProducts)
-  // const singleProduct = useProductStore(state => state.singleProduct)
+
 
   const { products, fetchProducts } = useProductStore(state => ({
     products: state.products,
     fetchProducts: state.fetchProducts,
-    // fetchSingleProduct: state.fetchSingleProduct,
-    // singleProduct: state.singleProduct
   }))
 
 
@@ -39,19 +35,6 @@ const Products = () => {
   }, [])
 
 
-  // console.log("here goes product", products)
-
-  // useEffect(() => {
-
-  //   const fetchData = async () => {
-  //     const response = await fetch('https://course-api.com/react-store-products')
-  //     const data = await response.json()
-  //     setItems(data)
-  //     setLoading(false)
-  //   }
-
-  //   fetchData()
-  // }, [])
 
   const formatPrice = (number) => {
     return new Intl.NumberFormat('en-US', {

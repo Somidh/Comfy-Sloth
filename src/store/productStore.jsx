@@ -5,12 +5,6 @@ import axios from 'axios'
 const url = 'https://course-api.com/react-store-products'
 
 
-// const useProductStoree = create(persist(
-//   set,get => ({
-
-//   })
-// ))
-
 const useProductStore = create(
   persist(
     (set, get) => ({

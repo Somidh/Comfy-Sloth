@@ -13,9 +13,6 @@ export const ContextProvider = ({ children }) => {
     const handleNavbarClick = () => {
         setShowNavbar(prev => !prev)
     }
-    // const handleImageHover = () => {
-        
-    // }
 
     const handleAddToCartButton = () => {
         Navigate('/cart')
