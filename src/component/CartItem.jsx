@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import useProductStore from '../store/productStore';
 
@@ -51,7 +51,7 @@ const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
             }
         }
         catch (error) {
-            
+
         }
   }
 

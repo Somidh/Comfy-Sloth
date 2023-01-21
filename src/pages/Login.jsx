@@ -46,26 +46,26 @@ const Login = ({ setToken }) => {
     navigate('/signup')
   }
   return (
-    <div>
+    <div className='flex flex-col items-center justify-center gap-10 my-[19em]'>
       <form onSubmit={handleSubmit} className='flex flex-col items-center justify-center w-full gap-2'>
         <input
           onChange={handleChange}
           name='email'
           placeholder='Email'
-          className='border-2' />
+          className='border-2 p-2 ' />
         <input
           onChange={handleChange}
           name='password'
           type="password"
           placeholder='Password'
-          className='border-2' />
+          className='border-2 p-2 ' />
 
         <button
           name='password'
           type='submit'
-          className='bg-[skyblue] px-5 py-2'>Submit</button>
+          className='bg-[#ab7a5f] text-white tracking-widest px-5 py-2 '>Submit</button>
       </form>
-      <p> Don't have an account? <span onClick={goToSignUp} className='cursor-pointer'> signUp</span></p>
+      <p> Don't have an account? <span onClick={goToSignUp} className='cursor-pointer'> Sign Up</span></p>
     </div>
   )
 
