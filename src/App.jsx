@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './component/Navbar'
 import SideBar from './component/Sidebar'
@@ -17,13 +17,21 @@ import AboutProduct from './pages/AboutProduct'
 
 function App() {
 
-  const { showNavbar } = useStateContext()
+  const [token, setToken] = useState(false)
 
+  token && sessionStorage.setItem('token', JSON.stringify(token))
+
+  useEffect(() => {
+    if(sessionStorage.getItem('token')){
+      let data = JSON.parse(sessionStorage.getItem('token'))
+      setToken(data)
+    }
+  }, [])
 
   return (
     <div>
       <BrowserRouter >
-        <Navbar />
+        <Navbar token={token} setToken={setToken} />
         <SideBar />
         <Routes>
           <Route path='/' element={<Home />} />
@@ -31,7 +39,7 @@ function App() {
           <Route path='/products' element={<Products />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/cart' element={<Cart />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/login' element={<Login setToken={setToken} />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/product/:id' element={<AboutProduct />} />
         </Routes>

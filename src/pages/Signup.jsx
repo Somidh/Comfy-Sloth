@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router'
 import { supabase } from '../supabaseClient'
 
 
@@ -10,6 +11,8 @@ const Signup = () => {
   })
 
 
+  const navigate = useNavigate()
+
   console.log(formData)
   const handleChange = (event) => {
     setFormData(prev => {
@@ -19,7 +22,6 @@ const Signup = () => {
       }
     })
   }
-
 
   const handleSubmit = async (e) => {
 
@@ -35,6 +37,7 @@ const Signup = () => {
           }
         }
       })
+      if (error) throw error
       alert('Check email for verification link')
 
 
@@ -44,14 +47,37 @@ const Signup = () => {
 
   }
 
+
+  const goToLogin = () => {
+    navigate('/login')
+  }
+
   return (
-    <div className='  my-[20em] '>
+    <div className='  my-[20em] flex flex-col items-center gap-5 '>
       <form onSubmit={handleSubmit} className='flex flex-col items-center justify-center w-full gap-2'>
-        <input type="text" name="fullName" placeholder='FullName' />
-        <input onClick={handleChange} name='email' type="email" placeholder='Email' className='border-2' />
-        <input type="password" placeholder='Password' className='border-2' />
-        <button onClick={handleChange} name='password' type='submit' className='bg-[skyblue] px-5 py-2'>Submit</button>
+        <input
+          onChange={handleChange}
+          name="fullName"
+          placeholder='FullName' />
+
+        <input
+          onChange={handleChange}
+          name='email'
+          placeholder='Email'
+          className='border-2' />
+        <input
+          onChange={handleChange}
+          name='password'
+          type="password"
+          placeholder='Password'
+          className='border-2' />
+
+        <button
+          name='password'
+          type='submit'
+          className='bg-[skyblue] px-5 py-2'>Submit</button>
       </form>
+      <p>Already have an account? <span onClick={goToLogin} className='cursor-pointer' >Login.</span></p>
     </div>
   )
 }

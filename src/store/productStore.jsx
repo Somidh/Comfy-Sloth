@@ -13,7 +13,8 @@ const useProductStore = create(
       cart: [],
       singleProduct: {},
       count: 1,
-   
+      token: false,
+
 
       fetchProducts: async () => {
         const response = await axios.get(url)
@@ -40,7 +41,7 @@ const useProductStore = create(
 
       removeFromCart: (id) => {
         const state = get()
-        
+
 
         set({
           cart: state.cart.filter(item => item.id != id)
@@ -53,7 +54,7 @@ const useProductStore = create(
           cart: []
         })
       },
-      
+
       increaseQty: (id) => {
         const state = get()
         const item = state.cart?.find(item => item.id === id)
@@ -66,7 +67,7 @@ const useProductStore = create(
         const item = state.cart?.find(item => item.id === id)
 
         set({
-          item: state.cart.length > 0  ? item.qty -= 1 : state.count
+          item: state.cart.length > 0 ? item.qty -= 1 : state.count
         })
       },
 
@@ -96,7 +97,20 @@ const useProductStore = create(
           loading: false,
           singleProduct: res.data
         })
-      }
+      },
+
+      addToken: () => {
+        const state = get()
+        state.token && sessionStorage.setItem('token', JSON.stringify(token))
+        useEffect(() => {
+          if (sessionStorage.getItem('token')) {
+            let data = JSON.parse(sessionStorage.getItem('token'))
+            set({
+              token: data
+            })
+          }
+        },[])
+      },
     }),
 
     {

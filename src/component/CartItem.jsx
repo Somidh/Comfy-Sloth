@@ -5,21 +5,68 @@ import useProductStore from '../store/productStore';
 
 const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
 
-    const { cart, removeFromCart, increaseQty, decreaseQty, setCount } = useProductStore(state => ({
+    const { cart, removeFromCart, increaseQty, decreaseQty, setCount, token } = useProductStore(state => ({
         cart: state.cart,
         removeFromCart: state.removeFromCart,
         increaseQty: state.increaseQty,
         decreaseQty: state.decreaseQty,
-        setCount: state.setCount
+        setCount: state.setCount,
+        token: state.token,
     }))
 
 
+    const [itemName, setItemName] = useState(null)
+
+
+    const getProfile = async () => {
+        try {
+            const user = supabase.auth.user()
+
+            let { data, error, status } = await supabase
+                .from('cartItem')
+                .select(`email, item_id, quantity, username`)
+                .eq('id', user.id)
+                .single()
+
+            if (data) {
+                setItemName(data.username)
+            }
+
+        }
+        catch (error) {
+            alert(error.message)
+        }
+    }
+
+
+    const updateCart = async (e) => {
+        e.preventDefault()
+
+        try {
+            const user = supabase.auth.user()
+
+            const updates = {
+                id: user.id,
+                username
+            }
+        }
+        catch (error) {
+            
+        }
+  }
+
+
+    // const []
+
     useEffect(() => {
         setCount()
-    },[])
+    }, [])
+
+
+
 
     const increase = () => {
-       stock > qty && increaseQty(id)
+        stock > qty && increaseQty(id)
     }
     const decrease = () => {
         qty > 1 && decreaseQty(id)
@@ -28,10 +75,6 @@ const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
     const handleDelete = () => {
         removeFromCart(id)
     }
-
-    console.log(cart)
-    console.log(qty)
-
 
     return (
         <div className='flex items-center justify-between mb-10 '>

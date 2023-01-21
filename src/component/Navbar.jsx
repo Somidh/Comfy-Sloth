@@ -8,18 +8,31 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useStateContext } from '../context/ContextProvider';
 import useProductStore from '../store/productStore';
 
-const Navbar = () => {
+const Navbar = ({token , setToken}) => {
 
   const { handleNavbarClick, showNavbar, cartCount } = useStateContext()
 
+  // console.log(token.user?.user_metadata.full_name) 
+
   const {cart} = useProductStore(state => ({ cart: state.cart}))
 
-  console.log(cart)
+  console.log(token)
 
   const navigate = useNavigate()
 
   const handleCartClick = () => {
     navigate('/cart')
+  }
+  const goToLogin =() => {
+    navigate('/login')
+  }
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('token')
+    navigate('/')
+    setToken(false)
+    supabase.auth.signOut()
+    token &&  alert('Please enter your login details')
   }
 
   return (
@@ -42,8 +55,9 @@ const Navbar = () => {
           <ShoppingCartIcon fontSize='medium' onClick={handleCartClick} />
           <span className='w-5 h-5 bg-[#AB7A5F] rounded-full absolute -right-2 -top-1 flex items-center justify-center text-white text-sm'>{cart.length}</span>
         </div>
-        <div className='flex items-center justify-center gap-2 cursor-pointer'>
-          <h2 className='text-[25px]'>Logout </h2>
+        <div onClick={goToLogin} className='flex items-center justify-center gap-2 cursor-pointer'>
+          <h2 onClick={handleLogout} className='text-[25px]'>{token ? 'Logout' : 'Login'} </h2>
+          {/* <p>{token.user.user_metadeta.full_name}</p> */}
           <div className='flex items-center '>
             <PersonIcon fontSize='medium' />
             <span className='font-medium text-2xl'>-</span>
