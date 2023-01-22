@@ -5,6 +5,7 @@ import Stars from '../component/Stars'
 import { ClipLoader } from 'react-spinners'
 import useProductStore from '../store/productStore'
 import { v4 as uuidv4 } from 'uuid';
+import { supabase } from '../supabaseClient'
 
 
 const AboutProduct = () => {
@@ -47,7 +48,7 @@ const AboutProduct = () => {
         description,
         stock,
         company,
-    qty } = singleProduct
+        qty } = singleProduct
 
     const handleIncrease = () => {
         count < stock && increaseCount(id)
@@ -82,9 +83,40 @@ const AboutProduct = () => {
 
 
 
+    // const addToBase = async (item) => {
+    //     const user = token.user
+    //     const user_id = token.user?.id
+    //     const item_id = item.id
+    //     const product_name = item.name
+    //     const res = await db
+    //         .from('cartItem')
+    //         .select({user_id, item_id, product_name})
+    //         .eq('id', user_id)
+    //         .single()
+
+    // }
+
+    // const addToBase = async () => {
+    //     const { data, error } = await supabase
+    //         .from('cartItem')
+    //         .insert([{ price, qty }])
+
+    //     if (error) {
+    //         console.log(error)
+    //     }
+    //     if(data) {
+    //          console.log(data)
+    //     }
+
+    // }
+
+
+
+
     const handleAddToCartButton = () => {
         navigate('/cart')
         addToCart(id)
+        // addToBase()
     }
     const handleBackClick = () => {
         navigate('/products')

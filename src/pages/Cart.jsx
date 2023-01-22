@@ -1,18 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../component/Header'
 import useProductStore from '../store/productStore'
 import CartItem from '../component/CartItem';
 import { useNavigate } from 'react-router';
 import SubTotal from '../component/SubTotal';
+import { useStateContext } from '../context/ContextProvider';
+
 
 const Cart = () => {
 
   const { cart, clearCart } = useProductStore(state => ({
     cart: state.cart,
-    clearCart: state.clearCart
+    clearCart: state.clearCart,
   }))
 
+  let subTotal = 0;
+
+
+  const { token } = useStateContext()
+
   const navigate = useNavigate()
+
+
+  console.log()
+
+
+
 
 
   const formatPrice = (number) => {
@@ -25,11 +38,9 @@ const Cart = () => {
   const goToProducts = () => {
     navigate('/products')
   }
-  const goToCheckout = () => {
-    navigate('/checkout')
-  }
 
- 
+
+
 
   return (
 
@@ -53,11 +64,18 @@ const Cart = () => {
 
           <hr className='w-full  border-[#bcccdc] hidden my-10 md:block' />
 
-          {
-            cart.map((item, idx) => (
+          {cart.map((item, idx) => {
+            subTotal += item.price * item.qty
+
+            return (
               <CartItem key={idx} formatPrice={formatPrice} {...item} />
+            )
+          })}
+
+          {/* {
+            cart.map((item, idx) => (
             ))
-          }
+          } */}
 
           <hr className='w-full border-[#bcccdc] mt-10' />
 
@@ -66,8 +84,8 @@ const Cart = () => {
             <button onClick={goToProducts} className='bg-[#AB7A5F] text-white px-3 py-1  tracking-widest rounded-[3px]'>Continue Shopping</button>
             <button onClick={clearCart} className='bg-[#222222] text-white text-sm px-3 py-1 tracking-widest rounded-[3px]'>Clear Shopping Cart</button>
           </div>
-          
-          <SubTotal goToCheckout={goToCheckout} />
+
+          <SubTotal subTotal={subTotal} />
 
 
         </div>
