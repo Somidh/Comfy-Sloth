@@ -8,15 +8,14 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useStateContext } from '../context/ContextProvider';
 import useProductStore from '../store/productStore';
 
-const Navbar = ({token , setToken}) => {
+const Navbar = () => {
 
-  const { handleNavbarClick, showNavbar, cartCount } = useStateContext()
+  const { handleNavbarClick, showNavbar, cartCount, token, setToken } = useStateContext()
 
   // console.log(token.user?.user_metadata.full_name) 
 
   const {cart} = useProductStore(state => ({ cart: state.cart}))
 
-  console.log(token)
 
   const navigate = useNavigate()
 

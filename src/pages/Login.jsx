@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
+import { useStateContext } from '../context/ContextProvider'
 import useProductStore from '../store/productStore'
 import { supabase } from '../supabaseClient'
 
 
-const Login = ({ setToken }) => {
+const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   })
+
+  const { token, setToken} = useStateContext()
   
 
   const navigate = useNavigate()
@@ -33,7 +36,6 @@ const Login = ({ setToken }) => {
         password: formData.password,
       })
       if (error) throw error
-      console.log(data)
       setToken(data)
       navigate('/')
 

@@ -10,28 +10,21 @@ import Checkout from './pages/Checkout'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import { useStateContext } from './context/ContextProvider'
+import { ContextProvider, useStateContext } from './context/ContextProvider'
 import Footer from './component/Footer'
 import AboutProduct from './pages/AboutProduct'
-
+import '@stripe/stripe-js'
+import Success from './component/Success'
+import { Cancel } from '@mui/icons-material'
 
 function App() {
 
-  const [token, setToken] = useState(false)
-
-  token && sessionStorage.setItem('token', JSON.stringify(token))
-
-  useEffect(() => {
-    if(sessionStorage.getItem('token')){
-      let data = JSON.parse(sessionStorage.getItem('token'))
-      setToken(data)
-    }
-  }, [])
+  const {token, setToken} = useStateContext()
 
   return (
     <div>
       <BrowserRouter >
-        <Navbar token={token} setToken={setToken} />
+        <Navbar />
         <SideBar />
         <Routes>
           <Route path='/' element={<Home />} />
@@ -39,9 +32,11 @@ function App() {
           <Route path='/products' element={<Products />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/cart' element={<Cart />} />
-          <Route path='/login' element={<Login setToken={setToken} />} />
+          <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/product/:id' element={<AboutProduct />} />
+          <Route path='/success' element={<Success />} />
+          <Route path='/cancel' element={<Cancel />} />
         </Routes>
       </BrowserRouter>
       <Footer  />

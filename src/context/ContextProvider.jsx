@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState, useEffect } from 'react'
 import { Navigate } from 'react-router'
 
 const StateContext = createContext()
@@ -19,6 +19,18 @@ export const ContextProvider = ({ children }) => {
         setCartCount(prev => prev + 1)
     }
 
+
+    const [token, setToken] = useState(false)
+
+    token && sessionStorage.setItem('token', JSON.stringify(token))
+
+    useEffect(() => {
+        if (sessionStorage.getItem('token')) {
+            let data = JSON.parse(sessionStorage.getItem('token'))
+            setToken(data)
+        }
+    }, [])
+
     return (
         <StateContext.Provider
             value={{
@@ -30,8 +42,10 @@ export const ContextProvider = ({ children }) => {
                 addingCartCount,
                 setAddingCartCount,
                 handleAddToCartButton,
-                cartCount, 
-                setCartCount
+                cartCount,
+                setCartCount,
+                token,
+                setToken
             }}
         >
             {children}
