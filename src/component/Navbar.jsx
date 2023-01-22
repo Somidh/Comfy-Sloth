@@ -38,11 +38,11 @@ const Navbar = () => {
     <div className='flex items-center justify-between max-w-[85em] mx-auto px-5 py-4 '>
       <img src={Logo} alt="logo" className='w-[10em] ' />
 
-      <div className='hidden lg:flex items-center gap-10 tracking-widest text-[#324D67] '>
+      <div className='hidden lg:flex items-center gap-28 tracking-widest text-[#324D67] '>
         <Link className='cursor-pointer hover:underline decoration-[#AB7A5F] decoration-2 underline-offset-8' to='/' >Home</Link>
         <Link className='cursor-pointer hover:underline decoration-[#AB7A5F] decoration-2 underline-offset-8' to='/about'>About</Link>
         <Link className='cursor-pointer hover:underline decoration-[#AB7A5F] decoration-2 underline-offset-8' to='/products'>Products</Link>
-        <Link className='cursor-pointer hover:underline decoration-[#AB7A5F] decoration-2 underline-offset-8' to='/checkout'>Checkout</Link>
+        {/* <Link className='cursor-pointer hover:underline decoration-[#AB7A5F] decoration-2 underline-offset-8' to='/checkout'>Checkout</Link> */}
       </div>
       <div className='lg:hidden'>
         <MenuIcon onClick={handleNavbarClick} fontSize='large' className=' text-[#AB7A5F]' />
