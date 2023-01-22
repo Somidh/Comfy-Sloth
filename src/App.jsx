@@ -36,7 +36,7 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/product/:id' element={<AboutProduct />} />
           <Route path='/success' element={<Success />} />
-          <Route path='/cancel' element={<Cancel />} />
+          <Route path='/cancel'  element={<Cancel />} />
         </Routes>
       </BrowserRouter>
       <Footer  />
