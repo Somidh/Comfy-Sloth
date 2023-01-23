@@ -12,7 +12,6 @@ const Navbar = () => {
 
   const { handleNavbarClick, showNavbar, cartCount, token, setToken } = useStateContext()
 
-  // console.log(token.user?.user_metadata.full_name) 
 
   const {cart} = useProductStore(state => ({ cart: state.cart}))
 
