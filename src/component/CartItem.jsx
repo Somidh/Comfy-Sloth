@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import useProductStore from '../store/productStore';
-import { useStateContext } from '../context/ContextProvider';
 
 
 const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
 
-    const { cart, removeFromCart, increaseQty, decreaseQty, setCount } = useProductStore(state => ({
-        cart: state.cart,
+    const { removeFromCart, increaseQty, decreaseQty, setCount } = useProductStore(state => ({
         removeFromCart: state.removeFromCart,
         increaseQty: state.increaseQty,
         decreaseQty: state.decreaseQty,
@@ -15,73 +13,9 @@ const CartItem = ({ name, images, price, qty, formatPrice, stock, id }) => {
     }))
 
 
-    // const [itemName, setItemName] = useState(null)
-
-    const { token, setToken } = useStateContext()
-
-
-
-    console.log(token)
-
-    const addToCart = async (item) => {
-        const user = token.user
-        const user_id = token.user?.id
-        const item_id = item.id
-        const product_name = item.name
-        const res = await db
-            .from('cartItem')
-            .select({user_id, item_id, product_name})
-            .eq('id', user_id)
-            .single()
-
-    }
-
-
-    // const getProfile = async () => {
-    //     try {
-    //         const user = supabase.auth.user()
-
-    //         let { data, error, status } = await supabase
-    //             .from('cartItem')
-    //             .select(`email, item_id, quantity, username`)
-    //             .eq('id', user.id)
-    //             .single()
-
-    //         if (data) {
-    //             setItemName(data.username)
-    //         }
-
-    //     }
-    //     catch (error) {
-    //         alert(error.message)
-    //     }
-    // }
-
-
-    // const updateCart = async (e) => {
-    //     e.preventDefault()
-
-    //     try {
-    //         const user = supabase.auth.user()
-
-    //         const updates = {
-    //             id: user.id,
-    //             username
-    //         }
-    //     }
-    //     catch (error) {
-
-    //     }
-    // }
-
-
-    // const []
-
     useEffect(() => {
         setCount()
     }, [])
-
-
 
 
     const increase = () => {

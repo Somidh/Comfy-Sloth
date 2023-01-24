@@ -6,8 +6,6 @@ const StateContext = createContext()
 export const ContextProvider = ({ children }) => {
 
     const [showNavbar, setShowNavbar] = useState(false)
-    const [productDetail, setProductDetail] = useState()
-    const [addingCartCount, setAddingCartCount] = useState(1)
     const [cartCount, setCartCount] = useState(0)
 
     const handleNavbarClick = () => {
@@ -37,15 +35,11 @@ export const ContextProvider = ({ children }) => {
                 showNavbar,
                 setShowNavbar,
                 handleNavbarClick,
-                productDetail,
-                setProductDetail,
-                addingCartCount,
-                setAddingCartCount,
                 handleAddToCartButton,
                 cartCount,
                 setCartCount,
                 token,
-                setToken
+                setToken,
             }}
         >
             {children}

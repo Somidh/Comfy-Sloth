@@ -1,7 +1,5 @@
 import React from 'react'
 
-
-
 const categories = ['All', 'office', 'living room', 'kitchen', 'bedroom', 'dining', 'kids']
 
 const Filters = () => {

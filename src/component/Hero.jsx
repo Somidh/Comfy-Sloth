@@ -2,14 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import hero1 from '../assests/hero-1.jpeg'
 import hero2 from '../assests/hero-2.jpeg'
-import useProductStore from '../store/productStore'
 
 const Hero = () => {
-
-
-    const token = useProductStore(state => ({
-        token: state.token
-    }))
 
     return (
         <div className='mt-32 lg:mt-56 max-w-[85em] mx-auto px-5 md:px-20 lg:px-5 py-4 flex items-start justify-between relative w-full'>

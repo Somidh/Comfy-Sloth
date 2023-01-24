@@ -24,10 +24,6 @@ const Cart = () => {
 
   console.log()
 
-
-
-
-
   const formatPrice = (number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -38,9 +34,6 @@ const Cart = () => {
   const goToProducts = () => {
     navigate('/products')
   }
-
-
-
 
   return (
 
@@ -72,13 +65,7 @@ const Cart = () => {
             )
           })}
 
-          {/* {
-            cart.map((item, idx) => (
-            ))
-          } */}
-
           <hr className='w-full border-[#bcccdc] mt-10' />
-
 
           <div className='flex item-center justify-between my-10 gap-2'>
             <button onClick={goToProducts} className='bg-[#AB7A5F] text-white px-3 py-1  tracking-widest rounded-[3px]'>Continue Shopping</button>

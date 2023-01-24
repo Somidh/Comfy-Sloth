@@ -10,10 +10,10 @@ import useProductStore from '../store/productStore';
 
 const Navbar = () => {
 
-  const { handleNavbarClick, showNavbar, cartCount, token, setToken } = useStateContext()
+  const { handleNavbarClick, token, setToken } = useStateContext()
 
 
-  const {cart} = useProductStore(state => ({ cart: state.cart}))
+  const { cart } = useProductStore(state => ({ cart: state.cart }))
 
 
   const navigate = useNavigate()
@@ -21,7 +21,7 @@ const Navbar = () => {
   const handleCartClick = () => {
     navigate('/cart')
   }
-  const goToLogin =() => {
+  const goToLogin = () => {
     navigate('/login')
   }
 
@@ -30,7 +30,7 @@ const Navbar = () => {
     navigate('/')
     setToken(false)
     supabase.auth.signOut()
-    token &&  alert('Please enter your login details')
+    token && alert('Please enter your login details')
   }
 
   return (
@@ -41,7 +41,6 @@ const Navbar = () => {
         <Link className='cursor-pointer hover:underline decoration-[#AB7A5F] decoration-2 underline-offset-8' to='/' >Home</Link>
         <Link className='cursor-pointer hover:underline decoration-[#AB7A5F] decoration-2 underline-offset-8' to='/about'>About</Link>
         <Link className='cursor-pointer hover:underline decoration-[#AB7A5F] decoration-2 underline-offset-8' to='/products'>Products</Link>
-        {/* <Link className='cursor-pointer hover:underline decoration-[#AB7A5F] decoration-2 underline-offset-8' to='/checkout'>Checkout</Link> */}
       </div>
       <div className='lg:hidden'>
         <MenuIcon onClick={handleNavbarClick} fontSize='large' className=' text-[#AB7A5F]' />
@@ -55,7 +54,6 @@ const Navbar = () => {
         </div>
         <div onClick={goToLogin} className='flex items-center justify-center gap-2 cursor-pointer'>
           <h2 onClick={handleLogout} className='text-[25px]'>{token ? 'Logout' : 'Login'} </h2>
-          {/* <p>{token.user.user_metadeta.full_name}</p> */}
           <div className='flex items-center '>
             <PersonIcon fontSize='medium' />
             <span className='font-medium text-2xl'>-</span>

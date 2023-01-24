@@ -3,11 +3,13 @@ import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const ProductListHeader = () => {
+
+ 
     return (
         <div className='view_section mt-10 flex flex-col px-5 items-start gap-3'>
             <div className='flex items-center gap-2 '>
-                <GridViewRoundedIcon style={{ color: 'white', backgroundColor: 'black', padding: '2px', borderRadius: '4px', cursor: 'pointer' }} />
-                <MenuIcon style={{ border: '1px solid black', padding: '2px', borderRadius: '4px', cursor: 'pointer' }} />
+                <GridViewRoundedIcon  style={{ color: 'white', backgroundColor: 'black', padding: '2px', borderRadius: '4px', cursor: 'pointer' }} />
+                <MenuIcon  style={{ border: '1px solid black', padding: '2px', borderRadius: '4px', cursor: 'pointer' }} />
             </div>
             <p className='text-[#324D67] text-sm tracking-wide'>20 Products Found</p>
             <div className='line h-[1px] w-full bg-[#bcccdc]' />

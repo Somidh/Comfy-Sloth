@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { useStateContext } from '../context/ContextProvider'
-import useProductStore from '../store/productStore'
 import { loadStripe } from '@stripe/stripe-js';
 
 let stripePromise
@@ -30,7 +29,7 @@ const SubTotal = ({ subTotal }) => {
 
   const redirectToCheckout = async () => {
     const stripe = await getStripe()
-    const { error } = await stripe.redirectToCheckout(checkoutOptions) 
+    // const { error } = await stripe.redirectToCheckout(checkoutOptions) 
   }
 
 
@@ -47,11 +46,11 @@ const SubTotal = ({ subTotal }) => {
   const goToLogin = () => {
     navigate('/login')
   }
-  const goToCheckout = async () => {
-    const stripe = await stripePromise
-    navigate('/checkout')
+  // const goToCheckout = async () => {
+  //   const stripe = await stripePromise
+  //   navigate('/checkout')
 
-  }
+  // }
 
 
   const formatedPrice = formatPrice(subTotal)

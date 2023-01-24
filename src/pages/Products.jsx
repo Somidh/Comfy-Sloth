@@ -19,7 +19,6 @@ const Products = () => {
   const [search, setSearch] = useState('')
   const [selectedCompany, setSelectedCompany] = useState('All')
   const [isGridView, setIsGridView] = useState(true)
-  const [loading, setLoading] = useState(true)
 
 
 
@@ -27,8 +26,6 @@ const Products = () => {
     products: state.products,
     fetchProducts: state.fetchProducts,
   }))
-
-
 
   useEffect(() => {
     fetchProducts()
@@ -48,9 +45,7 @@ const Products = () => {
   return (
     <>
       <Header title="Products" />
-      {/* {loading ? <div className='flex items-center justify-center mb-20'>
-        <ClipLoader color="#AB7A5F" size={60} />
-      </div> : */}
+     
 
       <div className='flex flex-col items-start md:flex-row max-w-[85em] mx-auto '>
         <Filters />
@@ -60,22 +55,6 @@ const Products = () => {
 
           <div>
             <ProductList products={products} />
-
-            {/* {
-                items
-                  .filter(item => !selectedCategory || item.category === selectedCategory || selectedCategory === 'All' || item.company === selectedCompany || selectedCompany === 'all')
-                  .map(item => (
-                    <Product
-                      key={item.id}
-                      name={item.name}
-                      price={item.price}
-                      image={item.image}
-                      description={item.description}
-                      isGridView={isGridView}
-                      id={item.id}
-                    />
-                  ))
-              } */}
           </div>
         </div>
       </div>
