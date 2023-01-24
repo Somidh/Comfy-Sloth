@@ -5,11 +5,12 @@ import ListView from './ListView'
 
 const ProductList = () => {
 
-    const gridView = true
 
     const { products } = useProductStore(state => ({
         products: state.products,
     }))
+
+    
     if (products.length < 1) {
         return (
             <h2>Sorry, no products matched your search.</h2>
@@ -19,7 +20,7 @@ const ProductList = () => {
 
     return (
         <div>
-            {gridView ? <GridView products={products} /> : <ListView products={products} />}
+            {true ? <GridView products={products} /> : <ListView products={products} />}
         </div>
     )
 }

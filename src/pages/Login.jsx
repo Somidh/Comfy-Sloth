@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useStateContext } from '../context/ContextProvider'
-import useProductStore from '../store/productStore'
 import { supabase } from '../supabaseClient'
 
 
