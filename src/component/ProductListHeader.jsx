@@ -3,7 +3,6 @@ import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const ProductListHeader = () => {
-
  
     return (
         <div className='view_section mt-10 flex flex-col px-5 items-start gap-3'>
