@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div>
-      <BrowserRouter >
+      <BrowserRouter basename="/" >
         <Navbar />
         <SideBar />
         <Routes>
