@@ -19,11 +19,10 @@ import { Cancel } from '@mui/icons-material'
 
 function App() {
 
-  const {token, setToken} = useStateContext()
 
   return (
     <div>
-      <BrowserRouter basename="/index.htmml" >
+      <BrowserRouter basename='/' >
         <Navbar />
         <SideBar />
         <Routes>
