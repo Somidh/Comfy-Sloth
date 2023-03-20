@@ -6,8 +6,10 @@ import ListView from './ListView'
 const ProductList = () => {
 
 
-    const { products } = useProductStore(state => ({
+    const { products, gridView, setGridView } = useProductStore(state => ({
         products: state.products,
+        gridView: state.gridView,
+        setGridView: state.setGridView
     }))
 
     
@@ -20,7 +22,7 @@ const ProductList = () => {
 
     return (
         <div>
-            {true ? <GridView products={products} /> : <ListView products={products} />}
+            {gridView ? <GridView products={products} /> : <ListView products={products} />}
         </div>
     )
 }

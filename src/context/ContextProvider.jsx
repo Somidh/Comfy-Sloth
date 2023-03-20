@@ -7,6 +7,7 @@ export const ContextProvider = ({ children }) => {
 
     const [showNavbar, setShowNavbar] = useState(false)
     const [cartCount, setCartCount] = useState(0)
+    
 
     const handleNavbarClick = () => {
         setShowNavbar(prev => !prev)
