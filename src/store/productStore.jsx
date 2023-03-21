@@ -14,7 +14,7 @@ const useProductStore = create(
     cart: [],
     singleProduct: {},
     count: 1,
-    gridView: false,
+    gridView: true,
 
     fetchProducts: async () => {
       // const response = await axios.get(url);
@@ -29,9 +29,7 @@ const useProductStore = create(
       //   products: Products
       // })
 
-      const { data, error } = await supabase
-      .from("products")
-      .select()
+      const { data, error } = await supabase.from("products").select();
       if (error) console.log("error", error);
       else {
         // console.log("data",data)
@@ -110,6 +108,56 @@ const useProductStore = create(
       const res = await axios.get(
         `https://course-api.com/react-store-single-product?id=${id}`
       );
+
+      // const url = `https://course-api.com/react-store-single-product?id=${ids}`;
+      // const response = await fetch(url);
+      // const productData = await response.json();
+
+      // const {
+      //   id,
+      //   images,
+      //   name,
+      //   price,
+      //   reviews,
+      //   stars,
+      //   description,
+      //   stock,
+      //   company,
+      //   qty,
+      // } = productData;
+
+      // const { data, error } = await supabase
+      //   .from("single-product")
+      //   .insert([
+      //     {
+      //       id,
+      //       images,
+      //       name,
+      //       price,
+      //       reviews,
+      //       stars,
+      //       description,
+      //       stock,
+      //       company,
+      //     },
+      //   ])
+      // if (error) {
+      //   console.error(error);
+      // } else {
+      //   console.log("data", data);
+      //   console.log("data inserted successfully");
+      // }
+      // console.log("data", data);
+
+      // // console.log("productData", productData);
+
+      // const { fetchData, fetchError } = await supabase
+      //   .from("single-product")
+      //   .select()
+      //   .eq("id", ids);
+
+      //   console.log("fetchData",fetchData)
+
       set({
         loading: false,
         singleProduct: res.data,
