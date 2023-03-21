@@ -59,7 +59,6 @@ const AboutProduct = () => {
         decreaseQty(id)
     }
 
-    console.log("count", count)
 
     useEffect(() => {
         setCount(1)
@@ -77,7 +76,6 @@ const AboutProduct = () => {
     }, [])
 
 
-    console.log(cart)
 
     const handleAddToCartButton = () => {
         navigate('/cart')
