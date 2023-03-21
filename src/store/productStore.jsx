@@ -1,113 +1,131 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import axios from "axios";
+import { supabase } from "../../server/supabase";
+import { useEffect } from "react";
 
 const url = "https://course-api.com/react-store-products";
 
 const useProductStore = create(
-  persist(
-    (set, get) => ({
-      products: [],
-      loading: true,
-      cart: [],
-      singleProduct: {},
-      count: 1,
-      gridView: false,
+  // persist(
+  (set, get) => ({
+    products: [],
+    loading: true,
+    cart: [],
+    singleProduct: {},
+    count: 1,
+    gridView: false,
 
-      fetchProducts: async () => {
-        const response = await axios.get(url);
+    fetchProducts: async () => {
+      // const response = await axios.get(url);
+      // set({
+      //   loading: false,
+      //   products: response.data,
+      // });
+
+      // const { data } = await supabase.from("Products").select()
+      // set({
+      //   loading: false,
+      //   products: Products
+      // })
+
+      const { data, error } = await supabase
+      .from("products")
+      .select()
+      if (error) console.log("error", error);
+      else {
+        // console.log("data",data)
         set({
           loading: false,
-          products: response.data,
+          products: data,
         });
-      },
-      addToCart: (id) => {
-        const state = get();
-        const item = state.singleProduct;
-        // Checking if item is in cart already
-        const inCart = state.cart.find((item) =>
-          item.id === id ? true : false
-        );
+      }
+    },
+    addToCart: (id) => {
+      const state = get();
+      const item = state.singleProduct;
+      // Checking if item is in cart already
+      const inCart = state.cart.find((item) => (item.id === id ? true : false));
 
-        set({
-          cart: inCart
-            ? state.cart.map((item) =>
-                item.id === id ? { ...item, qty: item.qty + 1 } : item
-              )
-            : [...state.cart, { ...item, qty: 1 }],
-        });
-      },
+      set({
+        cart: inCart
+          ? state.cart.map((item) =>
+              item.id === id ? { ...item, qty: item.qty + 1 } : item
+            )
+          : [...state.cart, { ...item, qty: 1 }],
+      });
+    },
 
-      removeFromCart: (id) => {
-        const state = get();
+    removeFromCart: (id) => {
+      const state = get();
 
-        set({
-          cart: state.cart.filter((item) => item.id != id),
-        });
-      },
+      set({
+        cart: state.cart.filter((item) => item.id != id),
+      });
+    },
 
-      clearCart: () => {
-        set({
-          cart: [],
-        });
-      },
+    clearCart: () => {
+      set({
+        cart: [],
+      });
+    },
 
-      increaseQty: (id) => {
-        const state = get();
-        const item = state.cart?.find((item) => item.id === id);
-        set({
-          item: state.cart.length > 0 ? (item.qty += state.count) : state.count,
-        });
-      },
-      decreaseQty: (id) => {
-        const state = get();
-        const item = state.cart?.find((item) => item.id === id);
+    increaseQty: (id) => {
+      const state = get();
+      const item = state.cart?.find((item) => item.id === id);
+      set({
+        item: state.cart.length > 0 ? (item.qty += state.count) : state.count,
+      });
+    },
+    decreaseQty: (id) => {
+      const state = get();
+      const item = state.cart?.find((item) => item.id === id);
 
-        set({
-          item: state.cart.length > 0 ? (item.qty -= 1) : state.count,
-        });
-      },
+      set({
+        item: state.cart.length > 0 ? (item.qty -= 1) : state.count,
+      });
+    },
 
-      increaseCount: (id) => {
-        const state = get();
-        const item = state.cart?.find((item) => item.id === id);
+    increaseCount: (id) => {
+      const state = get();
+      const item = state.cart?.find((item) => item.id === id);
 
-        set({
-          count: (state.count += 1),
-        });
-      },
-      decreaseCount: (id) => {
-        set({
-          count: (state.count -= 1),
-        });
-      },
-      setCount: () => {
-        const state = get();
-        set({
-          count: (state.count = 1),
-        });
-      },
+      set({
+        count: (state.count += 1),
+      });
+    },
+    decreaseCount: (id) => {
+      set({
+        count: (state.count -= 1),
+      });
+    },
+    setCount: () => {
+      const state = get();
+      set({
+        count: (state.count = 1),
+      });
+    },
 
-      fetchSingleProduct: async (id) => {
-        const res = await axios.get(
-          `https://course-api.com/react-store-single-product?id=${id}`
-        );
-        set({
-          loading: false,
-          singleProduct: res.data,
-        });
-      },
+    fetchSingleProduct: async (id) => {
+      const res = await axios.get(
+        `https://course-api.com/react-store-single-product?id=${id}`
+      );
+      set({
+        loading: false,
+        singleProduct: res.data,
+      });
+    },
 
-      setGridView: (value) =>
-        set(() => ({
-          gridView: value,
-        })),
-    }),
+    setGridView: (value) =>
+      set(() => ({
+        gridView: value,
+      })),
+  })
 
-    {
-      storage: createJSONStorage(() => sessionStorage),
-    }
-  )
+  //   {
+  //     storage: createJSONStorage(() => sessionStorage),
+  //   }
+  // )
 );
 
 export default useProductStore;
