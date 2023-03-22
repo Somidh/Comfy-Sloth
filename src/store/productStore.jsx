@@ -13,16 +13,18 @@ const useProductStore = create(
     //   email: "",
     //   password: "",
     // },
+    products: [],
+    cartItem: [],
+    singleProduct: {},
     user: false,
+    userId: "",
     full_name: "",
     email: "",
     password: "",
-    products: [],
     loading: true,
-    cart: [],
-    singleProduct: {},
-    count: 1,
+    // count: 1,
     gridView: true,
+    itemCount: 1,
 
     fetchProducts: async () => {
       // const response = await axios.get(url);
@@ -47,27 +49,56 @@ const useProductStore = create(
         });
       }
     },
-    addToCart: (id) => {
-      const state = get();
-      const item = state.singleProduct;
-      // Checking if item is in cart already
-      const inCart = state.cart.find((item) => (item.id === id ? true : false));
+    // addToCart: (id) => {
+    //   const state = get();
+    //   const item = state.singleProduct;
+    //   Checking if item is in cart already
+    //   const inCart = state.cart.find((item) => (item.id === id ? true : false));
 
-      set({
-        cart: inCart
-          ? state.cart.map((item) =>
-              item.id === id ? { ...item, qty: item.qty + 1 } : item
-            )
-          : [...state.cart, { ...item, qty: 1 }],
-      });
+    //   set({
+    //     cart: inCart
+    //       ? state.cart.map((item) =>
+    //           item.id === id ? { ...item, qty: item.qty + 1 } : item
+    //         )
+    //       : [...state.cart, { ...item, qty: 1 }],
+    //   });
+    // },
+    addToCart: async (name, price, userId, productId, image, itemCount) => {
+      const { data, error } = await supabase
+        .from("cartItem")
+        .insert({ name, price, userId, productId, image, itemCount });
+      if (error) console.log("Error while inserting items:", error);
+    },
+    fetchCartItem: async () => {
+
+      const state = get();
+      const { data, error } = await supabase
+        .from("cartItem")
+        .select("*")
+        .eq("userId", state.userId);
+      if (error) console.log("Error while fetching cart item:", error);
+      set({ cartItem: data });
+      console.log("cartItem:", data.itemCount);
     },
 
-    removeFromCart: (id) => {
+    removeFromCart: async () => {
       const state = get();
 
-      set({
-        cart: state.cart.filter((item) => item.id != id),
-      });
+      const { data, error } = await supabase
+        .from("cartItem")
+        .delete()
+        .eq("userId", state.userId)
+        .eq("productId", state.productId)
+
+      console.log("some", data);
+
+      if (error) console.log("Error while deleting item:", error);
+      console.log("item deleted", data);
+      set({ cartItem: data });
+
+      // set({
+      //   cart: state.cart.filter((item) => item.id != id),
+      // });
     },
 
     clearCart: () => {
@@ -80,7 +111,10 @@ const useProductStore = create(
       const state = get();
       const item = state.cart?.find((item) => item.id === id);
       set({
-        item: state.cart.length > 0 ? (item.qty += state.count) : state.count,
+        item:
+          state.cart.length > 0
+            ? (item.qty += state.temcount)
+            : state.itemCount,
       });
     },
     decreaseQty: (id) => {
@@ -88,27 +122,33 @@ const useProductStore = create(
       const item = state.cart?.find((item) => item.id === id);
 
       set({
-        item: state.cart.length > 0 ? (item.qty -= 1) : state.count,
+        item: state.cart.length > 0 ? (item.qty -= 1) : state.itemCount,
       });
     },
 
-    increaseCount: (id) => {
+    increaseItemCount: (id) => {
       const state = get();
       const item = state.cart?.find((item) => item.id === id);
 
       set({
-        count: (state.count += 1),
+        itemCount: (state.itemCount += 1),
       });
     },
-    decreaseCount: (id) => {
+    decreaseItemCount: (id) => {
       set({
-        count: (state.count -= 1),
+        itemCount: (state.itemCount -= 1),
       });
     },
-    setCount: () => {
+    // setCount: () => {
+    //   const state = get();
+    //   set({
+    //     count: (state.count = 1),
+    //   });
+    // },
+    setItemCount: (count) => {
       const state = get();
       set({
-        count: (state.count = 1),
+        itemCount: count,
       });
     },
 
@@ -199,6 +239,9 @@ const useProductStore = create(
     },
     setUser: (value) => {
       set({ user: value });
+    },
+    setUserId: (id) => {
+      set({ userId: id });
     },
 
     // handleSignup: async (e) => {

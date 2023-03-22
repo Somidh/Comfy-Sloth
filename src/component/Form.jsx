@@ -3,12 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../../server/supabase";
 import useProductStore from "../store/productStore";
 import { useNavigate } from "react-router-dom";
-
 const Form = () => {
   const location = useLocation();
   const pathName = location.pathname;
   const navigate = useNavigate();
 
+  const [userDetail, setUserDetail] = useState();
   const isLogin = pathName === "/login";
 
   const {
@@ -21,6 +21,7 @@ const Form = () => {
     loading,
     setLoading,
     setUser,
+    setUserId,
   } = useProductStore((state) => ({
     full_name: state.full_name,
     email: state.email,
@@ -31,6 +32,7 @@ const Form = () => {
     loading: state.loading,
     setLoading: state.setLoading,
     setUser: state.setUser,
+    setUserId: state.setUserId,
   }));
 
   const handleSignup = async (e) => {
@@ -66,6 +68,8 @@ const Form = () => {
     navigate("/");
     setUser(true);
     setLoading(false);
+    setUserId(data.user.id);
+    console.log("userID:",data.user.id)
   };
 
   return (

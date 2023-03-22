@@ -16,15 +16,19 @@ const Products = () => {
   const [selectedCompany, setSelectedCompany] = useState("All");
   const [isGridView, setIsGridView] = useState(true);
 
-  const { products, fetchProducts } = useProductStore((state) => ({
-    products: state.products,
-    fetchProducts: state.fetchProducts,
-  }));
-  
+  const { products, fetchProducts, fetchCartItem } = useProductStore(
+    (state) => ({
+      products: state.products,
+      fetchProducts: state.fetchProducts,
+      fetchCartItem: state.fetchCartItem,
+    })
+  );
 
   useEffect(() => {
     fetchProducts();
   }, []);
+
+ 
 
   // useEffect(() => {
   //   const fetchProducts = async () => {
@@ -44,8 +48,6 @@ const Products = () => {
 
   //   fetchProducts();
   // }, []);
-
-  console.log("products", products);
 
   // useEffect(() => {
   //   const fetchProducts = async () => {

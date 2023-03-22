@@ -12,6 +12,7 @@ const ProductList = () => {
         setGridView: state.setGridView
     }))
 
+    // console.log(products)
     
     if (products.length < 1) {
         return (
