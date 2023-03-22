@@ -9,6 +9,14 @@ const url = "https://course-api.com/react-store-products";
 const useProductStore = create(
   // persist(
   (set, get) => ({
+    // user: {
+    //   email: "",
+    //   password: "",
+    // },
+    user: false,
+    full_name: "",
+    email: "",
+    password: "",
     products: [],
     loading: true,
     cart: [],
@@ -168,6 +176,75 @@ const useProductStore = create(
       set(() => ({
         gridView: value,
       })),
+
+    // handleUser: (email, password) => {
+    //   set({ email: email, password: password });
+
+    //   const state = get();
+    //   state.user.email = email;
+    //   state.user.password = password;
+    // },
+
+    setEmail: (value) => {
+      set({ email: value });
+    },
+    setPassword: (value) => {
+      set({ password: value });
+    },
+    setFullName: (value) => {
+      set({ full_name: value });
+    },
+    setLoading: (value) => {
+      set({ loading: value });
+    },
+    setUser: (value) => {
+      set({ user: value });
+    },
+
+    // handleSignup: async (e) => {
+    //   e.preventDefault();
+    //   set({ loading: true });
+    //   const { data, error } = await supabase.auth.signUp({
+    //     email: email,
+    //     password: password,
+
+    //     options: {
+    //       user: {
+    //         full_name: full_name,
+    //       },
+    //     },
+    //   });
+    //   if (error) console.log("Error signing up:", error);
+    //   else console.log("Signed up user:", data);
+    //   set({ loading: false });
+    // },
+
+    // handleLogin: async (e) => {
+    //   e.preventDefault();
+
+    //   set({ loading: true });
+    //   const { data, error } = await supabase.auth.signInWithPassword({
+    //     email: email,
+    //     password: password,
+    //   });
+
+    //   if (error) console.log("Error in signing in:", error);
+    //   else {
+    //     console.log("Signed In user:", data);
+    //     navigate("/");
+    //   }
+
+    //   set({ loading: false });
+    // },
+
+    handleLogout: async () => {
+      set({ loading: true });
+      const { error } = await supabase.auth.signOut();
+
+      if (error) console.log("Error signing out:", error);
+      else console.log("Signed out user!");
+      set({ loading: false });
+    },
   })
 
   //   {
