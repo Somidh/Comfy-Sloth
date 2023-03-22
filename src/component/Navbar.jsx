@@ -12,9 +12,9 @@ import { supabase } from "../../server/supabase";
 const Navbar = () => {
   const { handleNavbarClick, token, setToken } = useStateContext();
 
-  const { cart, loading, setLoading, user, setUser } = useProductStore(
+  const { cartItem, loading, setLoading, user, setUser } = useProductStore(
     (state) => ({
-      cart: state.cart,
+      cartItem: state.cartItem,
       loading: state.loading,
       setLoading: state.setLoading,
       user: state.user,
@@ -44,7 +44,7 @@ const Navbar = () => {
     setLoading(false);
   };
 
-  console.log(user)
+  console.log("user:", user);
 
   // async function handleLogout() {
   //   setLoading(true);
@@ -92,7 +92,7 @@ const Navbar = () => {
           <h2 className="text-[25px] ">Cart</h2>
           <ShoppingCartIcon fontSize="medium" onClick={handleCartClick} />
           <span className="w-5 h-5 bg-[#AB7A5F] rounded-full absolute -right-2 -top-1 flex items-center justify-center text-white text-sm">
-            {cart.length}
+            {cartItem.length}
           </span>
         </div>
         <div

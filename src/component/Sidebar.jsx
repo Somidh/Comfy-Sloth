@@ -25,12 +25,14 @@ const sidebarLinks = [
 
 const Navbar = () => {
   const { handleNavbarClick, showNavbar, setShowNavbar } = useStateContext();
-  const { cart } = useProductStore(state => ({ cart: state.cart }))
+  const { cartItem } = useProductStore((state) => ({
+    cartItem: state.cartItem,
+  }));
 
   const navigate = useNavigate();
 
   const handleCartClick = () => {
-    setShowNavbar(prev => !prev)
+    setShowNavbar((prev) => !prev);
     navigate("/cart");
   };
 
@@ -68,7 +70,7 @@ const Navbar = () => {
           <h2 className="text-[28px]">Cart</h2>
           <ShoppingCartIcon fontSize="large" onClick={handleCartClick} />
           <span className="w-6 h-6 bg-[#AB7A5F] rounded-full absolute -right-1 -top-2 flex items-center justify-center text-white text-sm">
-            {cart.length}
+            {cartItem.length}
           </span>
         </div>
         <div className="flex items-center justify-center gap-2 cursor-pointer">

@@ -1,83 +1,95 @@
-import React, { useEffect } from 'react'
-import Header from '../component/Header'
-import useProductStore from '../store/productStore'
-import CartItem from '../component/CartItem';
-import { useNavigate } from 'react-router';
-import SubTotal from '../component/SubTotal';
-import { useStateContext } from '../context/ContextProvider';
-
+import React, { useEffect } from "react";
+import Header from "../component/Header";
+import useProductStore from "../store/productStore";
+import CartItem from "../component/CartItem";
+import { useNavigate } from "react-router";
+import SubTotal from "../component/SubTotal";
+import { useStateContext } from "../context/ContextProvider";
 
 const Cart = () => {
-
-  const { cart, clearCart } = useProductStore(state => ({
-    cart: state.cart,
+  const { cartItem, clearCart, fetchCartItem } = useProductStore((state) => ({
+    cartItem: state.cartItem,
     clearCart: state.clearCart,
-  }))
+    fetchCartItem: state.fetchCartItem
+  }));
 
+
+  useEffect(() => {
+    fetchCartItem();
+  }, []);
+
+
+  console.log("cartItems:", cartItem);
   let subTotal = 0;
 
+  const navigate = useNavigate();
 
-  const { token } = useStateContext()
-
-  const navigate = useNavigate()
-
-
-  console.log()
+  console.log();
 
   const formatPrice = (number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(number / 100)
-  }
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(number / 100);
+  };
 
   const goToProducts = () => {
-    navigate('/products')
-  }
+    navigate("/products");
+  };
 
-  return (
+  return cartItem.length === 0 ? (
+    <div className="flex flex-col items-center justify-center h-[82vh] gap-4">
+      <h1 className="font-bold text-5xl text-[#102A42] tracking-widest">
+        Your cart is empty
+      </h1>
+      <button
+        onClick={goToProducts}
+        className="bg-[#AB7A5F] text-[#EADED7]  uppercase  tracking-widest px-3 py-1 rounded-md"
+      >
+        fill it
+      </button>
+    </div>
+  ) : (
+    <>
+      <Header title="Cart" />
 
-    cart.length < 1 ?
-      <div className='flex flex-col items-center justify-center h-[82vh] gap-4'>
-        <h1 className='font-bold text-5xl text-[#102A42] tracking-widest'>Your cart is empty</h1>
-        <button onClick={goToProducts} className='bg-[#AB7A5F] text-[#EADED7]  uppercase  tracking-widest px-3 py-1 rounded-md'>fill it</button>
-      </div>
-      :
-      <>
+      <div className="max-w-[85em] mx-auto px-5 mb-10">
+        <ul className="hidden md:grid grid-cols-4 items-center ml-20 px-5 text-[#617D98]">
+          <li>Item</li>
+          <li>Price</li>
+          <li>Quantity</li>
+          <li>Subtotal</li>
+        </ul>
 
-        <Header title="Cart" />
+        <hr className="w-full  border-[#bcccdc] hidden my-10 md:block" />
 
-        <div className='max-w-[85em] mx-auto px-5 mb-10'>
-          <ul className='hidden md:grid grid-cols-4 items-center ml-20 px-5 text-[#617D98]'>
-            <li>Item</li>
-            <li>Price</li>
-            <li>Quantity</li>
-            <li>Subtotal</li>
-          </ul>
+        {cartItem.map((item, idx) => {
+          subTotal += item.price * item.qty;
 
-          <hr className='w-full  border-[#bcccdc] hidden my-10 md:block' />
+          return <CartItem key={idx} formatPrice={formatPrice} {...item} />;
+        })}
 
-          {cart.map((item, idx) => {
-            subTotal += item.price * item.qty
+        <hr className="w-full border-[#bcccdc] mt-10" />
 
-            return (
-              <CartItem key={idx} formatPrice={formatPrice} {...item} />
-            )
-          })}
-
-          <hr className='w-full border-[#bcccdc] mt-10' />
-
-          <div className='flex item-center justify-between my-10 gap-2'>
-            <button onClick={goToProducts} className='bg-[#AB7A5F] text-white px-3 py-1  tracking-widest rounded-[3px]'>Continue Shopping</button>
-            <button onClick={clearCart} className='bg-[#222222] text-white text-sm px-3 py-1 tracking-widest rounded-[3px]'>Clear Shopping Cart</button>
-          </div>
-
-          <SubTotal subTotal={subTotal} />
-
-
+        <div className="flex item-center justify-between my-10 gap-2">
+          <button
+            onClick={goToProducts}
+            className="bg-[#AB7A5F] text-white px-3 py-1  tracking-widest rounded-[3px]"
+          >
+            Continue Shopping
+          </button>
+          <button
+            onClick={clearCart}
+            className="bg-[#222222] text-white text-sm px-3 py-1 tracking-widest rounded-[3px]"
+          >
+            Clear Shopping Cart
+          </button>
         </div>
-      </>
-  )
-}
 
-export default Cart
+        <SubTotal subTotal={subTotal} />
+      </div>
+    </>
+  );
+};
+
+export default Cart;
