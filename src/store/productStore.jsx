@@ -24,7 +24,7 @@ const useProductStore = create(
     loading: true,
     // count: 1,
     gridView: true,
-    itemCount: 1,
+    quantity: 1,
 
     fetchProducts: async () => {
       // const response = await axios.get(url);
@@ -49,6 +49,7 @@ const useProductStore = create(
         });
       }
     },
+
     // addToCart: (id) => {
     //   const state = get();
     //   const item = state.singleProduct;
@@ -63,92 +64,177 @@ const useProductStore = create(
     //       : [...state.cart, { ...item, qty: 1 }],
     //   });
     // },
-    addToCart: async (name, price, userId, productId, image, itemCount) => {
-      const { data, error } = await supabase
-        .from("cartItem")
-        .insert({ name, price, userId, productId, image, itemCount });
-      if (error) console.log("Error while inserting items:", error);
-    },
-    fetchCartItem: async () => {
+    addToCart: async (name, price, userId, productId, image, quantity) => {
+      // here
 
-      const state = get();
-      const { data, error } = await supabase
+      const { data: cartItems, error } = await supabase
         .from("cartItem")
         .select("*")
-        .eq("userId", state.userId);
-      if (error) console.log("Error while fetching cart item:", error);
-      set({ cartItem: data });
-      console.log("cartItem:", data.itemCount);
+        .eq("productId", productId);
+
+      if (error) {
+        console.log("Error fetching cart items:", error);
+        return;
+      }
+
+      if (cartItems.length > 0) {
+        const updatedQuantity = cartItems[0].quantity + quantity;
+
+        const { error: updateError } = await supabase
+          .from("cartItem")
+          .update({ quantity: updatedQuantity })
+          .eq("productId", productId)
+          .select();
+
+        if (updateError) {
+          console.log("Error updating cart item:", updateError);
+          return;
+        }
+        console.log("Cart item updated successfully!");
+      } else {
+        const { data, error } = await supabase
+          .from("cartItem")
+          .insert({ name, price, userId, productId, image, quantity });
+        if (error) console.log("Error while inserting items:", error);
+
+        console.log("Cart item inserted successfully!");
+      }
+
+      // end here
     },
 
-    removeFromCart: async () => {
+    fetchCartItem: async () => {
+      const state = get();
+      const user = supabase.auth.getUser();
+      const { data, error } = await supabase
+        .from("cartItem")
+        .select()
+        .eq("userId", state.userId);
+      if (error) console.log("Error while fetching cart item:", error);
+      if (data) {
+        console.log("succes item fetching", data);
+        set({ cartItem: data });
+      }
+    },
+
+    removeFromCart: async (productId) => {
       const state = get();
 
       const { data, error } = await supabase
         .from("cartItem")
         .delete()
+        .eq("productId", productId)
         .eq("userId", state.userId)
-        .eq("productId", state.productId)
+        .select();
 
       console.log("some", data);
 
       if (error) console.log("Error while deleting item:", error);
       console.log("item deleted", data);
-      set({ cartItem: data });
+      // set({ cartItem: data });
 
       // set({
       //   cart: state.cart.filter((item) => item.id != id),
       // });
     },
 
-    clearCart: () => {
-      set({
-        cart: [],
-      });
+    clearCart: async () => {
+      const { data, error } = await supabase
+        .from("cartItem")
+        .delete()
+        .neq("id", 0);
+
+      if (error) {
+        console.log("Error deleting cart items:", error);
+        return;
+      }
+
+      console.log("Cart items deleted successfully!");
     },
 
-    increaseQty: (id) => {
-      const state = get();
-      const item = state.cart?.find((item) => item.id === id);
-      set({
-        item:
-          state.cart.length > 0
-            ? (item.qty += state.temcount)
-            : state.itemCount,
-      });
-    },
-    decreaseQty: (id) => {
-      const state = get();
-      const item = state.cart?.find((item) => item.id === id);
-
-      set({
-        item: state.cart.length > 0 ? (item.qty -= 1) : state.itemCount,
-      });
-    },
-
-    increaseItemCount: (id) => {
-      const state = get();
-      const item = state.cart?.find((item) => item.id === id);
-
-      set({
-        itemCount: (state.itemCount += 1),
-      });
-    },
-    decreaseItemCount: (id) => {
-      set({
-        itemCount: (state.itemCount -= 1),
-      });
-    },
-    // setCount: () => {
+    // increaseQty: async (userId) => {
     //   const state = get();
+    //   const item = state.cartItem?.find((item) => item.id === id);
     //   set({
-    //     count: (state.count = 1),
+    //     item:
+    //       state.cartItem.length > 0
+    //         ? (item.itemCount += state.itemCount)
+    //         : state.itemCount,
+    //   });
+
+    //   const { error } = await supabase
+    //     .from("cartItem")
+    //     .update({ quantity: state.quantity + 1 })
+    //     .eq("userId", userId);
+
+    //   if (error) console.log("error while updating count:", error);
+    // },
+    // decreaseQty: (id) => {
+    //   const state = get();
+    //   const item = state.cartItem?.find((item) => item.id === id);
+
+    //   set({
+    //     item: state.cartItem.length > 0 ? (item.qty -= 1) : state.quantity,
     //   });
     // },
+
+    setQuantity: (newQuantity) => {
+      set({
+        quantity: newQuantity,
+      });
+    },
+
+    increaseItemCount: async (newQuantity, productId) => {
+      const state = get();
+      // const item = state.cartItem?.find((item) => item.id === id);
+      const { data, error } = await supabase
+        .from("cartItem")
+        .update({ quantity: newQuantity + 1 })
+        .eq("productId", productId)
+        .select();
+      if (error) console.log("error while increaseing count:", error);
+
+      if (data) {
+        set({
+          quantity: (state.quantity += 1),
+        });
+        console.log(data);
+        console.log("updated quantity:", data[0]?.quantity);
+      }
+    },
+    decreaseItemCount: () => {
+      const state = get();
+      set({
+        quantity: (state.quantity -= 1),
+      });
+    },
+    // updateCartCount: async (newQuantity, productId) => {
+    //   const { data, error } = await supabase
+    //     .from("cartItem")
+    //     .update({ quantity: newQuantity })
+    //     .eq("productId", productId)
+    //     .select();
+    //   if (error) console.log("Error while updating quantity:", error);
+    //   const { quantity } = data[0];
+    //   if (data) {
+    //     set({
+    //       quantity: newQuantity,
+    //     });
+    //     console.log("SFJSE:", data[0].quantity);
+    //   }
+    // },
+
+    // addToCart: async (name, price, userId, productId, image, quantity) => {
+    // const { data, error } = await supabase
+    // .from("cartItem")
+    // .insert({ name, price, userId, productId, image, quantity });
+    // if (error) console.log("Error while inserting items:", error);
+    // },
+
     setItemCount: (count) => {
       const state = get();
       set({
-        itemCount: count,
+        quantity: count,
       });
     },
 
@@ -280,14 +366,14 @@ const useProductStore = create(
     //   set({ loading: false });
     // },
 
-    handleLogout: async () => {
-      set({ loading: true });
-      const { error } = await supabase.auth.signOut();
+    // handleLogout: async () => {
+    //   set({ loading: true });
+    //   const { error } = await supabase.auth.signOut();
 
-      if (error) console.log("Error signing out:", error);
-      else console.log("Signed out user!");
-      set({ loading: false });
-    },
+    //   if (error) console.log("Error signing out:", error);
+    //   else console.log("Signed out user!");
+    //   set({ loading: false });
+    // },
   })
 
   //   {

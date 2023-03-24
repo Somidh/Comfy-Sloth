@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assests/logo.svg";
@@ -6,29 +6,49 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import { useStateContext } from "../context/ContextProvider";
+import { useAuth } from "./AuthProvider";
 import useProductStore from "../store/productStore";
 import { supabase } from "../../server/supabase";
 
 const Navbar = () => {
   const { handleNavbarClick, token, setToken } = useStateContext();
 
-  const { cartItem, loading, setLoading, user, setUser } = useProductStore(
+  const { cartItem, loading, setLoading, userId, setUser } = useProductStore(
     (state) => ({
       cartItem: state.cartItem,
       loading: state.loading,
       setLoading: state.setLoading,
-      user: state.user,
+      userId: state.userId,
       setUser: state.setUser,
+      // user: state.user,
     })
   );
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user]);
+
+  const [useR, setUseR] = useState(null);
+  const [session, setSession] = useState(null);
+
+  // useEffect(() => {
+  //   const userFromStorage = sessionStorage.getItem("user");
+  //   const sessionFromStorage = sessionStorage.getItem("session");
+  //   if (userFromStorage && sessionFromStorage) {
+  //     setUseR(JSON.parse(userFromStorage));
+  //     setSession(JSON.parse(sessionFromStorage));
+  //   }
+  // }, []);
+  // setUser(useR && session);
 
   const navigate = useNavigate();
 
   const handleCartClick = () => {
     navigate("/cart");
-  };
-  const goToLogin = () => {
-    navigate("/login");
   };
 
   const handleLogout = async () => {
@@ -39,12 +59,14 @@ const Navbar = () => {
     else console.log("Signed out user!");
 
     alert("Sign out succesful");
-    setUser(false);
     navigate("/");
     setLoading(false);
   };
 
-  console.log("user:", user);
+  // console.log("userId:", userId);
+  // const user = supabase.auth.getUser()
+
+  // console.log("user:" , user.id)
 
   // async function handleLogout() {
   //   setLoading(true);
@@ -95,18 +117,17 @@ const Navbar = () => {
             {cartItem.length}
           </span>
         </div>
-        <div
-          onClick={goToLogin}
+        <Link
+          to={!user && "/login"}
+          onClick={user && handleLogout}
           className="flex items-center justify-center gap-2 cursor-pointer"
         >
-          <h2 onClick={handleLogout} className="text-[25px]">
-            {user ? "Logout" : "Login"}{" "}
-          </h2>
+          <h2 className="text-[25px]">{user ? "Logout" : "Login"} </h2>
           <div className="flex items-center ">
             <PersonIcon fontSize="medium" />
             <span className="font-medium text-2xl">-</span>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );
