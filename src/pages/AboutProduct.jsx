@@ -18,7 +18,7 @@ const AboutProduct = () => {
     addToCart,
     increaseQty,
     decreaseQty,
-    itemCount,
+    quantity,
     increaseItemCount,
     decreaseItemCount,
     setItemCount,
@@ -30,35 +30,35 @@ const AboutProduct = () => {
     addToCart: state.addToCart,
     increaseQty: state.increaseQty,
     decreaseQty: state.decreaseQty,
-    itemCount: state.itemCount,
+    quantity: state.quantity,
     increaseItemCount: state.increaseItemCount,
     decreaseItemCount: state.decreaseItemCount,
     setItemCount: state.setItemCount,
     userId: state.userId,
   }));
 
-  const {
-    images,
-    name,
-    price,
-    reviews,
-    stars,
-    description,
-    stock,
-    company,
-    qty,
-  } = singleProduct;
+  const { images, name, price, reviews, stars, description, stock, company } =
+    singleProduct;
 
-  console.log("name:", name, "price:", price, "qty:", qty, "UserId:", userId, "itemCOunt:" , itemCount);
+  console.log(
+    "name:",
+    name,
+    "price:",
+    price,
+    "UserId:",
+    userId,
+    "quantity:",
+    quantity,
+    "ID:",
+    singleProduct.id
+  );
 
   const handleIncrease = () => {
-    itemCount < stock && increaseItemCount(id);
-    increaseQty(id);
+    quantity < stock && increaseItemCount();
   };
 
   const handleDecrease = () => {
-    itemCount > 1 && decreaseItemCount(id);
-    decreaseQty(id);
+    quantity > 1 && decreaseItemCount();
   };
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const AboutProduct = () => {
   useEffect(() => {
     let timer = setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 800);
 
     fetchSingleProduct(id);
 
@@ -77,7 +77,7 @@ const AboutProduct = () => {
 
   const handleAddToCartButton = () => {
     navigate("/cart");
-    addToCart(name, price, userId, singleProduct?.id, images[0].url, itemCount);
+    addToCart(name, price, userId, id, images[0]?.url, quantity);
   };
   const handleBackClick = () => {
     navigate("/products");
@@ -171,7 +171,7 @@ const AboutProduct = () => {
                     -
                   </span>
                   <span className="text-[#102A42] font-bold text-3xl md:text-4xl">
-                    {itemCount}
+                    {quantity}
                   </span>
                   <span
                     onClick={handleIncrease}

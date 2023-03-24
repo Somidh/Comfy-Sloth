@@ -38,7 +38,7 @@ const Form = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const { data, error } = await supabase.auth.signUp({
+    const { data, session, error } = await supabase.auth.signUp({
       email: email,
       password: password,
 
@@ -63,13 +63,18 @@ const Form = () => {
       password: password,
     });
 
-    if (error) console.log("Error in signing in:", error);
-    else console.log("Signed In user:", data);
+    if (error) {
+      console.log("error while loggin in", error);
+    } else {
+      console.log("userData:", data);
+      sessionStorage.setItem("user", JSON.stringify(data.user));
+      sessionStorage.setItem("session", JSON.stringify(data.session));
+    }
     navigate("/");
     setUser(true);
     setLoading(false);
     setUserId(data.user.id);
-    console.log("userID:",data.user.id)
+    console.log("userID:", data.user.id);
   };
 
   return (

@@ -10,14 +10,12 @@ const Cart = () => {
   const { cartItem, clearCart, fetchCartItem } = useProductStore((state) => ({
     cartItem: state.cartItem,
     clearCart: state.clearCart,
-    fetchCartItem: state.fetchCartItem
+    fetchCartItem: state.fetchCartItem,
   }));
-
 
   useEffect(() => {
     fetchCartItem();
   }, []);
-
 
   console.log("cartItems:", cartItem);
   let subTotal = 0;
@@ -64,8 +62,8 @@ const Cart = () => {
         <hr className="w-full  border-[#bcccdc] hidden my-10 md:block" />
 
         {cartItem.map((item, idx) => {
-          subTotal += item.price * item.qty;
-
+          subTotal += item.price * item.quantity;
+          // console.log(item)
           return <CartItem key={idx} formatPrice={formatPrice} {...item} />;
         })}
 
