@@ -8,6 +8,7 @@ const Form = () => {
   const pathName = location.pathname;
   const navigate = useNavigate();
 
+  const [userDetail, setUserDetail] = useState();
   const isLogin = pathName === "/login";
 
   const {
@@ -17,6 +18,7 @@ const Form = () => {
     setEmail,
     setPassword,
     setFullName,
+    loading,
     setLoading,
     setUser,
     setUserId,
@@ -27,6 +29,7 @@ const Form = () => {
     setEmail: state.setEmail,
     setPassword: state.setPassword,
     setFullName: state.setFullName,
+    loading: state.loading,
     setLoading: state.setLoading,
     setUser: state.setUser,
     setUserId: state.setUserId,
@@ -35,7 +38,7 @@ const Form = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const { data, error } = await supabase.auth.signUp({
+    const { data, session, error } = await supabase.auth.signUp({
       email: email,
       password: password,
 

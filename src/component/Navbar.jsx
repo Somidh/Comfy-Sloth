@@ -11,26 +11,39 @@ import useProductStore from "../store/productStore";
 import { supabase } from "../../server/supabase";
 
 const Navbar = () => {
-  const { handleNavbarClick } = useStateContext();
+  const { handleNavbarClick, token, setToken } = useStateContext();
 
-  const { cartItem, setLoading } = useProductStore(
+  const { cartItem, loading, setLoading, userId, setUser } = useProductStore(
     (state) => ({
       cartItem: state.cartItem,
       loading: state.loading,
       setLoading: state.setLoading,
       userId: state.userId,
       setUser: state.setUser,
+      // user: state.user,
     })
   );
 
   const { user } = useAuth();
 
-
   useEffect(() => {
     if (!user) {
-      console.log("not User")
+      navigate("/");
     }
   }, [user]);
+
+  const [useR, setUseR] = useState(null);
+  const [session, setSession] = useState(null);
+
+  // useEffect(() => {
+  //   const userFromStorage = sessionStorage.getItem("user");
+  //   const sessionFromStorage = sessionStorage.getItem("session");
+  //   if (userFromStorage && sessionFromStorage) {
+  //     setUseR(JSON.parse(userFromStorage));
+  //     setSession(JSON.parse(sessionFromStorage));
+  //   }
+  // }, []);
+  // setUser(useR && session);
 
   const navigate = useNavigate();
 
@@ -50,6 +63,19 @@ const Navbar = () => {
     setLoading(false);
   };
 
+  // console.log("userId:", userId);
+  // const user = supabase.auth.getUser()
+
+  // console.log("user:" , user.id)
+
+  // async function handleLogout() {
+  //   setLoading(true);
+  //   const { error } = await supabase.auth.signOut();
+
+  //   if (error) console.log("Error signing out:", error);
+  //   else console.log("Signed out user!");
+  //   setLoading(false);
+  // }
 
   return (
     <div className="flex items-center justify-between max-w-[85em] mx-auto px-5 py-4 ">

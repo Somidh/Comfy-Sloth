@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useProductStore from "../store/productStore";
-import { useParams } from "react-router";
-import { useAuth } from "./AuthProvider";
+import { useNavigate, useParams } from "react-router";
+import { supabase } from "../../server/supabase";
 
 const CartItem = ({
   name,
@@ -16,23 +16,39 @@ const CartItem = ({
   const { id } = useParams();
   const {
     removeFromCart,
+    increaseQty,
+    decreaseQty,
     fetchCartItem,
     increaseItemCount,
     decreaseItemCount,
+    setItemCount,
+    updateCartCount,
+    setQuantity,
   } = useProductStore((state) => ({
     removeFromCart: state.removeFromCart,
+    increaseQty: state.increaseQty,
+    decreaseQty: state.decreaseQty,
+    setItemCount: state.setItemCount,
     fetchCartItem: state.fetchCartItem,
     increaseItemCount: state.increaseItemCount,
     decreaseItemCount: state.decreaseItemCount,
+
+    updateCartCount: state.updateCartCount,
+    setQuantity: state.setQuantity,
   }));
 
-  const { user } = useAuth();
-
   useEffect(() => {
-    fetchCartItem(user?.id);
-  }, []);
+    fetchCartItem();
+  },[]);
+  // useEffect(() => {
+  //   setItemCount(quantity);
+  // }, []);
 
+  // const handleIncrease = () => {
+  // updateCartCount(quantity, productId);
+  //  };
   const handleIncrease = () => {
+    // setQuantity(quantity);
     quantity < 10 && increaseItemCount(quantity, productId);
   };
   const handleDecrease = () => {
@@ -41,6 +57,7 @@ const CartItem = ({
   const handleDelete = () => {
     removeFromCart(productId);
   };
+  console.log("quantity:", quantity);
 
   return (
     <div className="flex items-center justify-between mb-10 ">

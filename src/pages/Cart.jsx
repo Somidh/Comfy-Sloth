@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Header from "../component/Header";
 import useProductStore from "../store/productStore";
 import CartItem from "../component/CartItem";
 import { useNavigate } from "react-router";
 import SubTotal from "../component/SubTotal";
 import { useStateContext } from "../context/ContextProvider";
-import { useAuth } from "../component/AuthProvider";
 
 const Cart = () => {
   const { cartItem, clearCart, fetchCartItem } = useProductStore((state) => ({
@@ -14,23 +13,16 @@ const Cart = () => {
     fetchCartItem: state.fetchCartItem,
   }));
 
-  const { user } = useAuth();
-  console.log("cart user:", user?.id);
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    let timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
-    fetchCartItem(user?.id);
-
-    return () => clearTimeout(timer);
+    fetchCartItem();
   }, []);
 
   console.log("cartItems:", cartItem);
   let subTotal = 0;
 
   const navigate = useNavigate();
+
+  console.log();
 
   const formatPrice = (number) => {
     return new Intl.NumberFormat("en-US", {
@@ -43,9 +35,7 @@ const Cart = () => {
     navigate("/products");
   };
 
-  return loading ? (
-    "loading"
-  ) : cartItem.length === 0 ? (
+  return cartItem.length === 0 ? (
     <div className="flex flex-col items-center justify-center h-[82vh] gap-4">
       <h1 className="font-bold text-5xl text-[#102A42] tracking-widest">
         Your cart is empty
