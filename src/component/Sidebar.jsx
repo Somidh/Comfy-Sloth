@@ -1,5 +1,5 @@
 import React from "react";
-// import Logo from "../assests/logo.svg";
+import Logo from "../assests/logo.svg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -44,7 +44,7 @@ const Navbar = () => {
     >
       <div className="flex flex-col items-start  gap-5  ">
         <div className="flex items-center justify-between w-full">
-          {/* <img src={Logo} alt="logo" className="w-[10em]" /> */}
+          <img src={Logo} alt="logo" className="w-[10em]" />
           <div>
             <CloseIcon
               onClick={handleNavbarClick}

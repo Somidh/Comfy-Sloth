@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// import Logo from "../assests/logo.svg";
+import Logo from "../assests/logo.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
@@ -52,7 +52,7 @@ const Navbar = () => {
 
   return (
     <div className="flex items-center justify-between max-w-[85em] mx-auto px-5 py-4 ">
-      {/* <img src={Logo} alt="logo" className="w-[10em] " /> */}
+      <img src={Logo} alt="logo" className="w-[10em] " />
 
       <div className="hidden lg:flex items-center gap-28 tracking-widest text-[#324D67] ">
         <Link
