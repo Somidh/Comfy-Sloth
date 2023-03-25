@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useStateContext } from "../context/ContextProvider";
-import { useAuth } from "./AuthProvider";
+// import { useStateContext } from "../context/ContextProvider";
+import { useAuth } from "../context/ContextProvider";
 import { Link } from "react-router-dom";
 
 const SubTotal = ({ subTotal }) => {
@@ -54,7 +54,7 @@ const SubTotal = ({ subTotal }) => {
 
         <Link
           role="link"
-          to={user ? "/" : "/login"}
+          to={user ? "/cart" : "/login"}
           className="bg-[#AB7A5F] text-center text-white text-sm mt-5 py-2 rounded-sm uppercase font-medium tracking-widest"
         >
           {user ? "Procees To Checkout" : "Login"}

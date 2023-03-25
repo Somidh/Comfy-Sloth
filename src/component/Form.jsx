@@ -3,12 +3,16 @@ import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../../server/supabase";
 import useProductStore from "../store/productStore";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/ContextProvider";
+
 const Form = () => {
   const location = useLocation();
   const pathName = location.pathname;
   const navigate = useNavigate();
 
   const isLogin = pathName === "/login";
+
+  const { logIn, signUp } = useAuth();
 
   const {
     full_name,
@@ -30,44 +34,59 @@ const Form = () => {
     setUser: state.setUser,
   }));
 
-  const handleSignup = async (e) => {
+  // const handleSignup = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   const { data, error } = await supabase.auth.signUp({
+  //     email: email,
+  //     password: password,
+
+  //     options: {
+  //       data: {
+  //         full_name: full_name,
+  //       },
+  //     },
+  //   });
+  //   if (error) console.log("Error signing up:", error);
+  //   else console.log("Signed up user:", data);
+  //   alert("check email");
+  //   setUser(true);
+  //   setLoading(false);
+  // };
+
+  const handleSignup = (e) => {
     e.preventDefault();
-    setLoading(true);
-    const { data, error } = await supabase.auth.signUp({
+    signUp({
       email: email,
       password: password,
-
-      options: {
-        data: {
-          full_name: full_name,
-        },
-      },
+      option: { data: { full_name: full_name } },
     });
-    if (error) console.log("Error signing up:", error);
-    else console.log("Signed up user:", data);
-    alert("check email");
-    setUser(true);
-    setLoading(false);
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   const { data, error } = await supabase.auth.signInWithPassword({
+  //     email: email,
+  //     password: password,
+  //   });
 
-    if (error) {
-      console.log("error while loggin in", error);
-    } else {
-      console.log("userData:", data);
-      sessionStorage.setItem("user", JSON.stringify(data.user));
-      sessionStorage.setItem("session", JSON.stringify(data.session));
-    }
+  //   if (error) {
+  //     console.log("error while loggin in", error);
+  //   } else {
+  //     console.log("userData:", data);
+  //     sessionStorage.setItem("user", JSON.stringify(data.user));
+  //     sessionStorage.setItem("session", JSON.stringify(data.session));
+  //   }
+  //   navigate("/");
+  //   setUser(true);
+  //   setLoading(false);
+  // };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    logIn({ email: email, password: password });
     navigate("/");
-    setUser(true);
-    setLoading(false);
   };
 
   return (

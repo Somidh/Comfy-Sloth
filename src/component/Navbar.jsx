@@ -5,34 +5,26 @@ import Logo from "../assests/logo.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
-import { useStateContext } from "../context/ContextProvider";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from "../context/ContextProvider";
 import useProductStore from "../store/productStore";
 import { supabase } from "../../server/supabase";
 
 const Navbar = () => {
-  const { handleNavbarClick } = useStateContext();
-
   const { cartItem, setLoading, fetchCartItem } = useProductStore((state) => ({
     cartItem: state.cartItem,
-    loading: state.loading,
+   
     setLoading: state.setLoading,
-    userId: state.userId,
-    setUser: state.setUser,
     fetchCartItem: state.fetchCartItem,
   }));
 
-  const { user } = useAuth();
-
-  useEffect(() => {
-    if (!user) {
-      console.log("not User");
-    }
-    fetchCartItem(user?.id);
-  }, [user]);
+  const { user, handleNavbarClick, signOut } = useAuth();
 
   // useEffect(() => {
-  // }, []);
+  //   if (!user) {
+  //     console.log("not User");
+  //   }
+  //   fetchCartItem(user?.id);
+  // }, [user]);
 
   const navigate = useNavigate();
 
@@ -40,16 +32,22 @@ const Navbar = () => {
     navigate("/cart");
   };
 
-  const handleLogout = async () => {
-    setLoading(true);
-    const { error } = await supabase.auth.signOut();
+  // const handleLogout = async () => {
+  //   setLoading(true);
+  //   const { error } = await supabase.auth.signOut();
 
-    if (error) console.log("Error signing out:", error);
-    else console.log("Signed out user!");
+  //   if (error) console.log("Error signing out:", error);
+  //   else console.log("Signed out user!");
 
-    alert("Sign out succesful");
-    navigate("/");
-    setLoading(false);
+  //   alert("Sign out succesful");
+  //   navigate("/");
+  //   setLoading(false);
+  // };
+
+  const handleLogout = () => {
+    signOut();
+    navigate('/')
+    alert("Succesfully sign out")
   };
 
   return (

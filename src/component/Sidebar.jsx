@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import CloseIcon from "@mui/icons-material/Close";
-import { useStateContext } from "../context/ContextProvider";
+import { useAuth } from "../context/ContextProvider";
 import useProductStore from "../store/productStore";
 
 const sidebarLinks = [
@@ -24,7 +24,7 @@ const sidebarLinks = [
 ];
 
 const Navbar = () => {
-  const { handleNavbarClick, showNavbar, setShowNavbar } = useStateContext();
+  const { handleNavbarClick, showNavbar, setShowNavbar } = useAuth();
   const { cartItem } = useProductStore((state) => ({
     cartItem: state.cartItem,
   }));

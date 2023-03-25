@@ -62,7 +62,7 @@ const AboutProduct = () => {
   useEffect(() => {
     let timer = setTimeout(() => {
       setLoading(false);
-    }, 800);
+    }, 1200);
 
     fetchSingleProduct(id);
 
@@ -70,8 +70,8 @@ const AboutProduct = () => {
   }, []);
 
   const handleAddToCartButton = () => {
-    navigate("/cart");
     addToCart(name, price, userId, id, images[0]?.url, quantity);
+    navigate("/cart");
   };
   const handleBackClick = () => {
     navigate("/products");
