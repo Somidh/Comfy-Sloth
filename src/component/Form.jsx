@@ -19,7 +19,6 @@ const Form = () => {
     setFullName,
     setLoading,
     setUser,
-    setUserId,
   } = useProductStore((state) => ({
     full_name: state.full_name,
     email: state.email,
@@ -29,7 +28,6 @@ const Form = () => {
     setFullName: state.setFullName,
     setLoading: state.setLoading,
     setUser: state.setUser,
-    setUserId: state.setUserId,
   }));
 
   const handleSignup = async (e) => {
@@ -70,8 +68,6 @@ const Form = () => {
     navigate("/");
     setUser(true);
     setLoading(false);
-    setUserId(data.user.id);
-    console.log("userID:", data.user.id);
   };
 
   return (
