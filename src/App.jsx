@@ -12,7 +12,7 @@ import Signup from "./pages/Signup";
 import Footer from "./component/Footer";
 import AboutProduct from "./pages/AboutProduct";
 import { Cancel } from "@mui/icons-material";
-import { AuthProvider } from "./component/AuthProvider";
+import { AuthProvider } from "./context/ContextProvider";
 
 function App() {
   return (

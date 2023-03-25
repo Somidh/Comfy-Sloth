@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useProductStore from "../store/productStore";
 import { useParams } from "react-router";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from "../context/ContextProvider";
+import { supabase } from "../../server/supabase";
 
 const CartItem = ({
   name,
@@ -13,23 +14,24 @@ const CartItem = ({
   productId,
   quantity,
 }) => {
-  const { id } = useParams();
   const {
     removeFromCart,
     fetchCartItem,
     increaseItemCount,
     decreaseItemCount,
-    userId
+    cartItem,
   } = useProductStore((state) => ({
     removeFromCart: state.removeFromCart,
     fetchCartItem: state.fetchCartItem,
     increaseItemCount: state.increaseItemCount,
     decreaseItemCount: state.decreaseItemCount,
-    userId: state.userId
+    cartItem: state.cartItem,
   }));
 
+  const { user } = useAuth();
+
   useEffect(() => {
-    fetchCartItem(userId);
+    fetchCartItem();
   }, []);
 
   const handleIncrease = () => {

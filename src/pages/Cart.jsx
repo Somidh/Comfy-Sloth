@@ -4,8 +4,8 @@ import useProductStore from "../store/productStore";
 import CartItem from "../component/CartItem";
 import { useNavigate } from "react-router";
 import SubTotal from "../component/SubTotal";
-import { useStateContext } from "../context/ContextProvider";
-import { useAuth } from "../component/AuthProvider";
+// import { useStateContext } from "../context/ContextProvider";
+import { useAuth } from "../context/ContextProvider";
 import { ClipLoader } from "react-spinners";
 
 const Cart = () => {
@@ -15,18 +15,18 @@ const Cart = () => {
     fetchCartItem: state.fetchCartItem,
   }));
 
-  const { user } = useAuth();
-  console.log("cart user:", user?.id);
-  const [loading, setLoading] = useState(true);
+    const { user } = useAuth();
+    console.log("cart user:", user?.id);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
-    fetchCartItem(user?.id);
+    useEffect(() => {
+      let timer = setTimeout(() => {
+        setLoading(false);
+      }, 100);
+      fetchCartItem();
 
-    return () => clearTimeout(timer);
-  }, []);
+      return () => clearTimeout(timer);
+    }, []);
 
   console.log("cartItems:", cartItem);
   let subTotal = 0;

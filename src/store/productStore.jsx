@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import { supabase } from "../../server/supabase";
-
+import { useAuth } from "../context/ContextProvider";
 
 const useProductStore = create((set, get) => ({
   products: [],
@@ -15,6 +15,13 @@ const useProductStore = create((set, get) => ({
   loading: true,
   gridView: true,
   quantity: 1,
+
+  // setSome: () => {
+  //   const { user } = useAuth();
+  //   set({
+  //     userId: user.id,
+  //   });
+  // },
 
   fetchProducts: async () => {
     const { data, error } = await supabase.from("products").select();
@@ -61,11 +68,12 @@ const useProductStore = create((set, get) => ({
     }
   },
 
-  fetchCartItem: async (userId) => {
+  fetchCartItem: async () => {
+    const state = get()
     const { data, error } = await supabase
       .from("cartItem")
       .select()
-      .eq("userId", userId);
+      .eq("userId", state.userId);
     if (error) console.log("Error while fetching cart item:", error);
     if (data) {
       console.log("succes item fetching", data);
