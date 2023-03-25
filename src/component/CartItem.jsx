@@ -30,15 +30,19 @@ const CartItem = ({
 
   const { user } = useAuth();
 
-  useEffect(() => {
-    fetchCartItem();
-  }, []);
+  const [qty, setQty] = useState(quantity);
+
+  // useEffect(() => {
+  //   fetchCartItem();
+  // }, []);
 
   const handleIncrease = () => {
-    quantity < 10 && increaseItemCount(quantity, productId);
+    setQty((prev) => prev + 1);
+    quantity < 10 && increaseItemCount(qty, productId);
   };
   const handleDecrease = () => {
-    quantity > 1 && decreaseItemCount();
+    setQty((prev) => prev - 1);
+    quantity > 1 && decreaseItemCount(qty, productId);
   };
   const handleDelete = () => {
     removeFromCart(productId);
@@ -68,7 +72,7 @@ const CartItem = ({
           -
         </span>
         <span className="text-[#102A42] font-bold text-3xl md:text-4xl">
-          {quantity}
+          {qty}
         </span>
         <span
           onClick={handleIncrease}
