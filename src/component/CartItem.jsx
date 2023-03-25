@@ -19,17 +19,17 @@ const CartItem = ({
     fetchCartItem,
     increaseItemCount,
     decreaseItemCount,
+    userId
   } = useProductStore((state) => ({
     removeFromCart: state.removeFromCart,
     fetchCartItem: state.fetchCartItem,
     increaseItemCount: state.increaseItemCount,
     decreaseItemCount: state.decreaseItemCount,
+    userId: state.userId
   }));
 
-  const { user } = useAuth();
-
   useEffect(() => {
-    fetchCartItem(user?.id);
+    fetchCartItem(userId);
   }, []);
 
   const handleIncrease = () => {

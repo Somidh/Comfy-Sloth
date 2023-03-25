@@ -8,17 +8,18 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   console.log("Session:", session);
-  // const { setUserId } = useProductStore((state) => ({
-  //   setUserId: state.setUserId,
-  // }));
+  const { setUserId } = useProductStore((state) => ({
+    setUserId: state.setUserId,
+  }));
   
   useEffect(() => {
     let gotSession = localStorage.getItem("authSession");
     if (gotSession) {
-      // setUserId(gotSession.user?.id)
+      setUserId(gotSession.user?.id)
       console.log("Retrieved: ", gotSession);
       setSession(JSON.parse(gotSession));
       setUser(JSON.parse(gotSession));
@@ -32,7 +33,7 @@ export function AuthProvider({ children }) {
           if (session) {
             console.log("New session: ", session);
             setUser(session.user);
-            // setUserId(session.user?.id)
+            setUserId(session.user?.id)
             localStorage.setItem("authSession", JSON.stringify(session));
             setSession(session);
           } else {

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import SubTotal from "../component/SubTotal";
 import { useStateContext } from "../context/ContextProvider";
 import { useAuth } from "../component/AuthProvider";
+import { ClipLoader } from "react-spinners";
 
 const Cart = () => {
   const { cartItem, clearCart, fetchCartItem } = useProductStore((state) => ({
@@ -44,9 +45,11 @@ const Cart = () => {
   };
 
   return loading ? (
-    "loading"
+    <div className="flex items-center justify-center mb-20 h-[calc(100vh-166px)]">
+      <ClipLoader color="#AB7A5F" size={60} />
+    </div>
   ) : cartItem.length === 0 ? (
-    <div className="flex flex-col items-center justify-center h-[82vh] gap-4">
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-167px)] gap-4">
       <h1 className="font-bold text-5xl text-[#102A42] tracking-widest">
         Your cart is empty
       </h1>

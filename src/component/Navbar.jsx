@@ -13,24 +13,26 @@ import { supabase } from "../../server/supabase";
 const Navbar = () => {
   const { handleNavbarClick } = useStateContext();
 
-  const { cartItem, setLoading } = useProductStore(
-    (state) => ({
-      cartItem: state.cartItem,
-      loading: state.loading,
-      setLoading: state.setLoading,
-      userId: state.userId,
-      setUser: state.setUser,
-    })
-  );
+  const { cartItem, setLoading, fetchCartItem } = useProductStore((state) => ({
+    cartItem: state.cartItem,
+    loading: state.loading,
+    setLoading: state.setLoading,
+    userId: state.userId,
+    setUser: state.setUser,
+    fetchCartItem: state.fetchCartItem,
+  }));
 
   const { user } = useAuth();
 
-
   useEffect(() => {
     if (!user) {
-      console.log("not User")
+      console.log("not User");
     }
+    fetchCartItem(user?.id);
   }, [user]);
+
+  // useEffect(() => {
+  // }, []);
 
   const navigate = useNavigate();
 
@@ -49,7 +51,6 @@ const Navbar = () => {
     navigate("/");
     setLoading(false);
   };
-
 
   return (
     <div className="flex items-center justify-between max-w-[85em] mx-auto px-5 py-4 ">
@@ -84,9 +85,12 @@ const Navbar = () => {
       </div>
 
       <div className=" items-center justify-center gap-5 hidden lg:flex">
-        <div className="flex items-center justify-center gap-2 cursor-pointer relative">
+        <div
+          onClick={handleCartClick}
+          className="flex items-center justify-center gap-2 cursor-pointer relative"
+        >
           <h2 className="text-[25px] ">Cart</h2>
-          <ShoppingCartIcon fontSize="medium" onClick={handleCartClick} />
+          <ShoppingCartIcon fontSize="medium" />
           <span className="w-5 h-5 bg-[#AB7A5F] rounded-full absolute -right-2 -top-1 flex items-center justify-center text-white text-sm">
             {cartItem.length}
           </span>
