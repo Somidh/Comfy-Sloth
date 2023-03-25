@@ -4,8 +4,6 @@ import { supabase } from "../../server/supabase";
 import useProductStore from "../store/productStore";
 const AuthContext = createContext();
 
-
-
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [showNavbar, setShowNavbar] = useState(false);
@@ -24,6 +22,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     let gotSession = localStorage.getItem("authSession");
+   
     if (gotSession) {
       setUserId(gotSession.user?.id);
       console.log("Retrieved: ", gotSession);
@@ -79,7 +78,6 @@ export function AuthProvider({ children }) {
   //     }
   // }, [])
 
-
   return (
     <AuthContext.Provider value={value}>
       {!loading && children}
@@ -87,5 +85,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-
-export const useAuth = () => useContext(AuthContext)
+export const useAuth = () => useContext(AuthContext);

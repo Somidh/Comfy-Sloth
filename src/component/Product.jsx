@@ -1,6 +1,6 @@
 import React from "react";
 import { FaSearch } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Product = ({ name, image, price, id }) => {
   const formatPrice = (number) => {
@@ -8,6 +8,11 @@ const Product = ({ name, image, price, id }) => {
       style: "currency",
       currency: "USD",
     }).format(number / 100);
+  };
+  const navigate = useNavigate();
+
+  const goToProduct = () => {
+    navigate(`/product/${id}`);
   };
 
   const number = formatPrice(price);
@@ -21,9 +26,12 @@ const Product = ({ name, image, price, id }) => {
           className="w-full h-[12em] bg-center bg-cover rounded-sm object-cover cursor-pointer hover:opacity-50 transition-opacity duration-500 "
         />
         <div className=" search-icon hidden absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 bg-[#AB7A5F] w-10 h-10  rounded-full cursor-pointer">
-          <Link to={`/product/${id}`}>
-            <FaSearch style={{ color: "white", fontSize: "20px" }} />
-          </Link>
+          {/* <Link to={`/product/${id}`}> */}
+          <FaSearch
+            onClick={goToProduct}
+            style={{ color: "white", fontSize: "20px" }}
+          />
+          {/* </Link> */}
         </div>
       </div>
 

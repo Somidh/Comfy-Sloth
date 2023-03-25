@@ -22,7 +22,7 @@ const Cart = () => {
     useEffect(() => {
       let timer = setTimeout(() => {
         setLoading(false);
-      }, 100);
+      }, 500);
       fetchCartItem();
 
       return () => clearTimeout(timer);

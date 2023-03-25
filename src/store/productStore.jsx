@@ -69,11 +69,13 @@ const useProductStore = create((set, get) => ({
   },
 
   fetchCartItem: async () => {
-    const state = get()
+    
+    const state = get();
+    const userId = state.userId
     const { data, error } = await supabase
       .from("cartItem")
       .select()
-      .eq("userId", state.userId);
+      .eq("userId", userId);
     if (error) console.log("Error while fetching cart item:", error);
     if (data) {
       console.log("succes item fetching", data);
@@ -148,7 +150,7 @@ const useProductStore = create((set, get) => ({
     // const item = state.cartItem?.find((item) => item.id === id);
     const { data, error } = await supabase
       .from("cartItem")
-      .update({ quantity: newQuantity + 1 })
+      .update({ quantity: newQuantity + 1})
       .eq("productId", productId)
       .select();
     if (error) console.log("error while increaseing count:", error);
@@ -158,14 +160,24 @@ const useProductStore = create((set, get) => ({
         quantity: (state.quantity += 1),
       });
       console.log(data);
-      console.log("updated quantity:", data[0]?.quantity);
     }
   },
-  decreaseItemCount: () => {
+  decreaseItemCount: async (newQuantity, productId) => {
     const state = get();
-    set({
-      quantity: (state.quantity -= 1),
-    });
+    // const item = state.cartItem?.find((item) => item.id === id);
+    const { data, error } = await supabase
+      .from("cartItem")
+      .update({ quantity: newQuantity - 1})
+      .eq("productId", productId)
+      .select();
+    if (error) console.log("error while increaseing count:", error);
+
+    if (data) {
+      set({
+        quantity: (state.quantity -= 1),
+      });
+      console.log(data);
+    }
   },
   // updateCartCount: async (newQuantity, productId) => {
   //   const { data, error } = await supabase
