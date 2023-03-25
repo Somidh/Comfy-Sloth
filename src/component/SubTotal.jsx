@@ -1,37 +1,11 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useStateContext } from "../context/ContextProvider";
-import { loadStripe } from "@stripe/stripe-js";
 import { useAuth } from "./AuthProvider";
-
-let stripePromise;
-const getStripe = () => {
-  if (!stripePromise) {
-    stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_PUBLIC_KEY);
-  }
-
-  return stripePromise;
-};
+import { Link } from "react-router-dom";
 
 const SubTotal = ({ subTotal }) => {
-  const item = {
-    price: "price_1MSvc8SB5kHwJbssPFsCOWM3",
-    quantity: 1,
-  };
 
-  const checkoutOptions = {
-    lineItems: [item],
-    mode: "payment",
-    successUrl: `${window.location.origin}/success`,
-    cancelUrl: `${window.location.origin}/cancel`,
-  };
-
-  const redirectToCheckout = async () => {
-    const stripe = await getStripe();
-    // const { error } = await stripe.redirectToCheckout(checkoutOptions)
-  };
-
-  const { token } = useStateContext();
   const navigate = useNavigate();
 
   const formatPrice = (number) => {
@@ -44,11 +18,6 @@ const SubTotal = ({ subTotal }) => {
   const goToLogin = () => {
     navigate("/login");
   };
-  // const goToCheckout = async () => {
-  //   const stripe = await stripePromise
-  //   navigate('/checkout')
-
-  // }
 
   const { user } = useAuth();
 
@@ -83,13 +52,13 @@ const SubTotal = ({ subTotal }) => {
           </div>
         </div>
 
-        <button
+        <Link
           role="link"
-          onClick={user ? redirectToCheckout : goToLogin}
-          className="bg-[#AB7A5F] text-white text-sm mt-5 py-2 rounded-sm uppercase font-medium tracking-widest"
+          to={user ? "/" : "/login"}
+          className="bg-[#AB7A5F] text-center text-white text-sm mt-5 py-2 rounded-sm uppercase font-medium tracking-widest"
         >
           {user ? "Procees To Checkout" : "Login"}
-        </button>
+        </Link>
       </div>
     </div>
   );

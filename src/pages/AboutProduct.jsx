@@ -14,10 +14,7 @@ const AboutProduct = () => {
   const {
     fetchSingleProduct,
     singleProduct,
-    cart,
     addToCart,
-    increaseQty,
-    decreaseQty,
     quantity,
     increaseItemCount,
     decreaseItemCount,
@@ -26,10 +23,7 @@ const AboutProduct = () => {
   } = useProductStore((state) => ({
     fetchSingleProduct: state.fetchSingleProduct,
     singleProduct: state.singleProduct,
-    cart: state.cart,
     addToCart: state.addToCart,
-    increaseQty: state.increaseQty,
-    decreaseQty: state.decreaseQty,
     quantity: state.quantity,
     increaseItemCount: state.increaseItemCount,
     decreaseItemCount: state.decreaseItemCount,
