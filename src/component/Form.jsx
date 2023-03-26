@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { supabase } from "../../server/supabase";
 import useProductStore from "../store/productStore";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/ContextProvider";
@@ -9,50 +8,19 @@ const Form = () => {
   const location = useLocation();
   const pathName = location.pathname;
   const navigate = useNavigate();
-
   const isLogin = pathName === "/login";
 
   const { logIn, signUp } = useAuth();
 
-  const {
-    full_name,
-    email,
-    password,
-    setEmail,
-    setPassword,
-    setFullName,
-    setLoading,
-    setUser,
-  } = useProductStore((state) => ({
-    full_name: state.full_name,
-    email: state.email,
-    password: state.password,
-    setEmail: state.setEmail,
-    setPassword: state.setPassword,
-    setFullName: state.setFullName,
-    setLoading: state.setLoading,
-    setUser: state.setUser,
-  }));
-
-  // const handleSignup = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   const { data, error } = await supabase.auth.signUp({
-  //     email: email,
-  //     password: password,
-
-  //     options: {
-  //       data: {
-  //         full_name: full_name,
-  //       },
-  //     },
-  //   });
-  //   if (error) console.log("Error signing up:", error);
-  //   else console.log("Signed up user:", data);
-  //   alert("check email");
-  //   setUser(true);
-  //   setLoading(false);
-  // };
+  const { full_name, email, password, setEmail, setPassword, setFullName } =
+    useProductStore((state) => ({
+      full_name: state.full_name,
+      email: state.email,
+      password: state.password,
+      setEmail: state.setEmail,
+      setPassword: state.setPassword,
+      setFullName: state.setFullName,
+    }));
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -62,26 +30,6 @@ const Form = () => {
       option: { data: { full_name: full_name } },
     });
   };
-
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   const { data, error } = await supabase.auth.signInWithPassword({
-  //     email: email,
-  //     password: password,
-  //   });
-
-  //   if (error) {
-  //     console.log("error while loggin in", error);
-  //   } else {
-  //     console.log("userData:", data);
-  //     sessionStorage.setItem("user", JSON.stringify(data.user));
-  //     sessionStorage.setItem("session", JSON.stringify(data.session));
-  //   }
-  //   navigate("/");
-  //   setUser(true);
-  //   setLoading(false);
-  // };
 
   const handleLogin = (e) => {
     e.preventDefault();

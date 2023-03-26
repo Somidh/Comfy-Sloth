@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import useProductStore from "../store/productStore";
 
 const categories = [
-  // "All",
   "office",
   "living room",
   "kitchen",
@@ -55,7 +54,7 @@ const Filters = () => {
   const formatedPrice = formatPrice(selectedPrice);
 
   return (
-    <div className="px-5 mb-5 flex flex-col items-start justify-center gap-5 md:sticky ">
+    <div className="px-5 md:h-[calc(100vh-423px)] mb-5 flex flex-col items-start justify-center gap-5 md:sticky ">
       <input
         type="text"
         placeholder="Search"
