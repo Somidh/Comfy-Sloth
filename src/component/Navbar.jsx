@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assests/logo.svg";
@@ -7,26 +7,14 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
 import { useAuth } from "../context/ContextProvider";
 import useProductStore from "../store/productStore";
-import { supabase } from "../../server/supabase";
 
 const Navbar = () => {
-  const { cartItem, setLoading, fetchCartItem, setShowSidebar } =
-    useProductStore((state) => ({
-      cartItem: state.cartItem,
+  const { cartItem, setShowSidebar } = useProductStore((state) => ({
+    cartItem: state.cartItem,
+    setShowSidebar: state.setShowSidebar,
+  }));
 
-      setLoading: state.setLoading,
-      fetchCartItem: state.fetchCartItem,
-      setShowSidebar: state.setShowSidebar,
-    }));
-
-  const { user, handleNavbarClick, signOut } = useAuth();
-
-  // useEffect(() => {
-  //   if (!user) {
-  //     console.log("not User");
-  //   }
-  //   fetchCartItem(user?.id);
-  // }, [user]);
+  const { user, signOut } = useAuth();
 
   const navigate = useNavigate();
 
@@ -37,18 +25,6 @@ const Navbar = () => {
     setShowSidebar(true);
   };
 
-  // const handleLogout = async () => {
-  //   setLoading(true);
-  //   const { error } = await supabase.auth.signOut();
-
-  //   if (error) console.log("Error signing out:", error);
-  //   else console.log("Signed out user!");
-
-  //   alert("Sign out succesful");
-  //   navigate("/");
-  //   setLoading(false);
-  // };
-
   const handleLogout = () => {
     signOut();
     navigate("/");
@@ -57,7 +33,7 @@ const Navbar = () => {
 
   return (
     <div className="flex items-center justify-between max-w-[85em] mx-auto px-5 py-4 ">
-      <Link to={'/'}>
+      <Link to={"/"}>
         <img src={Logo} alt="logo" className="w-[10em] " />
       </Link>
 

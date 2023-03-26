@@ -36,21 +36,6 @@ const AboutProduct = () => {
   const { images, name, price, reviews, stars, description, stock, company } =
     singleProduct;
 
-  console.log(
-    "name:",
-    name,
-    "price:",
-    price,
-    "UserId:",
-    userId,
-    "quantity:",
-    quantity,
-    "ID:",
-    singleProduct.id,
-    "stock:",
-    stock
-  );
-
   const handleIncrease = () => {
     quantity < stock && increaseItemCount();
   };
@@ -66,7 +51,7 @@ const AboutProduct = () => {
   useEffect(() => {
     let timer = setTimeout(() => {
       setLoading(false);
-    }, 1200);
+    }, 1000);
 
     fetchSingleProduct(id);
 
@@ -99,7 +84,7 @@ const AboutProduct = () => {
       <Header title="Product" productName={name} />
 
       {loading ? (
-        <div className="flex items-center justify-center mb-20">
+        <div className="flex items-center justify-center mb-20 h-[28em]">
           <ClipLoader color="#AB7A5F" size={60} />
         </div>
       ) : (

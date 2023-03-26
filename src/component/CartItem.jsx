@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useProductStore from "../store/productStore";
-import { useAuth } from "../context/ContextProvider";
 
 const CartItem = ({
   name,
@@ -17,24 +16,18 @@ const CartItem = ({
     fetchCartItem,
     increaseItemCount,
     decreaseItemCount,
-    cartItem,
   } = useProductStore((state) => ({
     removeFromCart: state.removeFromCart,
     fetchCartItem: state.fetchCartItem,
     increaseItemCount: state.increaseItemCount,
     decreaseItemCount: state.decreaseItemCount,
-    cartItem: state.cartItem,
   }));
-
-  const { user } = useAuth();
-
-  console.log("stockfsofse:", stock);
 
   const [qty, setQty] = useState(quantity);
 
   useEffect(() => {
     fetchCartItem();
-  }, [cartItem]);
+  }, []);
 
   const handleIncrease = () => {
     qty < stock && setQty((prev) => prev + 1);

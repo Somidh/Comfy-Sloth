@@ -26,12 +26,10 @@ const Product = ({ name, image, price, id }) => {
           className="w-full h-[12em] bg-center bg-cover rounded-sm object-cover cursor-pointer hover:opacity-50 transition-opacity duration-500 "
         />
         <div className=" search-icon hidden absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 bg-[#AB7A5F] w-10 h-10  rounded-full cursor-pointer">
-          {/* <Link to={`/product/${id}`}> */}
           <FaSearch
             onClick={goToProduct}
             style={{ color: "white", fontSize: "20px" }}
           />
-          {/* </Link> */}
         </div>
       </div>
 

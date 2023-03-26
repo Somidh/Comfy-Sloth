@@ -12,7 +12,6 @@ const FeaturedProducts = () => {
             const data = await response.json()
             setFeaturedData(data.slice(5, 8))
         }
-
         fetchData()
     }, [])
 

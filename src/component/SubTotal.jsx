@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
-// import { useStateContext } from "../context/ContextProvider";
 import { useAuth } from "../context/ContextProvider";
 import { Link } from "react-router-dom";
 
@@ -13,10 +12,6 @@ const SubTotal = ({ subTotal }) => {
       style: "currency",
       currency: "USD",
     }).format(number / 100);
-  };
-
-  const goToLogin = () => {
-    navigate("/login");
   };
 
   const { user } = useAuth();
