@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./component/Navbar";
 import SideBar from "./component/Sidebar";
@@ -13,9 +13,11 @@ import Footer from "./component/Footer";
 import AboutProduct from "./pages/AboutProduct";
 import { Cancel } from "@mui/icons-material";
 import { AuthProvider } from "./context/ContextProvider";
-import { HashRouter } from 'react-router-dom'
+import { HashRouter } from "react-router-dom";
+import useProductStore from "./store/productStore";
 
 function App() {
+  
   return (
     <div>
       <AuthProvider>

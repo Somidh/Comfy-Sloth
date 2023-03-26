@@ -15,18 +15,18 @@ const Cart = () => {
     fetchCartItem: state.fetchCartItem,
   }));
 
-    const { user } = useAuth();
-    console.log("cart user:", user?.id);
-    const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  console.log("cart user:", user?.id);
+  const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-      let timer = setTimeout(() => {
-        setLoading(false);
-      }, 500);
-      fetchCartItem();
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setLoading(false);
+    }, 500);
 
-      return () => clearTimeout(timer);
-    }, []);
+    fetchCartItem();
+    return () => clearTimeout(timer);
+  }, [cartItem]);
 
   console.log("cartItems:", cartItem);
   let subTotal = 0;
