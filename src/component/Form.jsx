@@ -150,7 +150,7 @@ const Form = () => {
               <div className="mb-3 ">
                 <button
                   onClick={isLogin ? handleLogin : handleSignup}
-                  className="mb-4 block w-full text-center text-white  bg-gray-400 hover:bg-[#2260c4] px-2 py-1.5 rounded-md tracking-widest shadow-md transition-all duration-800"
+                  className="mb-4 block w-full text-center text-white  bg-[#AB7A5F]/90 hover:bg-[#AB7A5F] px-2 py-1.5 rounded-md tracking-widest shadow-md transition-all duration-800"
                 >
                   Submit
                 </button>
@@ -158,13 +158,13 @@ const Form = () => {
             </form>
             {/* 9359e7bc-231b-42f8-bbf0-ce00b00e3173 */}
 
-            <div className="text-center">
-              <span className=" text-[text-[#102A43]] font-light">
+            <div className=" flex items-center justify-center">
+              <span className="text-[#617D98] font-light">
                 {isLogin ? "Not a member yet?" : "Already a member?"}
               </span>
               <Link
                 to={isLogin ? "/signup" : "/login"}
-                className="ml-2 tracking-wider text-[#3b82f6]"
+                className="ml-2 tracking-wider text-[#102A42] "
               >
                 {isLogin ? "Register" : "Login"}
               </Link>
