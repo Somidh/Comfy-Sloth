@@ -74,8 +74,9 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="flex flex-col px-5 text-[#324D67] items-start justify-center gap-7">
-          {sidebarLinks.map((link) => (
+          {sidebarLinks.map((link, idx) => (
             <Link
+            key={idx}
               to={link.url}
               className="tracking-widest"
               onClick={handleSidebarClick}

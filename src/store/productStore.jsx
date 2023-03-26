@@ -16,19 +16,15 @@ const useProductStore = create((set, get) => ({
   gridView: true,
   quantity: 1,
   showSidebar: false,
-
-  setShowSidebar: (value) => {
-    set({
-      showSidebar: value,
-    });
-  },
-
-  // setSome: () => {
-  //   const { user } = useAuth();
-  //   set({
-  //     userId: user.id,
-  //   });
-  // },
+  filteredProducts: [],
+  selectedCategory: null,
+  selectedBrand: null,
+  selectedPrice: 309999,
+  setFilteredProducts: (filteredProducts) => set(() => ({ filteredProducts })),
+  setSelectedCategory: (category) =>
+    set(() => ({ selectedCategory: category })),
+  setSelectedBrand: (brand) => set(() => ({ selectedBrand: brand })),
+  setSelectedPrice: (price) => set(() => ({ selectedPrice: price })),
 
   fetchProducts: async () => {
     const { data, error } = await supabase.from("products").select();
@@ -224,6 +220,12 @@ const useProductStore = create((set, get) => ({
     set({
       loading: false,
       singleProduct: res.data,
+    });
+  },
+
+  setShowSidebar: (value) => {
+    set({
+      showSidebar: value,
     });
   },
 
