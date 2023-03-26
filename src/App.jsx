@@ -19,7 +19,7 @@ function App() {
   return (
     <div>
       <AuthProvider>
-        <HashRouter>
+        <BrowserRouter>
           <Navbar />
           <SideBar />
           <Routes>
@@ -32,7 +32,7 @@ function App() {
             <Route path="/product/:id" element={<AboutProduct />} />
             <Route path="/cancel" element={<Cancel />} />
           </Routes>
-        </HashRouter>
+        </BrowserRouter>
         <Footer />
       </AuthProvider>
     </div>
