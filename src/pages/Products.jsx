@@ -6,13 +6,10 @@ import ProductList from "../component/ProductList";
 import ProductListHeader from "../component/ProductListHeader";
 
 const Products = () => {
-
-  const { products, fetchProducts } = useProductStore(
-    (state) => ({
-      products: state.products,
-      fetchProducts: state.fetchProducts,
-    })
-  );
+  const { products, fetchProducts } = useProductStore((state) => ({
+    products: state.products,
+    fetchProducts: state.fetchProducts,
+  }));
 
   useEffect(() => {
     fetchProducts();
@@ -25,13 +22,14 @@ const Products = () => {
     }).format(number / 100);
   };
 
-
   return (
     <>
       <Header title="Products" />
 
       <div className="flex flex-col items-start md:flex-row max-w-[85em] mx-auto ">
-        <Filters />
+        <div className="md:sticky md:top-10">
+          <Filters />
+        </div>
 
         <div className="flex flex-col w-full  ">
           <ProductListHeader />

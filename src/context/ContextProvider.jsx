@@ -11,7 +11,7 @@ export function AuthProvider({ children }) {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log("Session:", session);
+  // console.log("Session:", session);
   const { setUserId } = useProductStore((state) => ({
     setUserId: state.setUserId,
   }));
@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
    
     if (gotSession) {
       setUserId(gotSession.user?.id);
-      console.log("Retrieved: ", gotSession);
+      // console.log("Retrieved: ", gotSession);
       setSession(JSON.parse(gotSession));
       setUser(JSON.parse(gotSession));
     }
@@ -33,10 +33,10 @@ export function AuthProvider({ children }) {
       setLoading(false);
       const { subscription } = supabase.auth.onAuthStateChange(
         async (event, session) => {
-          console.log("subscription", subscription);
+          // console.log("subscription", subscription);
 
           if (session) {
-            console.log("New session: ", session);
+            // console.log("New session: ", session);
             setUser(session.user);
             setUserId(session.user?.id);
             localStorage.setItem("authSession", JSON.stringify(session));
