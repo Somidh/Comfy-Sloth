@@ -13,12 +13,13 @@ import Footer from "./component/Footer";
 import AboutProduct from "./pages/AboutProduct";
 import { Cancel } from "@mui/icons-material";
 import { AuthProvider } from "./context/ContextProvider";
+import { HashRouter } from 'react-router-dom'
 
 function App() {
   return (
     <div>
       <AuthProvider>
-        <BrowserRouter basename="/">
+        <HashRouter>
           <Navbar />
           <SideBar />
           <Routes>
@@ -31,7 +32,7 @@ function App() {
             <Route path="/product/:id" element={<AboutProduct />} />
             <Route path="/cancel" element={<Cancel />} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
         <Footer />
       </AuthProvider>
     </div>
