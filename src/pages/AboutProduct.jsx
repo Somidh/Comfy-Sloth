@@ -5,11 +5,13 @@ import Stars from "../component/Stars";
 import { ClipLoader } from "react-spinners";
 import useProductStore from "../store/productStore";
 import { v4 as uuidv4 } from "uuid";
+import { useAuth } from "../context/ContextProvider";
 
 const AboutProduct = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { id } = useParams();
+  const { user } = useAuth();
 
   const {
     fetchSingleProduct,
@@ -44,7 +46,9 @@ const AboutProduct = () => {
     "quantity:",
     quantity,
     "ID:",
-    singleProduct.id
+    singleProduct.id,
+    "stock:",
+    stock
   );
 
   const handleIncrease = () => {
@@ -69,8 +73,12 @@ const AboutProduct = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
   const handleAddToCartButton = () => {
-    addToCart(name, price, userId, id, images[0]?.url, quantity);
+    addToCart(name, price, userId, id, images[0]?.url, quantity, stock);
     navigate("/cart");
   };
   const handleBackClick = () => {
@@ -176,7 +184,7 @@ const AboutProduct = () => {
                 </div>
 
                 <button
-                  onClick={handleAddToCartButton}
+                  onClick={!user ? goToLogin : handleAddToCartButton}
                   className="bg-[#ab7a5f] text-[#EADED7] text-[14px] tracking-widest px-5 py-1.5 uppercase rounded-md"
                 >
                   add to cart

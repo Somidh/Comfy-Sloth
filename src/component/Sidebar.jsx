@@ -23,31 +23,51 @@ const sidebarLinks = [
   },
 ];
 
-const Navbar = () => {
-  const { handleNavbarClick, showNavbar, setShowNavbar } = useAuth();
-  const { cartItem } = useProductStore((state) => ({
-    cartItem: state.cartItem,
-  }));
+const Sidebar = () => {
+  const { signOut, user } = useAuth();
+  const { cartItem, showSidebar, setShowSidebar } = useProductStore(
+    (state) => ({
+      cartItem: state.cartItem,
+      showSidebar: state.showSidebar,
+      setShowSidebar: state.setShowSidebar,
+    })
+  );
 
   const navigate = useNavigate();
 
+  const handleSidebarClick = () => {
+    setShowSidebar(false);
+  };
+
   const handleCartClick = () => {
-    setShowNavbar((prev) => !prev);
+    setShowSidebar(false);
     navigate("/cart");
+  };
+  const handleLogout = () => {
+    signOut();
+    setShowSidebar(false);
+    navigate("/");
+    alert("Succesfully sign out");
+  };
+  const goToLogin = () => {
+    navigate("/login");
+    setShowSidebar(false);
   };
 
   return (
     <div
       className={`fixed top-0 left-0 bg-white z-50 w-screen h-screen flex flex-col gap-8 px-5 py-4 ${
-        showNavbar ? "-translate-x-0" : "-translate-x-full"
+        showSidebar ? "-translate-x-0" : "-translate-x-full"
       } transition-all duration-300 ease-linear`}
     >
       <div className="flex flex-col items-start  gap-5  ">
         <div className="flex items-center justify-between w-full">
-          <img src={Logo} alt="logo" className="w-[10em]" />
+          <Link to={"/"} onClick={() => setShowSidebar(false)}>
+            <img src={Logo} alt="logo" className="w-[10em]" />
+          </Link>
           <div>
             <CloseIcon
-              onClick={handleNavbarClick}
+              onClick={handleSidebarClick}
               fontSize="large"
               style={{ color: "red", cursor: "pointer" }}
             />
@@ -58,7 +78,7 @@ const Navbar = () => {
             <Link
               to={link.url}
               className="tracking-widest"
-              onClick={handleNavbarClick}
+              onClick={handleSidebarClick}
             >
               {link.name}
             </Link>
@@ -66,15 +86,21 @@ const Navbar = () => {
         </div>
       </div>
       <div className="flex items-center justify-center gap-5">
-        <div className="flex items-center justify-center gap-2 cursor-pointer relative">
+        <div
+          onClick={handleCartClick}
+          className="flex items-center justify-center gap-2 cursor-pointer relative"
+        >
           <h2 className="text-[28px]">Cart</h2>
-          <ShoppingCartIcon fontSize="large" onClick={handleCartClick} />
+          <ShoppingCartIcon fontSize="large" />
           <span className="w-6 h-6 bg-[#AB7A5F] rounded-full absolute -right-1 -top-2 flex items-center justify-center text-white text-sm">
             {cartItem.length}
           </span>
         </div>
-        <div className="flex items-center justify-center gap-2 cursor-pointer">
-          <h2 className="text-[28px]">Logout </h2>
+        <div
+          onClick={user ? handleLogout : goToLogin}
+          className="flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <h2 className="text-[28px]">{user ? "Logout" : "Login"} </h2>
           <div className="flex items-center ">
             <PersonIcon fontSize="large" />
             <span className="font-medium text-4xl">-</span>
@@ -85,4 +111,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Sidebar;
