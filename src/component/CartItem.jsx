@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useProductStore from "../store/productStore";
 import { useAuth } from "../context/ContextProvider";
@@ -32,9 +32,9 @@ const CartItem = ({
 
   const [qty, setQty] = useState(quantity);
 
-  // useEffect(() => {
-  //   fetchCartItem();
-  // }, []);
+  useEffect(() => {
+    fetchCartItem();
+  }, [cartItem]);
 
   const handleIncrease = () => {
     qty < stock && setQty((prev) => prev + 1);
