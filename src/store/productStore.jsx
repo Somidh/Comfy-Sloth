@@ -15,6 +15,13 @@ const useProductStore = create((set, get) => ({
   loading: true,
   gridView: true,
   quantity: 1,
+  showSidebar: false,
+
+  setShowSidebar: (value) => {
+    set({
+      showSidebar: value,
+    });
+  },
 
   // setSome: () => {
   //   const { user } = useAuth();
@@ -33,7 +40,7 @@ const useProductStore = create((set, get) => ({
       });
     }
   },
-  addToCart: async (name, price, userId, productId, image, quantity) => {
+  addToCart: async (name, price, userId, productId, image, quantity, stock) => {
     const { data: cartItems, error } = await supabase
       .from("cartItem")
       .select("*")
@@ -61,7 +68,8 @@ const useProductStore = create((set, get) => ({
     } else {
       const { data, error } = await supabase
         .from("cartItem")
-        .insert({ name, price, userId, productId, image, quantity });
+        .insert({ name, price, userId, productId, image, quantity, stock })
+        .select();
       if (error) console.log("Error while inserting items:", error);
 
       console.log("Cart item inserted successfully!");
@@ -69,9 +77,8 @@ const useProductStore = create((set, get) => ({
   },
 
   fetchCartItem: async () => {
-    
     const state = get();
-    const userId = state.userId
+    const userId = state.userId;
     const { data, error } = await supabase
       .from("cartItem")
       .select()
@@ -150,7 +157,7 @@ const useProductStore = create((set, get) => ({
     // const item = state.cartItem?.find((item) => item.id === id);
     const { data, error } = await supabase
       .from("cartItem")
-      .update({ quantity: newQuantity + 1})
+      .update({ quantity: newQuantity + 1 })
       .eq("productId", productId)
       .select();
     if (error) console.log("error while increaseing count:", error);
@@ -167,7 +174,7 @@ const useProductStore = create((set, get) => ({
     // const item = state.cartItem?.find((item) => item.id === id);
     const { data, error } = await supabase
       .from("cartItem")
-      .update({ quantity: newQuantity - 1})
+      .update({ quantity: newQuantity - 1 })
       .eq("productId", productId)
       .select();
     if (error) console.log("error while increaseing count:", error);

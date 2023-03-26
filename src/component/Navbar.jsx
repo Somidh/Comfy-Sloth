@@ -10,12 +10,14 @@ import useProductStore from "../store/productStore";
 import { supabase } from "../../server/supabase";
 
 const Navbar = () => {
-  const { cartItem, setLoading, fetchCartItem } = useProductStore((state) => ({
-    cartItem: state.cartItem,
-   
-    setLoading: state.setLoading,
-    fetchCartItem: state.fetchCartItem,
-  }));
+  const { cartItem, setLoading, fetchCartItem, setShowSidebar } =
+    useProductStore((state) => ({
+      cartItem: state.cartItem,
+
+      setLoading: state.setLoading,
+      fetchCartItem: state.fetchCartItem,
+      setShowSidebar: state.setShowSidebar,
+    }));
 
   const { user, handleNavbarClick, signOut } = useAuth();
 
@@ -30,6 +32,9 @@ const Navbar = () => {
 
   const handleCartClick = () => {
     navigate("/cart");
+  };
+  const handleMenuClick = () => {
+    setShowSidebar(true);
   };
 
   // const handleLogout = async () => {
@@ -46,13 +51,15 @@ const Navbar = () => {
 
   const handleLogout = () => {
     signOut();
-    navigate('/')
-    alert("Succesfully sign out")
+    navigate("/");
+    alert("Succesfully sign out");
   };
 
   return (
     <div className="flex items-center justify-between max-w-[85em] mx-auto px-5 py-4 ">
-      <img src={Logo} alt="logo" className="w-[10em] " />
+      <Link to={'/'}>
+        <img src={Logo} alt="logo" className="w-[10em] " />
+      </Link>
 
       <div className="hidden lg:flex items-center gap-28 tracking-widest text-[#324D67] ">
         <Link
@@ -76,9 +83,9 @@ const Navbar = () => {
       </div>
       <div className="lg:hidden">
         <MenuIcon
-          onClick={handleNavbarClick}
+          onClick={handleMenuClick}
           fontSize="large"
-          className=" text-[#AB7A5F]"
+          className=" text-[#AB7A5F] cursor-pointer"
         />
       </div>
 

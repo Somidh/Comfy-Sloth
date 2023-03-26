@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useProductStore from "../store/productStore";
-import { useParams } from "react-router";
 import { useAuth } from "../context/ContextProvider";
-import { supabase } from "../../server/supabase";
 
 const CartItem = ({
   name,
@@ -30,6 +28,8 @@ const CartItem = ({
 
   const { user } = useAuth();
 
+  console.log("stockfsofse:", stock);
+
   const [qty, setQty] = useState(quantity);
 
   // useEffect(() => {
@@ -37,8 +37,8 @@ const CartItem = ({
   // }, []);
 
   const handleIncrease = () => {
-    setQty((prev) => prev + 1);
-    quantity < 10 && increaseItemCount(qty, productId);
+    qty < stock && setQty((prev) => prev + 1);
+    qty < stock && increaseItemCount(qty, productId);
   };
   const handleDecrease = () => {
     setQty((prev) => prev - 1);
@@ -83,7 +83,7 @@ const CartItem = ({
       </div>
 
       <div className="hidden md:block">
-        <span className="text-[#617D98]">{formatPrice(price * quantity)}</span>
+        <span className="text-[#617D98]">{formatPrice(price * qty)}</span>
       </div>
       <DeleteIcon
         onClick={handleDelete}

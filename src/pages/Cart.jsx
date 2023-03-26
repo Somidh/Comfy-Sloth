@@ -65,10 +65,10 @@ const Cart = () => {
       <Header title="Cart" />
 
       <div className="max-w-[85em] mx-auto px-5 mb-10">
-        <ul className="hidden md:grid grid-cols-4 items-center ml-20 px-5 text-[#617D98]">
+        <ul className="hidden md:grid grid-cols-4 items-center ml-20  text-[#617D98]">
           <li>Item</li>
-          <li>Price</li>
-          <li>Quantity</li>
+          <li className="ml-11">Price</li>
+          <li className="ml-4">Quantity</li>
           <li>Subtotal</li>
         </ul>
 

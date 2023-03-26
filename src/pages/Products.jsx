@@ -37,7 +37,7 @@ const Products = () => {
           <ProductListHeader />
 
           <div>
-            <ProductList products={products} />
+            <ProductList />
           </div>
         </div>
       </div>

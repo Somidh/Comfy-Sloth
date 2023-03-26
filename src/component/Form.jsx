@@ -90,9 +90,9 @@ const Form = () => {
   };
 
   return (
-    <div className="flex flex-wrap h-[calc(100vh-167px)] w-full content-center justify-center bg-white py-10 ">
+    <div className="flex flex-wrap h-[calc(100vh-163px)]  w-full content-center justify-center bg-white py-10 ">
       <div className="flex shadow-md border-t-[5px] rounded-lg border-[#AB7A5F]">
-        <div className="flex flex-wrap w-full md:w-[25em] h-full py-8 px-10 content-center justify-center rounded-l-md bg-white">
+        <div className="flex flex-wrap w-[22em] md:w-[25em] h-full py-8 px-10 content-center justify-center rounded-l-md bg-white">
           <div className="w-full">
             <div className="flex flex-col items-center justify-center gap-6">
               <h1 className="text-[#102A43] text-3xl tracking-wider">
