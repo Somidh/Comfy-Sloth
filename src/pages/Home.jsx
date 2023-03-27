@@ -1,27 +1,35 @@
-import React, { useEffect } from 'react'
-import Hero from '../component/Hero'
-import FeaturedProducts from '../component/FeaturedProducts'
-import HomeAbout from '../component/HomeAbout'
-import Subscribe from '../component/Subscribe'
-import useProductStore from '../store/productStore'
+import React, { useCallback, useEffect, useState } from "react";
+import Hero from "../component/Hero";
+import FeaturedProducts from "../component/FeaturedProducts";
+import HomeAbout from "../component/HomeAbout";
+import Subscribe from "../component/Subscribe";
+import useProductStore from "../store/productStore";
 
 const Home = () => {
-  const { fetchCartItem } = useProductStore((state) => ({
+  const [cartItems, setCartItems] = useState([]);
+  const { fetchCartItem, setCartLength,  } = useProductStore((state) => ({
     fetchCartItem: state.fetchCartItem,
+    setCartLength: state.setCartLength,
   }));
 
-  useEffect(() => {
-    fetchCartItem();
+  const fetchCartItemsCallback = useCallback(async () => {
+    const items = await fetchCartItem();
+    setCartItems(items);
+    setCartLength(items.length);
   }, []);
 
+  useEffect(() => {
+    fetchCartItemsCallback();
+  }, [fetchCartItemsCallback]);
+
   return (
-    <div className='flex flex-col items-center justify-center w-full'>
+    <div className="flex flex-col items-center justify-center w-full">
       <Hero />
       <FeaturedProducts />
       <HomeAbout />
       <Subscribe />
-    </div >
-  )
-}
+    </div>
+  );
+};
 
-export default Home
+export default Home;

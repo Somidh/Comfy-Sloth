@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useProductStore from "../store/productStore";
 
@@ -10,14 +10,17 @@ const CartItem = ({
   stock,
   productId,
   quantity,
+  handleDeleteItem,
 }) => {
   const {
-    removeFromCart,
+    cartItem,
+    setCartItem,
     fetchCartItem,
     increaseItemCount,
     decreaseItemCount,
   } = useProductStore((state) => ({
-    removeFromCart: state.removeFromCart,
+    cartItem: state.cartItem,
+    setCartItem: state.setCartItem,
     fetchCartItem: state.fetchCartItem,
     increaseItemCount: state.increaseItemCount,
     decreaseItemCount: state.decreaseItemCount,
@@ -25,9 +28,14 @@ const CartItem = ({
 
   const [qty, setQty] = useState(quantity);
 
-  useEffect(() => {
-    fetchCartItem();
+  const fetchCartItemsCallback = useCallback(async () => {
+    const items = await fetchCartItem();
+    setCartItem(items);
   }, []);
+
+  useEffect(() => {
+    fetchCartItemsCallback();
+  }, [fetchCartItemsCallback]);
 
   const handleIncrease = () => {
     qty < stock && setQty((prev) => prev + 1);
@@ -38,7 +46,7 @@ const CartItem = ({
     quantity > 1 && decreaseItemCount(qty, productId);
   };
   const handleDelete = () => {
-    removeFromCart(productId);
+    handleDeleteItem(productId);
   };
 
   return (
@@ -65,7 +73,7 @@ const CartItem = ({
           -
         </span>
         <span className="text-[#102A42] font-bold text-3xl md:text-4xl">
-          {qty}
+          {quantity}
         </span>
         <span
           onClick={handleIncrease}

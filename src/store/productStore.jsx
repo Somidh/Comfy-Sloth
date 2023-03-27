@@ -5,6 +5,7 @@ import { supabase } from "../../server/supabase";
 const useProductStore = create((set, get) => ({
   products: [],
   cartItem: [],
+  cartLength: 0,
   singleProduct: {},
   filteredProducts: [],
   quantity: 1,
@@ -15,7 +16,7 @@ const useProductStore = create((set, get) => ({
   gridView: true,
   showSidebar: false,
   selectedCategory: null,
-  selectedBrand: null,
+  selectedBrand: "",
   selectedPrice: 309999,
   setFilteredProducts: (filteredProducts) => set(() => ({ filteredProducts })),
   setSelectedCategory: (category) =>
@@ -74,11 +75,13 @@ const useProductStore = create((set, get) => ({
     const { data, error } = await supabase
       .from("cartItem")
       .select()
-      .eq("userId", userId);
+      .eq("userId", userId)
+      .select();
     if (error) console.log("Error while fetching cart item:", error);
     if (data) {
       console.log("succes item fetching", data);
-      set({ cartItem: data });
+      return data;
+      // set({ cartItem: data });
     }
   },
 
@@ -96,17 +99,21 @@ const useProductStore = create((set, get) => ({
 
     if (error) console.log("Error while deleting item:", error);
     console.log("item deleted", data);
+    return data;
   },
 
   clearCart: async () => {
-    const { error } = await supabase.from("cartItem").delete().neq("id", 0);
+    const { data, error } = await supabase
+      .from("cartItem")
+      .delete()
+      .neq("id", 0)
+      .select();
 
     if (error) {
       console.log("Error deleting cart items:", error);
       return;
     }
-
-    console.log("Cart items deleted successfully!");
+    return data;
   },
 
   setQuantity: (newQuantity) => {
@@ -161,6 +168,11 @@ const useProductStore = create((set, get) => ({
       singleProduct: res.data,
     });
   },
+  setCartItem: (item) => {
+    set({
+      cartItem: item,
+    });
+  },
   setShowSidebar: (value) => {
     set({
       showSidebar: value,
@@ -181,6 +193,9 @@ const useProductStore = create((set, get) => ({
   },
   setUserId: (id) => {
     set({ userId: id });
+  },
+  setCartLength: (value) => {
+    set({ cartLength: value });
   },
 }));
 
