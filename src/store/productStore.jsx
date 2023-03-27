@@ -18,11 +18,6 @@ const useProductStore = create((set, get) => ({
   selectedCategory: null,
   selectedBrand: "",
   selectedPrice: 309999,
-  setFilteredProducts: (filteredProducts) => set(() => ({ filteredProducts })),
-  setSelectedCategory: (category) =>
-    set(() => ({ selectedCategory: category })),
-  setSelectedBrand: (brand) => set(() => ({ selectedBrand: brand })),
-  setSelectedPrice: (price) => set(() => ({ selectedPrice: price })),
 
   fetchProducts: async () => {
     const { data, error } = await supabase.from("products").select();
@@ -81,7 +76,6 @@ const useProductStore = create((set, get) => ({
     if (data) {
       console.log("succes item fetching", data);
       return data;
-      // set({ cartItem: data });
     }
   },
 
@@ -114,12 +108,6 @@ const useProductStore = create((set, get) => ({
       return;
     }
     return data;
-  },
-
-  setQuantity: (newQuantity) => {
-    set({
-      quantity: newQuantity,
-    });
   },
 
   increaseItemCount: async (newQuantity, productId) => {
@@ -197,6 +185,12 @@ const useProductStore = create((set, get) => ({
   setCartLength: (value) => {
     set({ cartLength: value });
   },
+
+  setFilteredProducts: (filteredProducts) => set(() => ({ filteredProducts })),
+  setSelectedCategory: (category) =>
+    set(() => ({ selectedCategory: category })),
+  setSelectedBrand: (brand) => set(() => ({ selectedBrand: brand })),
+  setSelectedPrice: (price) => set(() => ({ selectedPrice: price })),
 }));
 
 export default useProductStore;

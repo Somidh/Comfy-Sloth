@@ -4,7 +4,6 @@ import useProductStore from "../store/productStore";
 import CartItem from "../component/CartItem";
 import { useNavigate } from "react-router";
 import SubTotal from "../component/SubTotal";
-import { useAuth } from "../context/ContextProvider";
 import { ClipLoader } from "react-spinners";
 
 const Cart = () => {

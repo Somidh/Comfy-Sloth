@@ -12,19 +12,14 @@ const CartItem = ({
   quantity,
   handleDeleteItem,
 }) => {
-  const {
-    cartItem,
-    setCartItem,
-    fetchCartItem,
-    increaseItemCount,
-    decreaseItemCount,
-  } = useProductStore((state) => ({
-    cartItem: state.cartItem,
-    setCartItem: state.setCartItem,
-    fetchCartItem: state.fetchCartItem,
-    increaseItemCount: state.increaseItemCount,
-    decreaseItemCount: state.decreaseItemCount,
-  }));
+  const { setCartItem, fetchCartItem, increaseItemCount, decreaseItemCount } =
+    useProductStore((state) => ({
+      cartItem: state.cartItem,
+      setCartItem: state.setCartItem,
+      fetchCartItem: state.fetchCartItem,
+      increaseItemCount: state.increaseItemCount,
+      decreaseItemCount: state.decreaseItemCount,
+    }));
 
   const [qty, setQty] = useState(quantity);
 
@@ -42,8 +37,8 @@ const CartItem = ({
     qty < stock && increaseItemCount(qty, productId);
   };
   const handleDecrease = () => {
-    setQty((prev) => prev - 1);
-    quantity > 1 && decreaseItemCount(qty, productId);
+    qty > 1 && setQty((prev) => prev - 1);
+    qty > 1 && decreaseItemCount(qty, productId);
   };
   const handleDelete = () => {
     handleDeleteItem(productId);
@@ -73,7 +68,7 @@ const CartItem = ({
           -
         </span>
         <span className="text-[#102A42] font-bold text-3xl md:text-4xl">
-          {quantity}
+          {qty}
         </span>
         <span
           onClick={handleIncrease}
