@@ -6,15 +6,17 @@ import Subscribe from "../component/Subscribe";
 import useProductStore from "../store/productStore";
 
 const Home = () => {
-  const [cartItems, setCartItems] = useState([]);
-  const { fetchCartItem, setCartLength,  } = useProductStore((state) => ({
-    fetchCartItem: state.fetchCartItem,
-    setCartLength: state.setCartLength,
-  }));
+  const { fetchCartItem, setCartLength, setCartItem } = useProductStore(
+    (state) => ({
+      setCartItem,
+      fetchCartItem: state.fetchCartItem,
+      setCartLength: state.setCartLength,
+    })
+  );
 
   const fetchCartItemsCallback = useCallback(async () => {
     const items = await fetchCartItem();
-    setCartItems(items);
+    setCartItem(items);
     setCartLength(items.length);
   }, []);
 
