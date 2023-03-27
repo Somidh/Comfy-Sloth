@@ -8,7 +8,7 @@ import useProductStore from "../store/productStore";
 const Home = () => {
   const { fetchCartItem, setCartLength, setCartItem } = useProductStore(
     (state) => ({
-      setCartItem,
+      setCartItem: state.setCartItem,
       fetchCartItem: state.fetchCartItem,
       setCartLength: state.setCartLength,
     })
