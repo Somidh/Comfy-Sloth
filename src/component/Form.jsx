@@ -38,7 +38,7 @@ const Form = () => {
   };
 
   return (
-    <div className="flex flex-wrap h-[calc(100vh-163px)]  w-full content-center justify-center bg-white py-10 ">
+    <div className="flex flex-wrap h-[calc(100vh-163px)]  w-full items-center  content-center justify-center bg-white py-10">
       <div className="flex shadow-md border-t-[5px] rounded-lg border-[#AB7A5F]">
         <div className="flex flex-wrap w-[22em] md:w-[25em] h-full py-8 px-10 content-center justify-center rounded-l-md bg-white">
           <div className="w-full">
@@ -104,7 +104,6 @@ const Form = () => {
                 </button>
               </div>
             </form>
-            {/* 9359e7bc-231b-42f8-bbf0-ce00b00e3173 */}
 
             <div className=" flex items-center justify-center">
               <span className="text-[#617D98] font-light">
@@ -118,6 +117,16 @@ const Form = () => {
               </Link>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="absolute right-[30em] top-[20em]">
+        <div className="flex items-center gap-2">
+          <h1 className="font-bold text-[#102A42]" >Test Email:</h1>
+          <span className="">somidhroyy@gmail.com</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <h1 className="font-bold text-[#102A42]">Pass:</h1>
+          <span>password</span>
         </div>
       </div>
     </div>

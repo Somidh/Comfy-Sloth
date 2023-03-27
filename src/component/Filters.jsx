@@ -84,7 +84,7 @@ const Filters = () => {
           className="pl-2 py-1 text-sm mt-2 rounded-md w-20 cursor-pointer"
           value={selectedBrand}
         >
-          <option value="default" selected>
+          <option value="default" defaultValue>
             Select
           </option>
           <option value="marcos">Marcos</option>

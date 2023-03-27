@@ -9,9 +9,10 @@ import { useAuth } from "../context/ContextProvider";
 import useProductStore from "../store/productStore";
 
 const Navbar = () => {
-  const { cartItem, setShowSidebar } = useProductStore((state) => ({
+  const { setShowSidebar, cartLength } = useProductStore((state) => ({
     cartItem: state.cartItem,
     setShowSidebar: state.setShowSidebar,
+    cartLength: state.cartLength,
   }));
 
   const { user, signOut } = useAuth();
@@ -72,8 +73,8 @@ const Navbar = () => {
         >
           <h2 className="text-[25px] ">Cart</h2>
           <ShoppingCartIcon fontSize="medium" />
-          <span className="w-5 h-5 bg-[#AB7A5F] rounded-full absolute -right-2 -top-1 flex items-center justify-center text-white text-sm">
-            {cartItem.length}
+          <span className="w-5 h-5 bg-[#AB7A5F] rounded-full absolute -right-2 -top-1 flex items-center justify-center text-white text-sm ">
+            {cartLength}
           </span>
         </div>
         <Link
