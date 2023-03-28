@@ -29,6 +29,7 @@ const Form = () => {
       password: password,
       option: { data: { full_name: full_name } },
     });
+    alert("check Email for verification");
   };
 
   const handleLogin = (e) => {
