@@ -119,16 +119,6 @@ const Form = () => {
           </div>
         </div>
       </div>
-      <div className="absolute right-[30em] top-[20em]">
-        <div className="flex items-center gap-2">
-          <h1 className="font-bold text-[#102A42]" >Test Email:</h1>
-          <span className="">somidhroyy@gmail.com</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <h1 className="font-bold text-[#102A42]">Pass:</h1>
-          <span>password</span>
-        </div>
-      </div>
     </div>
   );
 };
